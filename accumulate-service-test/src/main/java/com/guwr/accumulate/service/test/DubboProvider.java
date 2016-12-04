@@ -51,6 +51,7 @@ public class DubboProvider {
      * 充值自动还款
      */
     private static void autoRepayOverdue(ClassPathXmlApplicationContext context) {
+        System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.autoRepayOverdue");
         OverdueRepaymentAPI api = context.getBean("overdueRepaymentAPI", OverdueRepaymentAPI.class);
         Result result = api.autoRepayOverdue(710321);
