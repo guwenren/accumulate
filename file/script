@@ -1,0 +1,17 @@
+-- 远程部署脚本
+#!/bin/sh
+
+## java env
+export JAVA_HOME=/usr/local/jdk7
+export JRE_HOME=$JAVA_HOME/jre
+
+## restart tomcat
+/usr/local/workspace/accumulate-service-account/bin/shutdown.sh
+sleep 5
+rm -rf /usr/local/workspace/accumulate-service-account/webapps/ROOT
+
+mkdir /usr/local/workspace/accumulate-service-account/webapps/ROOT
+
+cd /usr/local/workspace/accumulate-service-account/webapps
+
+unzip -q accumulate-service-account.war -d ROOT  &&  rm -rf accumulate-service-account.war  &&  /usr/local/workspace/accumulate-service-account/bin/startup.sh

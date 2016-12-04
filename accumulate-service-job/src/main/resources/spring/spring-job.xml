@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--<bean id="quartzScheduler" lazy-init="false" class="org.springframework.scheduling.job.SchedulerFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource" />-->
+    <!--<property name="autoStartup" value="true" />	&lt;!&ndash;自动启动 &ndash;&gt;-->
+    <!--<property name="startupDelay" value="20" />		&lt;!&ndash;延时启动 &ndash;&gt;-->
+    <!--<property name="applicationContextSchedulerContextKey"  value="applicationContextKey" />-->
+    <!--<property name="configLocation" value="classpath:job.properties"/>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;&lt;!&ndash; 协同-调度器 &ndash;&gt;&ndash;&gt;-->
+    <!--<bean id="dynamicSchedulerUtil" class="com.guwr.accumulate.service.job.util.DynamicSchedulerUtils" init-method="init" destroy-method="destroy" >-->
+    <!--&lt;!&ndash; (轻易不要变更“调度器名称”, 任务创建时会绑定该“调度器名称”) &ndash;&gt;-->
+    <!--<property name="scheduler" ref="quartzScheduler"/>-->
+    <!--&lt;!&ndash;<property name="callBackPort" value="8888"/>&ndash;&gt;-->
+    <!--</bean>-->
+    <!--服务端-->
+    <!--<bean id="jobLogCallbackServer" class="com.guwr.accumulate.service.job.callback.JobLogCallbackServer" init-method="start" destroy-method="destroy">-->
+    <!--<property name="port" value="8888"/>-->
+    <!--</bean>-->
+
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>
+    <bean id="dynamicSchedulerUtils" class="com.guwr.accumulate.service.job.util.DynamicSchedulerUtils"
+          init-method="init" destroy-method="destroy">
+        <property name="callBackPort" value="8888"/>
+        <property name="scheduler" value="schedulerFactoryBean"/>
+    </bean>
+</beans>

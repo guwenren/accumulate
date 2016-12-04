@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://code.alibabatech.com/schema/dubbo  
+            http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <!--accumulate-service-notify-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyRecordFacade" id="notifyRecordFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyRecordLogFacade" id="notifyRecordLogFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade" id="notifyMessageFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade" id="notifyTransactionMessageFacade" check="false"/>
+    <!--accumulate-service-wmps-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.wmps.facade.IProductRecordFacade" id="productRecordFacade" check="false"/>
+</beans>

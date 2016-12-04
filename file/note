@@ -1,0 +1,46 @@
+linux环境配置
+JAVA_HOME=/usr/local/jdk1.7.0_75
+JRE_HOME=$JAVA_HOME/jre
+PATH=$PATH:$JAVA_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export JAVA_HOME
+export JRE_HOME
+export PATH
+export CLASSPATH
+MAVEN_HOME=/usr/local/maven
+export MAVEN_HOME
+export PATH=${PATH}:${MAVEN_HOME}/bin
+
+
+公共类、公共配置文件
+accumulate-common
+accumulate-common-conf
+消息中心
+accumulate-queue-notify
+accumulate-facade-notify
+accumulate-service-notify
+统一认证权限管理
+accumulate-service-authority
+accumulate-facade-authority
+产品
+accumulate-facade-wmps
+accumulate-service-wmps
+用户
+accumulate-facade-user
+accumulate-service-user
+用户账户中心
+accumulate-facade-account
+accumulate-service-account
+JOB任务调用
+accumulate-facade-job
+accumulate-service-job
+accumulate-service-job-client
+
+dubbo调用测试
+accumulate-service-test
+
+2016-09-12
+完成用户注册-初始化资金账户-添加注册成功-发送异步通知
+2016-09-14
+购买产品-添加购买记录-修改产品已购金额-添加资金流水-修改账户余额-发送异步通知
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 异步通知 notify-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade" id="notifyMessageFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade" id="notifyTransactionMessageFacade" check="false"/>
+    <!-- 账户资金流水-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade" id="accountBalanceRecordFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade" id="accountBalanceFacade" check="false"/>
+    <!-- 用户-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserInfoFacade" id="userInfoFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade" id="userProductLevelFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductEarningsFacade" id="userProductEarningsFacade" check="false"/>
+</beans>

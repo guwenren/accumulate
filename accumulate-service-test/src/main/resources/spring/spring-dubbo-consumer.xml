@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <dubbo:registry protocol="zookeeper" address="192.168.2.249:12182,192.168.2.201:12182,192.168.2.202:12182"  id="elZookeeper" timeout="15000" />
+
+    <!-- 异步通知 notify-->
+    <!--<dubbo:reference interface="com.eloancn.nback.financeapi.AccountPaymentAPI" group="dkweb-soa-cat" id="accountPaymentAPI" version="1.0.0" check="false"/>-->
+    <dubbo:reference interface="com.el.borrow.soa.service.logic.borrowauth.ILogicBorrowAuthService" id="logicBorrowAuthService" group="borrow-soa" registry="elZookeeper" version="1.1.0" timeout="60000" protocol="dubbo" check="false" validation="false" retries="1" />
+    <dubbo:reference interface="com.el.borrow.soa.service.logic.borrowsignature.ILogicBorrowSignatureService" id="logicBorrowSignatureService" group="borrow-soa" registry="elZookeeper" version="1.1.0" timeout="60000" protocol="dubbo" check="false" validation="false" retries="1" />
+
+
+    <!-- back-destress-->
+    <!--<dubbo:reference interface="com.eloancn.app.IBorrowAppAPI" id="borrowAppAPI" group="destress-soa" registry="elZookeeper" version="1.0.0" check="false" />-->
+
+
+    <dubbo:reference interface="com.eloancn.repayment.OverdueRepaymentAPI" id="overdueRepaymentAPI" group="destress-soa-test-repay" version="1.0.0"
+                     registry="elZookeeper" timeout="5000" protocol="dubbo"  validation="false" lazy="true" check="false"/>
+
+    <dubbo:reference interface="com.eloancn.overdueAccrue.OverdueAccrueAPI" id="overdueAccrueAPI" group="destress-soa-test-repay" version="1.0.0"
+                     registry="elZookeeper" timeout="5000" protocol="dubbo"  validation="false" lazy="true" check="false"/>
+</beans>

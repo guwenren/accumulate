@@ -1,0 +1,9 @@
+10:02:10.755 [main] INFO  com.guwr.accumulate.common.Main - ======info
+10:02:10.758 [main] WARN  com.guwr.accumulate.common.Main - ======warn
+10:02:10.758 [main] ERROR com.guwr.accumulate.common.Main - ======error
+10:04:02.905 [main] INFO  com.guwr.accumulate.common.cache.RedisUtils - ======info
+10:04:02.908 [main] WARN  com.guwr.accumulate.common.cache.RedisUtils - ======warn
+10:04:02.908 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - ======error
+10:09:00.975 [main] INFO  com.guwr.accumulate.common.cache.RedisUtils - ======info
+10:09:00.977 [main] WARN  com.guwr.accumulate.common.cache.RedisUtils - ======warn
+10:09:00.977 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - ======error
