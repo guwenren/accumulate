@@ -890,6 +890,7 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <!--build-->
     <build>
         <finalName>accumulate</finalName>
         <plugins>
