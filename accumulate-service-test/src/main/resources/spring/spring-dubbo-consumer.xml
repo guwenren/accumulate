@@ -22,4 +22,7 @@
 
     <dubbo:reference interface="com.eloancn.overdueAccrue.OverdueAccrueAPI" id="overdueAccrueAPI" group="destress-soa-test-repay" version="1.0.0"
                      registry="elZookeeper" timeout="5000" protocol="dubbo"  validation="false" lazy="true" check="false"/>
+
+    <dubbo:reference interface="com.eloancn.repayment.RepaymentAPI" id="repaymentAPI" group="destress-soa-test-repay" version="1.0.0"
+                     registry="elZookeeper" timeout="5000" protocol="dubbo"  validation="false" lazy="true" check="false"/>
 </beans>

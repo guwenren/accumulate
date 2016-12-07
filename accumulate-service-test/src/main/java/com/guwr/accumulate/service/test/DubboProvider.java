@@ -12,6 +12,7 @@ import com.el.common.result.PublicResult;
 import com.eloancn.fornew.result.Result;
 import com.eloancn.overdueAccrue.OverdueAccrueAPI;
 import com.eloancn.repayment.OverdueRepaymentAPI;
+import com.eloancn.repayment.RepaymentAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -27,7 +28,8 @@ public class DubboProvider {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
             System.out.println("accumulate-service-test");
             System.out.println("context = " + context);
-            autoRepayOverdue(context);
+            getRepayShow(context);
+//            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
             context.start();
@@ -48,13 +50,26 @@ public class DubboProvider {
     }
 
     /**
+     * 正在还款的借款
+     */
+    private static void getRepayShow(ClassPathXmlApplicationContext context) {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.getRepayShow");
+        RepaymentAPI api = context.getBean("repaymentAPI", RepaymentAPI.class);
+        Result result = api.getRepayShow(709770);
+        System.out.println("result = " + JSON.toJSONString(result));
+    }
+
+    /**
      * 充值自动还款
      */
     private static void autoRepayOverdue(ClassPathXmlApplicationContext context) {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.autoRepayOverdue");
+
+
         OverdueRepaymentAPI api = context.getBean("overdueRepaymentAPI", OverdueRepaymentAPI.class);
-        Result result = api.autoRepayOverdue(710321);
+        Result result = api.autoRepayOverdue(709114);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 

@@ -1,17 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+<!--scan: 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。-->
+<!--scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。-->
+<!--debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。-->
+
+
+<!--每个logger都关联到logger上下文，默认上下文名称为default。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 声明变量 -->
+    <property name="P_NAME" value="accumulate-service-account"/>
+    <timestamp key="P_SECOND" datePattern="yyyyMMdd'T'HHmmss"/>
+    <property name="P_BASE" value="logs" />
+    <contextName>${P_NAME}</contextName>
+    <!-- 其他配置省略-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${P_BASE}/${P_NAME}.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
             </pattern>
         </layout>
     </appender>
-    <!--&lt;!&ndash; logback为java中的包 &ndash;&gt;-->
-    <logger name="com.guwr" level="INFO">
 
+    <!-- accumulate-service-account日志 -->
+    <appender name="accumulate-service-account" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${P_BASE}/${P_NAME}.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+
+    <!-- com.guwr.accumulate.common.cache为java中的包 -->
+    <logger name="com.guwr.accumulate.service.account" level="INFO" additivity="true">
+        <appender-ref ref="accumulate-service-account"/>
     </logger>
-    <root level="ERROR">
-        <appender-ref ref="STDOUT" />
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE" />
     </root>
 </configuration>
