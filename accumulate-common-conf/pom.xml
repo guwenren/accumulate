@@ -10,6 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>accumulate-common-conf</artifactId>
+
+    <properties>
+        <env>test</env>
+    </properties>
+
     <!-- 全局属性配置 -->
     <profiles>
         <!-- 开发环境 -->
@@ -17,7 +22,7 @@
             <id>env</id>
             <properties>
                 <env>env</env>
-                <maven.test.skip>false</maven.test.skip>
+                <maven.test.skip>true</maven.test.skip>
             </properties>
         </profile>
         <!-- 测试环境 -->
@@ -25,7 +30,7 @@
             <id>test</id>
             <properties>
                 <env>test</env>
-                <maven.test.skip>false</maven.test.skip>
+                <maven.test.skip>true</maven.test.skip>
             </properties>
             <!-- 设置默认环境 -->
             <activation>
@@ -37,7 +42,7 @@
             <id>prod</id>
             <properties>
                 <env>prod</env>
-                <maven.test.skip>false</maven.test.skip>
+                <maven.test.skip>true</maven.test.skip>
             </properties>
         </profile>
     </profiles>
