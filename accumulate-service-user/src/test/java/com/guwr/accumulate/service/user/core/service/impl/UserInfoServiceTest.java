@@ -1,6 +1,7 @@
 package com.guwr.accumulate.service.user.core.service.impl;
 
 import com.guwr.accumulate.common.page.PageBean;
+import com.guwr.accumulate.common.util.StringUtils;
 import com.guwr.accumulate.common.util.UUIDUitls;
 import com.guwr.accumulate.facade.user.entity.UserInfo;
 import com.guwr.accumulate.facade.user.vo.UserInfoVO;
@@ -38,14 +39,14 @@ public class UserInfoServiceTest extends BaseTest {
 
     @Test
     public void save() throws Exception {
-        for (int i = 0; i < 20; i++) {
-            UserInfo userInfo = new UserInfo();
-            userInfo.setMobile("13" + UUIDUitls.generateInteger(9));
-            userInfo.setPassword(UUIDUitls.generateString(6));
-            userInfo.setRealname("李" + UUIDUitls.generateString(8));
-            userInfoService.save(userInfo);
-            System.out.println(userInfoService);
-        }
+//        for (int i = 0; i < 20; i++) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setMobile("13" + UUIDUitls.generateInteger(9));
+        userInfo.setPassword(UUIDUitls.generateString(6));
+        userInfo.setRealname("李" + UUIDUitls.generateString(8));
+        userInfoService.save(userInfo);
+        System.out.println(userInfoService);
+//        }
     }
 
     @Test
@@ -56,12 +57,13 @@ public class UserInfoServiceTest extends BaseTest {
 
     @Test
     public void register() throws Exception {
-        for (int i = 1; i < 15; i++) {
-            UserInfoVO info = new UserInfoVO();
-            info.setMobile("13" + UUIDUitls.generateInteger(9));
-            info.setPassword(UUIDUitls.generateString(6));
-            info.setRealname("李" + UUIDUitls.generateString(8));
-            userInfoService.register(info);
-        }
+//        for (int i = 1; i < 15; i++) {
+        UserInfoVO info = new UserInfoVO();
+        info.setMobile("13" + UUIDUitls.generateInteger(9));
+        info.setPassword(UUIDUitls.generateString(6));
+        info.setRealname("李" + UUIDUitls.generateString(8));
+        info.setUuid(StringUtils.getUUID());
+        userInfoService.register(info);
+//        }
     }
 }

@@ -43,12 +43,12 @@ public class ProductRecordServiceTest extends BaseTest {
 
     @Test
     public void addProductRecord() throws Exception {
-        for (int i = 0; i < 10; i++) {
+//        for (int i = 0; i < 10; i++) {
             ProductRecordVO vo = new ProductRecordVO();
-            vo.setUid(2);
-            vo.setPid(2);
+            vo.setUid(4);
+            vo.setPid(1);
             vo.setInvestAmount(new BigDecimal(100));
             productRecordService.addProductRecord(vo);
-        }
+//        }
     }
 }

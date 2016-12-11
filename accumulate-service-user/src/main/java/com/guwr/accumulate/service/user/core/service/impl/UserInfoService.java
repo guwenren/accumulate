@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by gwr
  * Description
- * Path com.guwr.accumulate.service.user.service.impl.ProductService
+ * Path com.guwr.accumulate.service.user.service.impl.UserInfoService
  * Date 2016/8/13
  * Time 21:16
  */
@@ -41,7 +41,6 @@ public class UserInfoService implements IUserInfoService {
 
     @Autowired
     private INotifyMessageFacade notifyMessageFacade;
-
 
     @Override
     public UserInfo save(UserInfo entity) {
@@ -61,6 +60,7 @@ public class UserInfoService implements IUserInfoService {
     @Override
     @Transactional
     public UserInfo register(UserInfoVO info) {
+        String uuid = com.guwr.accumulate.common.util.StringUtils.getUUID();
         // 1、用户注册
         UserInfo userInfo = new UserInfo();
         userInfo.setPassword(info.getPassword());
@@ -77,6 +77,7 @@ public class UserInfoService implements IUserInfoService {
         // 3、发送短信通知
         NotifyMessageVO notifyMessageVO = new NotifyMessageVO();
         notifyMessageVO.setUid(id);
+        notifyMessageVO.setUuid(uuid);
         notifyMessageFacade.save(notifyMessageVO);
         return userInfo;
     }

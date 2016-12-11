@@ -16,7 +16,7 @@ public class AccountBizException extends BizException {
     private static final long serialVersionUID = 3424589800181389417L;
     private static Logger logger = LoggerFactory.getLogger(AccountBizException.class);
 
-    public static final AccountBizException ACCOUNTBALANCE_NOT_EXIT = new AccountBizException(30000001, "用户账户不存在");
+    public static final AccountBizException YONG_HU_ZHANG_HU_BU_CUN_ZAI = new AccountBizException(30000001, "用户账户不存在");
     public static final AccountBizException YU_E_BU_ZU = new AccountBizException(30000002, "余额不足");
     public static final AccountBizException YU_E_BU_PI_PEI = new AccountBizException(30000003, "余额不匹配");
 

@@ -7,6 +7,7 @@ import com.guwr.accumulate.common.util.AmountUtils;
 import com.guwr.accumulate.common.util.StringUtils;
 import com.guwr.accumulate.facade.account.entity.AccountBalance;
 import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
+import com.guwr.accumulate.facade.account.exception.AccountBizException;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
@@ -100,26 +101,31 @@ public class ProductRecordService implements IProductRecordService {
         if (divideAndRemainder[1].compareTo(BigDecimal.ZERO) != 0) { //不是100的整倍数
             throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
         }
-        Product product = productService.findOne(pid);//加载购买产品信息
-        if (product == null) {
-            throw WmpsBizException.CHAN_PIN_BU_CUN_ZAI.print();
-        }
-        //状态是否为已发布
-        if (!Objects.equals(ProductStatus.PUBLISHED.getValue(), product.getStatus())) {
-            throw WmpsBizException.CHAN_PIN_WEI_KAI_SHI_REN_GOU.print();
-        }
-        //获取用户信息
+
         UserInfo userInfo = userInfoFacade.findOne(uid);
-        if (userInfo == null) {
+        if (userInfo == null) { //用户
             throw UserBizException.YONG_HU_BU_CUN_ZAI.print();
         }
-        //账户余额是否足够
-        AccountBalance accountBalance = accountBalanceFacade.findOneByUid(uid);   //查询用户账户
-        BigDecimal balance = accountBalance.getBalance();//账户余额
 
-        if (investAmount.compareTo(balance) > 0) { //余额不足
+        AccountBalance accountBalance = accountBalanceFacade.findOneByUid(uid);
+        if (accountBalance == null) { //账户
+            throw AccountBizException.YONG_HU_ZHANG_HU_BU_CUN_ZAI.print();
+        }
+
+        BigDecimal balance = accountBalance.getBalance();//账户余额
+        if (investAmount.compareTo(balance) > 0) { //账户余额是否足够
             throw WmpsBizException.YU_E_BU_ZU.print();
         }
+
+        Product product = productService.findOne(pid);//加载购买产品信息
+        if (product == null) { //产品是否存在
+            throw WmpsBizException.CHAN_PIN_BU_CUN_ZAI.print();
+        }
+
+        if (!Objects.equals(ProductStatus.PUBLISHED.getValue(), product.getStatus())) {//状态是否为已发布
+            throw WmpsBizException.CHAN_PIN_WEI_KAI_SHI_REN_GOU.print();
+        }
+
 
         BigDecimal productInvestAmount = product.getInvestAmount();//投资总额
         BigDecimal productEffectAmount = product.getEffectAmount();//有效总额

@@ -9,15 +9,20 @@ import com.el.borrow.soa.service.logic.borrowauth.ILogicBorrowAuthService;
 import com.el.borrow.soa.service.logic.borrowsignature.ILogicBorrowSignatureService;
 import com.el.common.page.PageList;
 import com.el.common.result.PublicResult;
+import com.eloancn.app.IBorrowAppAPI;
+import com.eloancn.entity.repay.RepayShowVO;
 import com.eloancn.fornew.result.Result;
 import com.eloancn.overdueAccrue.OverdueAccrueAPI;
 import com.eloancn.repayment.OverdueRepaymentAPI;
+import com.eloancn.repayment.PayBackBailAPI;
 import com.eloancn.repayment.RepaymentAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class DubboProvider {
@@ -32,6 +37,8 @@ public class DubboProvider {
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
+//            borrowAPP(context);
+//            countPayBackBail(context);
             context.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,11 +59,26 @@ public class DubboProvider {
     /**
      * 正在还款的借款
      */
+    private static void countPayBackBail(ClassPathXmlApplicationContext context) {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.getRepayShow");
+        PayBackBailAPI api = context.getBean("payBackBailAPI", PayBackBailAPI.class);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("tenderId",18);
+        Result result = api.countPayBackBail(map);
+        System.out.println("result = " + JSON.toJSONString(result));
+    }
+
+    /**
+     * 正在还款的借款
+     */
     private static void getRepayShow(ClassPathXmlApplicationContext context) {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.getRepayShow");
         RepaymentAPI api = context.getBean("repaymentAPI", RepaymentAPI.class);
-        Result result = api.getRepayShow(709770);
+
+        com.eloancn.entity.Result<List<RepayShowVO>> result = api.getRepayShowByUid(710327);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 
@@ -66,10 +88,8 @@ public class DubboProvider {
     private static void autoRepayOverdue(ClassPathXmlApplicationContext context) {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.autoRepayOverdue");
-
-
         OverdueRepaymentAPI api = context.getBean("overdueRepaymentAPI", OverdueRepaymentAPI.class);
-        Result result = api.autoRepayOverdue(709114);
+        Result result = null;//api.autoRepayOverdue(709114);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 
@@ -96,17 +116,17 @@ public class DubboProvider {
     }
 
     private static void borrowAPP(ClassPathXmlApplicationContext context) {
-//        IBorrowAppAPI borrowAppAPI = context.getBean("borrowAppAPI", IBorrowAppAPI.class);
-//        System.out.println("borrowAppAPI = " + borrowAppAPI);
-//
-//        Result result = borrowAppAPI.borroweTenderInfo(67);
-//
-//        System.out.println("result = " + JSON.toJSONString(result));
-//        Integer uid = 205;
-//        Integer tid = 322;
-//        Integer publisheddate = 1351128721;
-//        result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate);
-//        System.out.println("result = " + JSON.toJSONString(result));
+        IBorrowAppAPI borrowAppAPI = context.getBean("borrowAppAPI", IBorrowAppAPI.class);
+        System.out.println("borrowAppAPI = " + borrowAppAPI);
+
+        Result result = borrowAppAPI.borroweTenderInfo(67,null);
+
+        System.out.println("result = " + JSON.toJSONString(result));
+        Integer uid = 205;
+        Integer tid = 322;
+        Integer publisheddate = 1351128721;
+        result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate,null);
+        System.out.println("result = " + JSON.toJSONString(result));
     }
 
     private static void borrow(ClassPathXmlApplicationContext context) {
