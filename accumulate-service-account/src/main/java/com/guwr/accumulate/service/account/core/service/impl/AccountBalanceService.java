@@ -45,7 +45,7 @@ public class AccountBalanceService implements IAccountBalanceService {
         }
         List<AccountBalance> accountBalances = repository.findOneByUid(uid);
         if (CollectionUtils.isEmpty(accountBalances)) {
-            throw AccountBizException.ACCOUNTBALANCE_NOT_EXIT.print();
+            throw AccountBizException.YONG_HU_ZHANG_HU_BU_CUN_ZAI.print();
         }
         return accountBalances.get(0);
     }

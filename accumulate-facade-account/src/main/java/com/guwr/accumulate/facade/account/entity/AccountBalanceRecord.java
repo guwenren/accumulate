@@ -1,5 +1,6 @@
 package com.guwr.accumulate.facade.account.entity;
 
+import com.guwr.accumulate.common.entity.BaseEntity;
 import com.guwr.accumulate.common.util.CommonUtils;
 
 import javax.persistence.*;
@@ -15,26 +16,16 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "tbl_account_balance_record")
-public class AccountBalanceRecord implements Serializable {
+public class AccountBalanceRecord extends BaseEntity {
 
 
     private static final long serialVersionUID = -1309600883062868382L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     private Integer uid;//用户ID
     private Integer type;//资金流水类型
     private BigDecimal amount;//交易金额
     private BigDecimal balance;//余额
     private String description;//描述
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Integer getUid() {
         return uid;
