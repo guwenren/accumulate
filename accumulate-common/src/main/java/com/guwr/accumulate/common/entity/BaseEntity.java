@@ -1,5 +1,7 @@
 package com.guwr.accumulate.common.entity;
 
+import com.guwr.accumulate.common.util.CommonUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -66,5 +68,10 @@ public abstract class BaseEntity implements Serializable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    @Override
+    public String toString() {
+        return CommonUtils.obj2Json(this);
     }
 }

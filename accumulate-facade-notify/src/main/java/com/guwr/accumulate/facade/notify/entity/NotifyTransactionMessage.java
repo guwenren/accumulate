@@ -1,5 +1,7 @@
 package com.guwr.accumulate.facade.notify.entity;
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
+import com.guwr.accumulate.common.entity.BaseEntity;
 import com.guwr.accumulate.common.util.CommonUtils;
 
 import javax.persistence.*;
@@ -15,19 +17,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tbl_notify_transaction_message")
-public class NotifyTransactionMessage implements Serializable {
+public class NotifyTransactionMessage extends BaseEntity {
 
     private static final long serialVersionUID = 7206021153093420017L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Version
-    private Integer version;    //版本
-    @Column(name = "create_time")
-    private Date createTime; //创建时间
-    @Column(name = "update_time")
-    private Date updateTime; //更新时间
-    private String uuid; //uuid
+
     @Column(name = "message_body")
     private String messageBody; //消息内容
     @Column(name = "message_data_type")
@@ -40,46 +33,6 @@ public class NotifyTransactionMessage implements Serializable {
     private Integer areadlyDead; //是否死亡
     private Integer status;//状态
     private String remark; //备注
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 
     public String getMessageBody() {
         return messageBody;

@@ -13,20 +13,20 @@
         <!--<module>accumulate-common</module>-->
         <!--<module>accumulate-common-conf</module>-->
         <!--facade-->
-        <!--<module>accumulate-facade-notify</module>-->
         <!--<module>accumulate-facade-authority</module>-->
+        <!--<module>accumulate-facade-job</module>-->
+        <!--<module>accumulate-facade-notify</module>-->
         <!--<module>accumulate-facade-wmps</module>-->
         <!--<module>accumulate-facade-user</module>-->
         <!--<module>accumulate-facade-account</module>-->
-        <!--<module>accumulate-facade-job</module>-->
         <!--service-->
         <!--<module>accumulate-service-authority</module>-->
+        <!--<module>accumulate-service-job</module>-->
+        <!--<module>accumulate-service-job-client</module>-->
         <!--<module>accumulate-service-notify</module>-->
         <!--<module>accumulate-service-wmps</module>-->
         <!--<module>accumulate-service-user</module>-->
         <!--<module>accumulate-service-account</module>-->
-        <!--<module>accumulate-service-job</module>-->
-        <!--<module>accumulate-service-job-client</module>-->
         <!--other-->
         <!--<module>accumulate-queue-notify</module>-->
         <!--test-->

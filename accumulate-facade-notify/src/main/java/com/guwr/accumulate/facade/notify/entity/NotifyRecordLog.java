@@ -1,5 +1,6 @@
 package com.guwr.accumulate.facade.notify.entity;
 
+import com.guwr.accumulate.common.entity.BaseEntity;
 import com.guwr.accumulate.common.util.CommonUtils;
 
 import javax.persistence.*;
@@ -16,17 +17,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tbl_notify_record_log")
-public class NotifyRecordLog implements Serializable {
+public class NotifyRecordLog extends BaseEntity {
 
 
     private static final long serialVersionUID = 7082630535924694869L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Version
-    private Integer version = 0;
-    @Column(name = "create_time")
-    private Date createTime = new Date();//创建时间
+
     @Column(name = "notify_id")
     private Integer notifyId;//通知记录ID
     private String request;//请求信息
@@ -38,29 +33,6 @@ public class NotifyRecordLog implements Serializable {
     @Column(name = "http_status")
     private Integer httpStatus;//HTTP状态
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 
     public Integer getNotifyId() {
         return notifyId;

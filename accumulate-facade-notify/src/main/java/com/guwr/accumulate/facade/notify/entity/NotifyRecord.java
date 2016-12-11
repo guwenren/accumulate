@@ -1,5 +1,6 @@
 package com.guwr.accumulate.facade.notify.entity;
 
+import com.guwr.accumulate.common.entity.BaseEntity;
 import com.guwr.accumulate.common.util.CommonUtils;
 
 import javax.persistence.*;
@@ -15,20 +16,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tbl_notify_record")
-public class NotifyRecord implements Serializable {
+public class NotifyRecord extends BaseEntity {
 
 
     private static final long serialVersionUID = 316294188572441683L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Version
-    private Integer version = 0;
-    @Column(name = "create_time")
-    private Date createTime = new Date();//创建时间
-    @Column(name = "update_time")
-    private Date updateTime;//修改时间
-    private String uuid;//uuid
+
     @Column(name = "notify_times")
     private Integer notifyTimes = 0;//通知次数
     @Column(name = "limit_notify_times")
@@ -41,39 +33,6 @@ public class NotifyRecord implements Serializable {
     private Integer status = 101;//通知状态(100:成功:101:未成功,默认101)
     @Column(name = "notify_type")
     private Integer notifyType = 0;//通知类型 NotifyTypeEnum
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     public Integer getNotifyTimes() {
         return notifyTimes;
@@ -129,14 +88,6 @@ public class NotifyRecord implements Serializable {
 
     public void setNotifyType(Integer notifyType) {
         this.notifyType = notifyType;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     @Override

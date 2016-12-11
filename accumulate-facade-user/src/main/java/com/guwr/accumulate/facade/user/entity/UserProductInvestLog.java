@@ -1,5 +1,6 @@
 package com.guwr.accumulate.facade.user.entity;
 
+import com.guwr.accumulate.common.entity.BaseEntity;
 import com.guwr.accumulate.common.util.CommonUtils;
 
 import javax.persistence.*;
@@ -16,19 +17,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tbl_user_wmps_invest_log")
-public class UserProductInvestLog implements Serializable {
+public class UserProductInvestLog extends BaseEntity {
 
 
     private static final long serialVersionUID = -1309600883062868382L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "create_time")
-    private Date createTime; //创建时间
-    @Column(name = "update_time")
-    private Date updateTime; //更新时间
 
-    private String uuid;// uuid
     private Integer pid;//产品投资总额ID
     @Column(name = "invest_money")
     private BigDecimal investMoney;// 变更金额
@@ -38,38 +31,6 @@ public class UserProductInvestLog implements Serializable {
     private BigDecimal beforTotalInvest;//用户变更前在投资金额
     @Column(name = "after_total_invest")
     private BigDecimal afterTotalInvest;//用户变更后在投资金额
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 
     public Integer getPid() {
         return pid;
