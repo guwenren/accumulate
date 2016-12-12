@@ -33,11 +33,11 @@ public class DubboProvider {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
             System.out.println("accumulate-service-test");
             System.out.println("context = " + context);
-            getRepayShow(context);
+//            getRepayShow(context);
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
-//            borrowAPP(context);
+            borrowAPP(context);
 //            countPayBackBail(context);
             context.start();
         } catch (Exception e) {
@@ -122,9 +122,9 @@ public class DubboProvider {
         Result result = borrowAppAPI.borroweTenderInfo(67,null);
 
         System.out.println("result = " + JSON.toJSONString(result));
-        Integer uid = 205;
-        Integer tid = 322;
-        Integer publisheddate = 1351128721;
+        Integer uid = 707020;
+        Integer tid = 1026390;
+        Integer publisheddate = 1461901569;
         result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate,null);
         System.out.println("result = " + JSON.toJSONString(result));
     }

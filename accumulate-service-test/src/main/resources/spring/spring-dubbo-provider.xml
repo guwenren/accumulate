@@ -5,7 +5,7 @@
             http://code.alibabatech.com/schema/dubbo  
             http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<dubbo:application name="eloancn-service-tender" />
+	<dubbo:application name="accumulate-service-test" />
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<!--<dubbo:registry protocol="zookeeper" address="192.168.2.249:12182" />-->
