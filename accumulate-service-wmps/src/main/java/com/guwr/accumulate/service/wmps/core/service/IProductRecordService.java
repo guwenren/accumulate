@@ -14,6 +14,7 @@ import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 public interface IProductRecordService {
     /**
      * 保存购买记录
+     *
      * @param entity
      * @return
      */
@@ -21,6 +22,7 @@ public interface IProductRecordService {
 
     /**
      * 查找购买记录
+     *
      * @param id
      * @return
      */
@@ -28,10 +30,17 @@ public interface IProductRecordService {
 
     /**
      * 添加购买记录
+     *
      * @param info
      */
     void addProductRecord(ProductRecordVO info);
 
 
+    /**
+     * 根据投资UUID获取对象
+     *
+     * @param uuid
+     * @return
+     */
     ProductRecord findOneProductRecordByUUID(String uuid);
 }

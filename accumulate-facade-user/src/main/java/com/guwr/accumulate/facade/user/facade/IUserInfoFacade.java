@@ -18,6 +18,11 @@ public interface IUserInfoFacade {
      * @return
      */
     UserInfo findOne(int id);
+    /**
+     * @param id
+     * @return
+     */
+    UserInfo findOneCheck(int id);
 
     /**
      * @param mobile

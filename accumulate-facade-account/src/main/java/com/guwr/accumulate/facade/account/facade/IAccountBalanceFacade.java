@@ -16,4 +16,6 @@ public interface IAccountBalanceFacade {
     AccountBalance update(AccountBalanceVO vo);
 
     AccountBalance findOneByUid(int uid);
+
+    AccountBalance findOneByUidCheck(int uid);
 }

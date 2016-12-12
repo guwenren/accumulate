@@ -43,9 +43,9 @@ public class NotifyMessageListener implements SessionAwareMessageListener<Messag
         ActiveMQTextMessage textMessage = (ActiveMQTextMessage) message;
         String msgText = textMessage.getText();
         logger.info("msgText = " + msgText);
-//        NotifyMessageVO notifyMessageVO = JSON.parseObject(msgText, NotifyMessageVO.class);
-//        notifyMessageFacade.save(notifyMessageVO);
-//        String uuid = notifyMessageVO.getUuid();
-//        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUID(uuid);//测试消息通知结果处理完成但是删除消息失败
+        NotifyMessageVO notifyMessageVO = JSON.parseObject(msgText, NotifyMessageVO.class);
+        notifyMessageFacade.save(notifyMessageVO);
+        String uuid = notifyMessageVO.getUuid();
+        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUID(uuid);//测试消息通知结果处理完成但是删除消息失败
     }
 }

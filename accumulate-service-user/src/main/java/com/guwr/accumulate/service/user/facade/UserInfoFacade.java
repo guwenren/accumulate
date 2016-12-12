@@ -2,6 +2,7 @@ package com.guwr.accumulate.service.user.facade;
 
 import com.guwr.accumulate.common.page.PageBean;
 import com.guwr.accumulate.facade.user.entity.UserInfo;
+import com.guwr.accumulate.facade.user.exception.UserBizException;
 import com.guwr.accumulate.facade.user.facade.IUserInfoFacade;
 import com.guwr.accumulate.facade.user.vo.UserInfoVO;
 import com.guwr.accumulate.service.user.core.service.IUserInfoService;
@@ -29,6 +30,15 @@ public class UserInfoFacade implements IUserInfoFacade {
         logger.info("UserInfoFacade.findOne");
         logger.info("id = " + id);
         UserInfo userInfo = userInfoService.findOne(id);
+        return userInfo;
+    }
+
+    @Override
+    public UserInfo findOneCheck(int id) {
+        UserInfo userInfo = this.findOne(id);
+        if (userInfo == null) { //用户
+            throw UserBizException.YONG_HU_BU_CUN_ZAI.print();
+        }
         return userInfo;
     }
 

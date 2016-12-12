@@ -25,7 +25,7 @@ public class NotifyMessageFacade implements INotifyMessageFacade {
 
     @Override
     public NotifyMessage save(NotifyMessageVO info) {
-        logger.info("NotifyMessageFacade.save.info = " + info);
+        logger.info("NotifyMessageFacade.save.info = [" + info + "]");
         Integer uid = info.getUid();
         String title = info.getTitle();
         String content = info.getContent();

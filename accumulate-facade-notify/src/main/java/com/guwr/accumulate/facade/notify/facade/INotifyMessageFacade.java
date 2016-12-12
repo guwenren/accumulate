@@ -11,5 +11,10 @@ import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
  * Time 18:33
  */
 public interface INotifyMessageFacade {
+    /**
+     * 保存发送消息
+     * @param vo
+     * @return
+     */
     NotifyMessage save(NotifyMessageVO vo);
 }

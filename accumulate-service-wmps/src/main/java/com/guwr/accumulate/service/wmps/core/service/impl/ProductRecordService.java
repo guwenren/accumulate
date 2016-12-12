@@ -102,15 +102,9 @@ public class ProductRecordService implements IProductRecordService {
             throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
         }
 
-        UserInfo userInfo = userInfoFacade.findOne(uid);
-        if (userInfo == null) { //用户
-            throw UserBizException.YONG_HU_BU_CUN_ZAI.print();
-        }
+        userInfoFacade.findOneCheck(uid);
 
-        AccountBalance accountBalance = accountBalanceFacade.findOneByUid(uid);
-        if (accountBalance == null) { //账户
-            throw AccountBizException.YONG_HU_ZHANG_HU_BU_CUN_ZAI.print();
-        }
+        AccountBalance accountBalance = accountBalanceFacade.findOneByUidCheck(uid);
 
         BigDecimal balance = accountBalance.getBalance();//账户余额
         if (investAmount.compareTo(balance) > 0) { //账户余额是否足够

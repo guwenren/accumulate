@@ -1,6 +1,7 @@
 package com.guwr.accumulate.service.account.facade;
 
 import com.guwr.accumulate.facade.account.entity.AccountBalance;
+import com.guwr.accumulate.facade.account.exception.AccountBizException;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceVO;
 import com.guwr.accumulate.service.account.core.service.IAccountBalanceService;
@@ -45,6 +46,16 @@ public class AccountBalanceFacade implements IAccountBalanceFacade {
     public AccountBalance findOneByUid(int uid) {
         logger.info("AccountBalanceFacade.findOneByUid.uid = [" + uid + "]");
         AccountBalance accountBalance = accountBalanceService.findOneByUid(uid);
+        return accountBalance;
+    }
+
+    @Override
+    public AccountBalance findOneByUidCheck(int uid) {
+        logger.info("AccountBalanceFacade.findOneByUidCheck.uid = [" + uid + "]");
+        AccountBalance accountBalance = this.findOneByUid(uid);
+        if (accountBalance == null) { //账户
+            throw AccountBizException.YONG_HU_ZHANG_HU_BU_CUN_ZAI.print();
+        }
         return accountBalance;
     }
 }

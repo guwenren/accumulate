@@ -21,15 +21,13 @@ import java.util.List;
  * Time         9:26
  * Description
  */
-public class BaseRepository<T> {
+public abstract class BaseRepository<T> {
 
     private static Logger logger = LoggerFactory.getLogger(BaseRepository.class);
 
     protected EntityManager em;
 
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
+    public abstract void setEm(EntityManager em);
 
     public Integer listPageCount(String listPageCountStr) {
         System.out.println("BaseRepository.listPageCount.listPageCountStr = [" + listPageCountStr + "]");
