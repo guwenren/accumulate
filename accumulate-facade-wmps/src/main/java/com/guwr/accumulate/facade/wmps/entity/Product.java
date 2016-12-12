@@ -3,10 +3,10 @@ package com.guwr.accumulate.facade.wmps.entity;
 import com.guwr.accumulate.common.entity.BaseEntity;
 import com.guwr.accumulate.common.util.CommonUtils;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by gwr
