@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by gwr
@@ -31,6 +32,11 @@ public class Product extends BaseEntity {
     private Integer status; //状态:0尚未发布 1.已发布，认购中 2认购完成，审核中 3计息中 4到期完成
     private Integer phases; //期限
     private BigDecimal interestrate; //发行年利率
+    private Date publisheddate;//发布时间
+    private Date finisheddate;//完成时间
+    private Date interdate; //计息时间
+    private Date enddate;   //结束时间
+
 
     public BigDecimal getAmount() {
         return amount;
@@ -78,6 +84,38 @@ public class Product extends BaseEntity {
 
     public void setInterestrate(BigDecimal interestrate) {
         this.interestrate = interestrate;
+    }
+
+    public Date getPublisheddate() {
+        return publisheddate;
+    }
+
+    public void setPublisheddate(Date publisheddate) {
+        this.publisheddate = publisheddate;
+    }
+
+    public Date getFinisheddate() {
+        return finisheddate;
+    }
+
+    public void setFinisheddate(Date finisheddate) {
+        this.finisheddate = finisheddate;
+    }
+
+    public Date getInterdate() {
+        return interdate;
+    }
+
+    public void setInterdate(Date interdate) {
+        this.interdate = interdate;
+    }
+
+    public Date getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(Date enddate) {
+        this.enddate = enddate;
     }
 
     @Override

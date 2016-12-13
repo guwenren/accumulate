@@ -35,7 +35,9 @@ public class StringUtils {
 
         System.out.println("bigDecimals = " + JSON.toJSONString(bigDecimals));
 
+        double floor = Math.floor(501/ 500);
 
+        System.out.println("floor = " + floor);
 
         //fbabedde97574f4d938362d822a7868b
         //b4259af28acc4f039a5815164663fac0
