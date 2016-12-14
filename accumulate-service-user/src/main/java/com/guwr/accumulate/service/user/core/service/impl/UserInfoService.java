@@ -66,12 +66,14 @@ public class UserInfoService implements IUserInfoService {
         userInfo.setPassword(info.getPassword());
         userInfo.setMobile(info.getMobile());
         userInfo.setRealname(info.getRealname());
+        userInfo.setUuid(uuid);
         userInfo = save(userInfo);
 
         Integer id = userInfo.getId();
         // 2、添加用户账户
         AccountBalanceVO accountBalanceVO = new AccountBalanceVO();
         accountBalanceVO.setUid(id);
+        accountBalanceVO.setUuid(uuid);
         accountBalanceFacade.save(accountBalanceVO);
 
         // 3、发送短信通知

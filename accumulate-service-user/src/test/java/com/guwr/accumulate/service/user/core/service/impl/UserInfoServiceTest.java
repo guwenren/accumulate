@@ -18,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Time 10:49
  */
 public class UserInfoServiceTest extends BaseTest {
+    @Autowired
+    private IUserInfoService userInfoService;
+
     @Test
     public void findOneByMobile() throws Exception {
         UserInfo userInfo = userInfoService.findOneByMobile("13167309518");
@@ -32,10 +35,6 @@ public class UserInfoServiceTest extends BaseTest {
         PageBean<UserInfo> listPage = userInfoService.findListPage(info);
         System.out.println("listPage = " + listPage);
     }
-
-
-    @Autowired
-    private IUserInfoService userInfoService;
 
     @Test
     public void save() throws Exception {
@@ -57,13 +56,13 @@ public class UserInfoServiceTest extends BaseTest {
 
     @Test
     public void register() throws Exception {
-//        for (int i = 1; i < 15; i++) {
-        UserInfoVO info = new UserInfoVO();
-        info.setMobile("13" + UUIDUitls.generateInteger(9));
-        info.setPassword(UUIDUitls.generateString(6));
-        info.setRealname("李" + UUIDUitls.generateString(8));
-        info.setUuid(StringUtils.getUUID());
-        userInfoService.register(info);
-//        }
+        for (int i = 1; i < 15; i++) {
+            UserInfoVO info = new UserInfoVO();
+            info.setMobile("13" + UUIDUitls.generateInteger(9));
+            info.setPassword(UUIDUitls.generateString(6));
+            info.setRealname("李" + UUIDUitls.generateString(8));
+            info.setUuid(StringUtils.getUUID());
+            userInfoService.register(info);
+        }
     }
 }
