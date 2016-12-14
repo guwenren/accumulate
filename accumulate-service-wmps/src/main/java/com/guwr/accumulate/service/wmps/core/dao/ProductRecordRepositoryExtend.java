@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by gwr
@@ -38,5 +40,27 @@ public class ProductRecordRepositoryExtend {
             logger.info(e.getMessage());
         }
         return result;
+    }
+
+    public int findInterestCount(int interestDate) {
+        StringBuilder qlStringB = new StringBuilder();
+        qlStringB.append(" SELECT count(DISTINCT(a.uid)) FROM tbl_wmps_product_record a");
+        qlStringB.append("  LEFT JOIN tbl_wmps_product b on a.pid=b.id");
+        qlStringB.append(" WHERE a.status=7 AND b.status=3");
+        qlStringB.append("  and  b.interdate >= ? and b.enddate > ?");
+        Query query = em.createNativeQuery(qlStringB.toString());
+        query.setParameter(1, interestDate);
+        query.setParameter(2, interestDate);
+        BigInteger result = (BigInteger) query.getSingleResult();
+        return result.intValue();
+    }
+
+    public List<Integer> findListByMOD(Integer number, Integer interestDate) {
+        StringBuilder qlStringB = new StringBuilder();
+        qlStringB.append(" SELECT count(DISTINCT(a.uid)) FROM tbl_wmps_product_record a");
+        qlStringB.append("  LEFT JOIN tbl_wmps_product b on a.pid=b.id");
+        qlStringB.append(" WHERE a.status=7 AND b.status=3");
+        qlStringB.append("  and  b.interdate >= ? and b.enddate > ?");
+        return null;
     }
 }

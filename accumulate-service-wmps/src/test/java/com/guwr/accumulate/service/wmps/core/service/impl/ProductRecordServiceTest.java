@@ -1,5 +1,6 @@
 package com.guwr.accumulate.service.wmps.core.service.impl;
 
+import com.guwr.accumulate.common.util.DateUtils;
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 import com.guwr.accumulate.service.wmps.BaseTest;
@@ -18,10 +19,21 @@ import java.util.Date;
  * Time 16:40
  */
 public class ProductRecordServiceTest extends BaseTest {
-
-
     @Autowired
     private IProductRecordService productRecordService;
+
+    @Test
+    public void findInterestCount1() throws Exception {
+        productRecordService.interestTask();
+        System.in.read();
+    }
+
+    @Test
+    public void findInterestCount() throws Exception {
+        int queryDate = DateUtils.currentTimeSeconds();
+        int interestCount = productRecordService.findInterestCount(queryDate);
+        System.out.println("interestCount = " + interestCount);
+    }
 
     @Test
     public void save() throws Exception {
@@ -43,12 +55,12 @@ public class ProductRecordServiceTest extends BaseTest {
 
     @Test
     public void addProductRecord() throws Exception {
-//        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             ProductRecordVO vo = new ProductRecordVO();
-            vo.setUid(4);
-            vo.setPid(1);
-            vo.setInvestAmount(new BigDecimal(100));
+            vo.setUid(i + 1);
+            vo.setPid(i + 1);
+            vo.setInvestAmount(new BigDecimal(i * 100));
             productRecordService.addProductRecord(vo);
-//        }
+        }
     }
 }

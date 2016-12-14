@@ -31,6 +31,7 @@ public class ProductRecord extends BaseEntity {
     private BigDecimal proearn;//预期收益
     @Column(name = "vip_interestrate")
     private BigDecimal vipInterestrate; //vip利率
+    private Integer status; //状态
 
     public Integer getUid() {
         return uid;
@@ -78,6 +79,14 @@ public class ProductRecord extends BaseEntity {
 
     public void setVipInterestrate(BigDecimal vipInterestrate) {
         this.vipInterestrate = vipInterestrate;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override

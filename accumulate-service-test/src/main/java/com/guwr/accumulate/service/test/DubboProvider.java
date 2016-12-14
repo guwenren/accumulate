@@ -34,10 +34,10 @@ public class DubboProvider {
             System.out.println("accumulate-service-test");
             System.out.println("context = " + context);
 //            getRepayShow(context);
-//            autoRepayOverdue(context);
+            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
-            borrowAPP(context);
+//            borrowAPP(context);
 //            countPayBackBail(context);
             context.start();
         } catch (Exception e) {
@@ -65,7 +65,7 @@ public class DubboProvider {
         PayBackBailAPI api = context.getBean("payBackBailAPI", PayBackBailAPI.class);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("tenderId",18);
+        map.put("tenderId",1028468);
         Result result = api.countPayBackBail(map);
         System.out.println("result = " + JSON.toJSONString(result));
     }
@@ -89,8 +89,8 @@ public class DubboProvider {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.autoRepayOverdue");
         OverdueRepaymentAPI api = context.getBean("overdueRepaymentAPI", OverdueRepaymentAPI.class);
-        Result result = null;//api.autoRepayOverdue(709114);
-        System.out.println("result = " + JSON.toJSONString(result));
+        com.eloancn.entity.Result<Object> objectResult = api.autoRepayOverdue(710327);
+        System.out.println("result = " + JSON.toJSONString(objectResult));
     }
 
 
@@ -139,14 +139,11 @@ public class DubboProvider {
         borrowAuthVo.setTid(1035180);
 
         PublicResult<ArrayList<BorrowAuthVo>> borrowAuthList = api.getBorrowAuthList(borrowAuthVo);
-
         System.out.println("JSON.toJSONString(borrowAuthList) = " + JSON.toJSONString(borrowAuthList));
-
         BorrowSignatureVo info = new BorrowSignatureVo();
         info.setUtype(2);
         info.setTid(1035180);
         PublicResult<PageList<BorrowSignature>> borrowSignature = api1.getBorrowSignature(info);
-
         System.out.println("JSON.toJSONString(borrowSignature) = " + JSON.toJSONString(borrowSignature));
     }
 }

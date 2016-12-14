@@ -4,10 +4,10 @@ package com.guwr.accumulate.service.wmps.core.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.guwr.accumulate.common.enums.NotifyDestination;
 import com.guwr.accumulate.common.util.AmountUtils;
+import com.guwr.accumulate.common.util.DateUtils;
 import com.guwr.accumulate.common.util.StringUtils;
 import com.guwr.accumulate.facade.account.entity.AccountBalance;
 import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
-import com.guwr.accumulate.facade.account.exception.AccountBizException;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
@@ -15,10 +15,8 @@ import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
-import com.guwr.accumulate.facade.user.entity.UserInfo;
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
-import com.guwr.accumulate.facade.user.exception.UserBizException;
 import com.guwr.accumulate.facade.user.facade.IUserInfoFacade;
 import com.guwr.accumulate.facade.user.facade.IUserProductEarningsFacade;
 import com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade;
@@ -31,6 +29,7 @@ import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 import com.guwr.accumulate.service.wmps.core.dao.ProductRecordRepository;
 import com.guwr.accumulate.service.wmps.core.service.IProductRecordService;
 import com.guwr.accumulate.service.wmps.core.service.IProductService;
+import com.guwr.accumulate.service.wmps.task.InterestTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,11 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 /**
  * Created by gwr
@@ -50,10 +53,8 @@ import java.util.Objects;
 @Service
 public class ProductRecordService implements IProductRecordService {
 
-    private static Logger logger = LoggerFactory.getLogger(ProductRecordService.class);
-
     private final static BigDecimal MULTIPLE_AMOUNT = new BigDecimal(100d);//投资倍数
-
+    private static Logger logger = LoggerFactory.getLogger(ProductRecordService.class);
     @Autowired
     private ProductRecordRepository repository;
 
@@ -86,6 +87,29 @@ public class ProductRecordService implements IProductRecordService {
     @Override
     public ProductRecord findOne(Integer id) {
         return repository.findOne(id);
+    }
+
+
+    @Override
+    public void interestTask() {
+        /**
+         * 1、获取当天需要发息的总人数
+         */
+        int interestDate = DateUtils.currentTimeSeconds();
+        int size = 5;//默认一个线程跑5个
+        int interestCount = 13;//this.findInterestCount(queryDate);
+        int threadTaskSize; // 线程数
+        if (interestCount % size == 0) {
+            threadTaskSize = interestCount / size;
+        } else {
+            threadTaskSize = interestCount / size + 1;
+        }
+        ExecutorService executorService = Executors.newFixedThreadPool(threadTaskSize);
+        for (int i = 0; i < threadTaskSize; i++) {
+            InterestTask task = new InterestTask(i, this, interestDate);
+            FutureTask<Integer> funcTrue = new FutureTask<>(task);
+            executorService.execute(funcTrue);
+        }
     }
 
     @Override
@@ -247,4 +271,16 @@ public class ProductRecordService implements IProductRecordService {
         proearn = divAmount.multiply(new BigDecimal(product.getPhases())); // 预期收益
         return proearn;
     }
+
+    @Override
+    public int findInterestCount(int interestDate) {
+        return repository.findInterestCount(interestDate);
+    }
+
+    @Override
+    public List<Integer> findListByMOD(Integer number, Integer interestDate) {
+        return repository.findListByMOD(number,interestDate);
+    }
 }
+
+

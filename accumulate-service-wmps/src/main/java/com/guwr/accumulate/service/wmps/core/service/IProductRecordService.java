@@ -4,6 +4,8 @@ package com.guwr.accumulate.service.wmps.core.service;
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 
+import java.util.List;
+
 /**
  * Created by gwr
  * Description
@@ -29,6 +31,11 @@ public interface IProductRecordService {
     ProductRecord findOne(Integer id);
 
     /**
+     * 发息定时任务
+     */
+    void interestTask();
+
+    /**
      * 添加购买记录
      *
      * @param info
@@ -43,4 +50,21 @@ public interface IProductRecordService {
      * @return
      */
     ProductRecord findOneProductRecordByUUID(String uuid);
+
+    /**
+     * 需要发息的人数
+     *
+     * @return
+     */
+    int findInterestCount(int interestDate);
+
+    /**
+     * 根据MOD查找发息用户
+     *
+     *
+     * @param number
+     * @param interestDate
+     * @return
+     */
+    List<Integer> findListByMOD(Integer number, Integer interestDate);
 }
