@@ -34,6 +34,7 @@ public class AccountBalanceFacade implements IAccountBalanceFacade {
         AccountBalance accountBalance = new AccountBalance();
         accountBalance.setBalance(balance);
         accountBalance.setUid(uid);
+        accountBalance.setUuid(info.getUuid());
         return accountBalanceService.save(accountBalance);
     }
 
