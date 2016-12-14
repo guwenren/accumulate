@@ -50,6 +50,7 @@ public class UserProductLevelService implements IUserProductLevelService {
         UserProductInvestVO userProductInvestVO = new UserProductInvestVO();
         userProductInvestVO.setInvest(info.getInvest());
         userProductInvestVO.setUid(info.getUid());
+        userProductInvestVO.setUuid(info.getUuid());
         BigDecimal afterTotalInvest = userProductInvestService.changeInInvest(userProductInvestVO);
         userProductLevel = this.findOneByInvest(afterTotalInvest);
         return userProductLevel;
