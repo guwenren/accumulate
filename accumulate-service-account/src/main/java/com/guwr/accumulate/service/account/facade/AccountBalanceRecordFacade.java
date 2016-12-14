@@ -31,6 +31,7 @@ public class AccountBalanceRecordFacade implements IAccountBalanceRecordFacade {
         accountBalanceRecord.setUid(info.getUid());
         accountBalanceRecord.setType(AccountBalanceRecordEnum.AccountBalanceRecordEnumType.OUTGO.getValue());
         accountBalanceRecord.setAmount(info.getAmount());
+        accountBalanceRecord.setUuid(info.getUuid());
         return accountBalanceRecordService.outgo(accountBalanceRecord);
     }
 
@@ -42,6 +43,7 @@ public class AccountBalanceRecordFacade implements IAccountBalanceRecordFacade {
         accountBalanceRecord.setUid(info.getUid());
         accountBalanceRecord.setType(AccountBalanceRecordEnum.AccountBalanceRecordEnumType.INCOME.getValue());
         accountBalanceRecord.setAmount(info.getAmount());
+        accountBalanceRecord.setUuid(info.getUuid());
         return accountBalanceRecordService.income(accountBalanceRecord);
     }
 }
