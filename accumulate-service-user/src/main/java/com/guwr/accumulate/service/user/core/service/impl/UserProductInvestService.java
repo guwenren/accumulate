@@ -63,18 +63,19 @@ public class UserProductInvestService implements IUserProductInvestService {
         logger.info("UserProductInvestService.changeInInvest.info = [" + info + "]");
         Integer uid = info.getUid();
         BigDecimal invest = info.getInvest();
+        String uuid = info.getUuid();
         BigDecimal beforTotalInvest; //用户变更前在投资金额
         BigDecimal afterTotalInvest; //用户变更后在投资金额 根据此金额计算当前用户VIP等级
 
         //当前投资总额
         Date date = new Date();
-        String uuid = StringUtils.getUUID();
         UserProductInvest userProductInvest = repository.findOneByUid(uid);
         logger.info("UserProductInvestService.changeInInvest.userProductInvest = " + CommonUtils.obj2Json(userProductInvest));
         if (userProductInvest == null) {
             beforTotalInvest = BigDecimal.ZERO;
             afterTotalInvest = invest;
             userProductInvest = new UserProductInvest();
+            userProductInvest.setUuid(uuid);
             userProductInvest.setUid(uid);
             userProductInvest.setTotalInvest(afterTotalInvest);
             userProductInvest.setCreateTime(date);
