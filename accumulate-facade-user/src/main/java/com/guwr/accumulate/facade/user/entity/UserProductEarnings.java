@@ -28,8 +28,7 @@ public class UserProductEarnings extends BaseEntity {
     private BigDecimal investAmount; //购买金额
     private BigDecimal proearn; //预期收益
     private BigDecimal realearn; //实际收益
-    @Column(name = "vip_interestrate")
-    private BigDecimal vipInterestrate; //vip利率
+    private BigDecimal interestrate; //vip利率
 
     public Integer getUid() {
         return uid;
@@ -71,12 +70,12 @@ public class UserProductEarnings extends BaseEntity {
         this.realearn = realearn;
     }
 
-    public BigDecimal getVipInterestrate() {
-        return vipInterestrate;
+    public BigDecimal getInterestrate() {
+        return interestrate;
     }
 
-    public void setVipInterestrate(BigDecimal vipInterestrate) {
-        this.vipInterestrate = vipInterestrate;
+    public void setInterestrate(BigDecimal interestrate) {
+        this.interestrate = interestrate;
     }
 
     @Override

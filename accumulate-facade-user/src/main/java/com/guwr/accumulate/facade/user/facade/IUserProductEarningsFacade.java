@@ -3,6 +3,8 @@ package com.guwr.accumulate.facade.user.facade;
 
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gwr
  * Description
@@ -12,7 +14,7 @@ import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
  */
 public interface IUserProductEarningsFacade {
 
-    UserProductEarnings findOneByUidPidLid(Integer uid, Integer pid, Integer lid);
+    UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate);
 
     void save(UserProductEarnings userProductEarnings);
 
