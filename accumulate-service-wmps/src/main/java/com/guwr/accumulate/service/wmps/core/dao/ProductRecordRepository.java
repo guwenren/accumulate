@@ -1,6 +1,7 @@
 package com.guwr.accumulate.service.wmps.core.dao;
 
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
+import com.guwr.accumulate.facade.wmps.entity.ProductRecordExtend;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -30,9 +31,14 @@ public interface ProductRecordRepository extends JpaRepository<ProductRecord, In
 
     /**
      * 查找需要发息的用户ID
+     * @param mod
      * @param number
      * @param interestDate
      * @return
      */
-    List<Integer> findListByMOD(Integer number, Integer interestDate);
+    List<Integer> findListByMOD(Integer mod,Integer number, Integer interestDate);
+
+
+    List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate);
+
 }

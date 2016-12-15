@@ -1,20 +1,14 @@
 package com.guwr.accumulate.service.wmps.core.service.impl;
 
 
-import com.alibaba.fastjson.JSON;
-import com.guwr.accumulate.common.enums.NotifyDestination;
 import com.guwr.accumulate.common.util.AmountUtils;
-import com.guwr.accumulate.common.util.DateUtils;
 import com.guwr.accumulate.common.util.StringUtils;
 import com.guwr.accumulate.facade.account.entity.AccountBalance;
 import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
-import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
-import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
-import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
 import com.guwr.accumulate.facade.user.facade.IUserInfoFacade;
@@ -23,6 +17,8 @@ import com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
 import com.guwr.accumulate.facade.wmps.entity.Product;
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
+import com.guwr.accumulate.facade.wmps.entity.ProductRecordExtend;
+import com.guwr.accumulate.facade.wmps.enums.ProductRecordStatus;
 import com.guwr.accumulate.facade.wmps.enums.ProductStatus;
 import com.guwr.accumulate.facade.wmps.exception.WmpsBizException;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
@@ -95,9 +91,9 @@ public class ProductRecordService implements IProductRecordService {
         /**
          * 1、获取当天需要发息的总人数
          */
-        int interestDate = DateUtils.currentTimeSeconds();
-        int size = 5;//默认一个线程跑5个
-        int interestCount = 13;//this.findInterestCount(queryDate);
+        int interestDate = 1481817600;
+        int size = 3;//默认一个线程跑5个
+        int interestCount = this.findInterestCount(interestDate);
         int threadTaskSize; // 线程数
         if (interestCount % size == 0) {
             threadTaskSize = interestCount / size;
@@ -106,7 +102,7 @@ public class ProductRecordService implements IProductRecordService {
         }
         ExecutorService executorService = Executors.newFixedThreadPool(threadTaskSize);
         for (int i = 0; i < threadTaskSize; i++) {
-            InterestTask task = new InterestTask(i, this, interestDate);
+            InterestTask task = new InterestTask(threadTaskSize, i, this, interestDate);
             FutureTask<Integer> funcTrue = new FutureTask<>(task);
             executorService.execute(funcTrue);
         }
@@ -141,7 +137,6 @@ public class ProductRecordService implements IProductRecordService {
             throw WmpsBizException.CHAN_PIN_WEI_KAI_SHI_REN_GOU.print();
         }
 
-
         BigDecimal productInvestAmount = product.getInvestAmount();//投资总额
         BigDecimal productEffectAmount = product.getEffectAmount();//有效总额
         BigDecimal amount = product.getAmount();
@@ -174,7 +169,6 @@ public class ProductRecordService implements IProductRecordService {
         userProductLevelVO.setUuid(uuid);
         UserProductLevel userProductLevel = userProductLevelFacade.findUserProductLevelByIn(userProductLevelVO);
         logger.info("addProductRecord.userProductLevel = " + userProductLevel + "");
-        Integer lid = userProductLevel.getId();
         BigDecimal vipInterestrate = userProductLevel.getInterestrate(); // vip利率
         BigDecimal proearn = proearn(userProductLevel, product, effectAmount);
         /**
@@ -225,6 +219,7 @@ public class ProductRecordService implements IProductRecordService {
         productRecord.setPid(pid);
         productRecord.setUid(uid);
         productRecord.setUuid(uuid);
+        productRecord.setStatus(ProductRecordStatus.WMPS_BUY_RECORD_STATUS_SUCCESS.getValue());
 
 
 //        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();//消息体
@@ -272,12 +267,20 @@ public class ProductRecordService implements IProductRecordService {
 
     @Override
     public int findInterestCount(int interestDate) {
+        logger.info("interestDate = [" + interestDate + "]");
         return repository.findInterestCount(interestDate);
     }
 
     @Override
-    public List<Integer> findListByMOD(Integer number, Integer interestDate) {
-        return repository.findListByMOD(number,interestDate);
+    public List<Integer> findListByMOD(Integer mod, Integer number, Integer interestDate) {
+        logger.info("findListByMOD.mod = [" + mod + "], number = [" + number + "], interestDate = [" + interestDate + "]");
+        return repository.findListByMOD(mod, number, interestDate);
+    }
+
+    @Override
+    public List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate) {
+        logger.info("findProductRecordExtendListByMOD.mod = [" + mod + "], number = [" + number + "], interestDate = [" + interestDate + "]");
+        return repository.findProductRecordExtendListByMOD(mod, number, interestDate);
     }
 }
 

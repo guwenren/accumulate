@@ -1,6 +1,9 @@
 package com.guwr.accumulate.service.wmps.core.dao;
 
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
+import com.guwr.accumulate.facade.wmps.entity.ProductRecordExtend;
+import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,9 +48,9 @@ public class ProductRecordRepositoryExtend {
     public int findInterestCount(int interestDate) {
         StringBuilder qlStringB = new StringBuilder();
         qlStringB.append(" SELECT count(DISTINCT(a.uid)) FROM tbl_wmps_product_record a");
-        qlStringB.append("  LEFT JOIN tbl_wmps_product b on a.pid=b.id");
+        qlStringB.append(" LEFT JOIN tbl_wmps_product b on a.pid=b.id");
         qlStringB.append(" WHERE a.status=7 AND b.status=3");
-        qlStringB.append("  and  b.interdate >= ? and b.enddate > ?");
+        qlStringB.append(" and  b.interdate >= ? and b.enddate > ?");
         Query query = em.createNativeQuery(qlStringB.toString());
         query.setParameter(1, interestDate);
         query.setParameter(2, interestDate);
@@ -55,12 +58,34 @@ public class ProductRecordRepositoryExtend {
         return result.intValue();
     }
 
-    public List<Integer> findListByMOD(Integer number, Integer interestDate) {
+    public List<Integer> findListByMOD(Integer mod, Integer number, Integer interestDate) {
         StringBuilder qlStringB = new StringBuilder();
-        qlStringB.append(" SELECT count(DISTINCT(a.uid)) FROM tbl_wmps_product_record a");
-        qlStringB.append("  LEFT JOIN tbl_wmps_product b on a.pid=b.id");
+        qlStringB.append(" SELECT DISTINCT(a.uid) FROM tbl_wmps_product_record a");
+        qlStringB.append(" LEFT JOIN tbl_wmps_product b on a.pid=b.id ");
         qlStringB.append(" WHERE a.status=7 AND b.status=3");
-        qlStringB.append("  and  b.interdate >= ? and b.enddate > ?");
-        return null;
+        qlStringB.append(" and  b.interdate >= ? and b.enddate > ?");
+        qlStringB.append(" and  (a.uid MOD ? = ?)");
+        Query query = em.createNativeQuery(qlStringB.toString());
+        query.setParameter(1, interestDate);
+        query.setParameter(2, interestDate);
+        query.setParameter(3, mod);
+        query.setParameter(4, number);
+        return query.getResultList();
+    }
+
+    public List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate) {
+        StringBuilder qlStringB = new StringBuilder();
+        qlStringB.append(" SELECT a.uid,a.pid,a.effect_amount effectAmount,a.interestrate FROM tbl_wmps_product_record a");
+        qlStringB.append(" LEFT JOIN tbl_wmps_product b on a.pid=b.id ");
+        qlStringB.append(" WHERE a.status=7 AND b.status=3");
+        qlStringB.append(" and  b.interdate >= ? and b.enddate > ?");
+        qlStringB.append(" and  (a.uid MOD ? = ?)");
+        Query query = em.createNativeQuery(qlStringB.toString());
+        query.unwrap(SQLQuery.class).setResultTransformer(Transformers.aliasToBean(ProductRecordExtend.class));
+        query.setParameter(1, interestDate);
+        query.setParameter(2, interestDate);
+        query.setParameter(3, mod);
+        query.setParameter(4, number);
+        return query.getResultList();
     }
 }

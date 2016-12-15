@@ -55,11 +55,11 @@ public class ProductRecordServiceTest extends BaseTest {
 
     @Test
     public void addProductRecord() throws Exception {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 9; i >= 5; i--) {
             ProductRecordVO vo = new ProductRecordVO();
-            vo.setUid(i + 3);
-            vo.setPid(i + 1);
-            vo.setInvestAmount(new BigDecimal(i * 100));
+            vo.setUid(i - 2);
+            vo.setPid(i - 1);
+            vo.setInvestAmount(new BigDecimal(i * 1300));
             productRecordService.addProductRecord(vo);
         }
     }

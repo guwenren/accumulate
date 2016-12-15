@@ -61,7 +61,7 @@ public class UserProductInvestService implements IUserProductInvestService {
 
     @Override
     public BigDecimal changeInInvest(UserProductInvestVO info) {
-        logger.info("UserProductInvestService.changeInInvest.info = [" + info + "]");
+        logger.info("changeInInvest.info = [" + info + "]");
         Integer uid = info.getUid();
         BigDecimal invest = info.getInvest();
         String uuid = info.getUuid();
@@ -71,7 +71,7 @@ public class UserProductInvestService implements IUserProductInvestService {
         //当前投资总额
         Date date = new Date();
         UserProductInvest userProductInvest = repository.findOneByUid(uid);
-        logger.info("UserProductInvestService.changeInInvest.userProductInvest = " + CommonUtils.obj2Json(userProductInvest));
+        logger.info("changeInInvest.userProductInvest = " + CommonUtils.obj2Json(userProductInvest));
         if (userProductInvest == null) {
             beforTotalInvest = BigDecimal.ZERO;
             afterTotalInvest = invest;

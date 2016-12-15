@@ -2,6 +2,7 @@ package com.guwr.accumulate.service.wmps.core.service;
 
 
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
+import com.guwr.accumulate.facade.wmps.entity.ProductRecordExtend;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 
 import java.util.List;
@@ -62,9 +63,19 @@ public interface IProductRecordService {
      * 根据MOD查找发息用户
      *
      *
+     * @param mod
      * @param number
      * @param interestDate
      * @return
      */
-    List<Integer> findListByMOD(Integer number, Integer interestDate);
+    List<Integer> findListByMOD(Integer mod,Integer number, Integer interestDate);
+
+    /**
+     * 根据MOD查找发息model
+     * @param mod
+     * @param number
+     * @param interestDate
+     * @return
+     */
+    List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate);
 }
