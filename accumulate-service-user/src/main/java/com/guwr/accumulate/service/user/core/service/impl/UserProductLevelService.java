@@ -44,7 +44,7 @@ public class UserProductLevelService implements IUserProductLevelService {
 
     @Override
     public UserProductLevel findUserProductLevelByIn(UserProductLevelVO info) {
-        logger.info("UserProductLevelService.findUserProductLevelByIn.info = [" + info + "]");
+        logger.info("findUserProductLevelByIn.info = [" + info + "]");
         UserProductLevel userProductLevel;
 
         UserProductInvestVO userProductInvestVO = new UserProductInvestVO();
