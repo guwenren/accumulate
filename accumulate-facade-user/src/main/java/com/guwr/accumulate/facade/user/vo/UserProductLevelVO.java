@@ -18,7 +18,6 @@ public class UserProductLevelVO extends BaseVO {
     private Integer uid; //用户ID
     private Integer pid; //产品ID
     private BigDecimal invest; //变动金额
-    private String uuid; //
 
 
     public Integer getUid() {
@@ -43,14 +42,6 @@ public class UserProductLevelVO extends BaseVO {
 
     public void setInvest(BigDecimal invest) {
         this.invest = invest;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     @Override
