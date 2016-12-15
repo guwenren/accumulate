@@ -43,17 +43,19 @@ public class UserProductInvestService implements IUserProductInvestService {
 
     @Override
     public UserProductInvest save(UserProductInvest entity) {
-        logger.info("entity = [" + CommonUtils.obj2Json(entity) + "]");
+        logger.info("save.entity = [" + CommonUtils.obj2Json(entity) + "]");
         return repository.save(entity);
     }
 
     @Override
     public UserProductInvest update(UserProductInvest entity) {
+        logger.info("update.entity = [" + CommonUtils.obj2Json(entity) + "]");
         return repository.save(entity);
     }
 
     @Override
     public UserProductInvest findOne(Integer id) {
+        logger.info("id = [" + id + "]");
         return repository.findOne(id);
     }
 
