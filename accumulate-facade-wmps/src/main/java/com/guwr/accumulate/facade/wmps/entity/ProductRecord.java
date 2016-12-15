@@ -29,8 +29,7 @@ public class ProductRecord extends BaseEntity {
     @Column(name = "effect_amount")
     private BigDecimal effectAmount;
     private BigDecimal proearn;//预期收益
-    @Column(name = "vip_interestrate")
-    private BigDecimal vipInterestrate; //vip利率
+    private BigDecimal interestrate; //vip利率
     private Integer status; //状态
 
     public Integer getUid() {
@@ -73,12 +72,12 @@ public class ProductRecord extends BaseEntity {
         this.proearn = proearn;
     }
 
-    public BigDecimal getVipInterestrate() {
-        return vipInterestrate;
+    public BigDecimal getInterestrate() {
+        return interestrate;
     }
 
-    public void setVipInterestrate(BigDecimal vipInterestrate) {
-        this.vipInterestrate = vipInterestrate;
+    public void setInterestrate(BigDecimal interestrate) {
+        this.interestrate = interestrate;
     }
 
     public Integer getStatus() {

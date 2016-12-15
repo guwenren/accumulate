@@ -1,5 +1,6 @@
 package com.guwr.accumulate.service.account.core.service.impl;
 
+import com.guwr.accumulate.common.util.StringUtils;
 import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
 import com.guwr.accumulate.facade.account.enums.AccountBalanceRecordEnum;
 import com.guwr.accumulate.service.account.BaseTest;
@@ -51,11 +52,15 @@ public class AccountBalanceRecordServiceTest extends BaseTest {
 
     @Test
     public void income() throws Exception {
-        AccountBalanceRecord accountBalanceRecord = new AccountBalanceRecord();
-        accountBalanceRecord.setUid(2);
-        accountBalanceRecord.setAmount(new BigDecimal(100000));
-        accountBalanceRecord.setDescription("添加收入流水");
-        AccountBalanceRecord save = accountBalanceRecordService.income(accountBalanceRecord);
-        System.out.println("save = " + save);
+        for (int i = 0; i < 10; i++) {
+            String uuid = StringUtils.getUUID();
+            AccountBalanceRecord accountBalanceRecord = new AccountBalanceRecord();
+            accountBalanceRecord.setUid(i + 3);
+            accountBalanceRecord.setAmount(new BigDecimal(100000));
+            accountBalanceRecord.setDescription("添加收入流水");
+            accountBalanceRecord.setUuid(uuid);
+            AccountBalanceRecord save = accountBalanceRecordService.income(accountBalanceRecord);
+            System.out.println("save = " + save);
+        }
     }
 }

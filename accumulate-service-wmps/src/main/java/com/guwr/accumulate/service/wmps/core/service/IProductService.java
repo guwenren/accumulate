@@ -16,4 +16,5 @@ public interface IProductService {
     Product update(Product entity);
 
     Product findOne(Integer id);
+    Product findOneCheck(Integer id);
 }

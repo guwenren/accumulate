@@ -114,7 +114,7 @@ public class ProductRecordService implements IProductRecordService {
 
     @Override
     public void addProductRecord(ProductRecordVO info) {
-        logger.info("ProductRecordService.addProductRecord.info = [" + info + "]");
+        logger.info("addProductRecord.info = [" + info + "]");
         Integer uid = info.getUid();
         Integer pid = info.getPid();
         String uuid = StringUtils.getUUID();
@@ -135,10 +135,7 @@ public class ProductRecordService implements IProductRecordService {
             throw WmpsBizException.YU_E_BU_ZU.print();
         }
 
-        Product product = productService.findOne(pid);//加载购买产品信息
-        if (product == null) { //产品是否存在
-            throw WmpsBizException.CHAN_PIN_BU_CUN_ZAI.print();
-        }
+        Product product = productService.findOneCheck(pid);//加载购买产品信息
 
         if (!Objects.equals(ProductStatus.PUBLISHED.getValue(), product.getStatus())) {//状态是否为已发布
             throw WmpsBizException.CHAN_PIN_WEI_KAI_SHI_REN_GOU.print();
@@ -174,9 +171,9 @@ public class ProductRecordService implements IProductRecordService {
         UserProductLevelVO userProductLevelVO = new UserProductLevelVO();
         userProductLevelVO.setUid(uid);
         userProductLevelVO.setInvest(effectAmount);
-
+        userProductLevelVO.setUuid(uuid);
         UserProductLevel userProductLevel = userProductLevelFacade.findUserProductLevelByIn(userProductLevelVO);
-        logger.info("ProductRecordService.addProductRecord.userProductLevel = " + userProductLevel + "");
+        logger.info("addProductRecord.userProductLevel = " + userProductLevel + "");
         Integer lid = userProductLevel.getId();
         BigDecimal vipInterestrate = userProductLevel.getInterestrate(); // vip利率
         BigDecimal proearn = proearn(userProductLevel, product, effectAmount);
@@ -186,12 +183,13 @@ public class ProductRecordService implements IProductRecordService {
         AccountBalanceRecordVO accountBalanceRecordVO = new AccountBalanceRecordVO();
         accountBalanceRecordVO.setAmount(effectAmount);
         accountBalanceRecordVO.setUid(uid);
+        accountBalanceRecordVO.setUuid(uuid);
         AccountBalanceRecord outgo = accountBalanceRecordFacade.outgo(accountBalanceRecordVO);
-        logger.info("ProductRecordService.addProductRecord.outgo = " + outgo);
+        logger.info("addProductRecord.outgo = " + outgo);
 
         // 同一利率同一产品是否投资过
-        UserProductEarnings userProductEarnings = userProductEarningsFacade.findOneByUidPidLid(uid, pid, lid);
-        logger.info("ProductRecordService.addProductRecord.userProductEarnings = " + userProductEarnings);
+        UserProductEarnings userProductEarnings = userProductEarningsFacade.findOneByUidPidInterestrate(uid, pid, vipInterestrate);
+        logger.info("addProductRecord.userProductEarnings = " + userProductEarnings);
         if (userProductEarnings == null) {
             userProductEarnings = new UserProductEarnings();
             userProductEarnings.setInvestAmount(effectAmount);
@@ -199,7 +197,7 @@ public class ProductRecordService implements IProductRecordService {
             userProductEarnings.setUpdateTime(date);
             userProductEarnings.setUid(uid);
             userProductEarnings.setPid(pid);
-            userProductEarnings.setVipInterestrate(vipInterestrate);
+            userProductEarnings.setInterestrate(vipInterestrate);
             userProductEarnings.setProearn(proearn);
             userProductEarnings.setUuid(uuid);
             userProductEarnings.setRealearn(BigDecimal.ZERO);
@@ -219,7 +217,7 @@ public class ProductRecordService implements IProductRecordService {
         ProductRecord productRecord = new ProductRecord();
         proearn = AmountUtils.round(proearn, 2);
         productRecord.setProearn(proearn);
-        productRecord.setVipInterestrate(vipInterestrate);
+        productRecord.setInterestrate(vipInterestrate);
         productRecord.setEffectAmount(effectAmount);
         productRecord.setInvestAmount(investAmount);
         productRecord.setCreateTime(date);
@@ -229,23 +227,23 @@ public class ProductRecordService implements IProductRecordService {
         productRecord.setUuid(uuid);
 
 
-        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();//消息体
-        notifyMessageVO.setUid(uid);
-        notifyMessageVO.setTitle(uid + "购买产品");
-        notifyMessageVO.setContent(uid + "购买，" + pid + "产品");
-        notifyMessageVO.setUuid(uuid);
-        String messageBody = JSON.toJSONString(notifyMessageVO);
-        NotifyTransactionMessageVO notifyTransactionMessageVO = new NotifyTransactionMessageVO();
-        notifyTransactionMessageVO.setMessageBody(messageBody);
-        notifyTransactionMessageVO.setUuid(uuid);
-        notifyTransactionMessageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
-        logger.info("发送待确认消息");
-        NotifyTransactionMessage notifyTransactionMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(notifyTransactionMessageVO);
-        logger.info("ProductRecordService.addProductRecord.notifyTransactionMessage = " + userProductEarnings);
+//        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();//消息体
+//        notifyMessageVO.setUid(uid);
+//        notifyMessageVO.setTitle(uid + "购买产品");
+//        notifyMessageVO.setContent(uid + "购买，" + pid + "产品");
+//        notifyMessageVO.setUuid(uuid);
+//        String messageBody = JSON.toJSONString(notifyMessageVO);
+//        NotifyTransactionMessageVO notifyTransactionMessageVO = new NotifyTransactionMessageVO();
+//        notifyTransactionMessageVO.setMessageBody(messageBody);
+//        notifyTransactionMessageVO.setUuid(uuid);
+//        notifyTransactionMessageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
+//        logger.info("发送待确认消息");
+//        NotifyTransactionMessage notifyTransactionMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(notifyTransactionMessageVO);
+//        logger.info("addProductRecord.notifyTransactionMessage = " + userProductEarnings);
         this.save(productRecord);  //保存购买记录
         this.productService.update(product);//更新产品购买金额
-        logger.info("发送已确认消息到MQ");
-        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyTransactionMessage);//将消息发送至mq
+//        logger.info("发送已确认消息到MQ");
+//        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyTransactionMessage);//将消息发送至mq
     }
 
     @Override
