@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by gwr
  * Description
@@ -28,6 +30,12 @@ public class UserProductDayInterService implements IUserProductDayInterService {
     public UserProductDayInter saveUserProductDayInter(UserProductDayInter entity) {
         logger.info("saveUserProductDayInter.entity = [" + entity + "]");
         return repository.save(entity);
+    }
+
+    @Override
+    public List<UserProductDayInter> saveUserProductDayInters(List<UserProductDayInter> entitys) {
+        logger.info("saveUserProductDayInters.entitys = [" + entitys + "]");
+        return repository.save(entitys);
     }
 
     @Override
