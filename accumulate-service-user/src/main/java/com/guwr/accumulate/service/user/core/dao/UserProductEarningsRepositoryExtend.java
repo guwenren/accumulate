@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 
 /**
  * Created by gwr
@@ -22,12 +23,12 @@ public class UserProductEarningsRepositoryExtend {
     @PersistenceContext
     private EntityManager em;
 
-    public UserProductEarnings findOneByUidPidLid(Integer uid, Integer pid, Integer lid) {
-        String qlString = "from  UserProductEarnings o where o.uid = ?  and o.pid = ? and o.lid = ?";
+    public UserProductEarnings findOneByUidPidLid(Integer uid, Integer pid, BigDecimal interestrate) {
+        String qlString = "from  UserProductEarnings o where o.uid = ?  and o.pid = ? and o.interestrate = ?";
         Query query = em.createQuery(qlString);
         query.setParameter(1, uid);
         query.setParameter(2, pid);
-        query.setParameter(3, lid);
+        query.setParameter(3, interestrate);
         UserProductEarnings result = null;
         try {
             result = (UserProductEarnings) query.getSingleResult();

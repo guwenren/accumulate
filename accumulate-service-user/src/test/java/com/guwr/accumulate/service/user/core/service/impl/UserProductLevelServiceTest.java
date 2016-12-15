@@ -19,19 +19,24 @@ import java.util.Date;
  * Description
  */
 public class UserProductLevelServiceTest extends BaseTest {
+    @Autowired
+    private IUserProductLevelService userProductLevelService;
+
     @Test
     public void save() throws Exception {
-        Date date = new Date();
-        String uuid = StringUtils.getUUID();
-        UserProductLevel userProductLevel = new UserProductLevel();
-        userProductLevel.setCreateTime(date);
-        userProductLevel.setUpdateTime(date);
-        userProductLevel.setLevel(5);
-        userProductLevel.setMinInvest(new BigDecimal(500000d));
-        userProductLevel.setMaxInvest(new BigDecimal(600000d));
-        userProductLevel.setInterestrate(new BigDecimal(0.0050));
-        userProductLevel.setUuid(uuid);
-        userProductLevelService.save(userProductLevel);
+        for (int i = 0; i < 10; i++) {
+            Date date = new Date();
+            String uuid = StringUtils.getUUID();
+            UserProductLevel userProductLevel = new UserProductLevel();
+            userProductLevel.setCreateTime(date);
+            userProductLevel.setUpdateTime(date);
+            userProductLevel.setLevel(i);
+            userProductLevel.setMinInvest(new BigDecimal(i * 100000d));
+            userProductLevel.setMaxInvest(new BigDecimal(i * 100000d + 100000d));
+            userProductLevel.setInterestrate(new BigDecimal(0.0050));
+            userProductLevel.setUuid(uuid);
+            userProductLevelService.save(userProductLevel);
+        }
     }
 
     @Test
@@ -39,7 +44,4 @@ public class UserProductLevelServiceTest extends BaseTest {
         UserProductLevel userProductLevel = userProductLevelService.findOneByInvest(new BigDecimal(100000));
         System.out.println("userProductLevel = " + userProductLevel);
     }
-
-    @Autowired
-    private IUserProductLevelService userProductLevelService;
 }

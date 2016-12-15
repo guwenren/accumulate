@@ -3,6 +3,8 @@ package com.guwr.accumulate.service.user.core.service;
 
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gwr
  * Description
@@ -15,5 +17,5 @@ public interface IUserProductEarningsService {
 
     UserProductEarnings update(UserProductEarnings entity);
 
-    UserProductEarnings findOneByUidPidLid(Integer uid, Integer pid, Integer lid);
+    UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate);
 }

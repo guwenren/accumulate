@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gwr
  * Description
@@ -25,20 +27,20 @@ public class UserProductEarningsFacade implements IUserProductEarningsFacade {
 
 
     @Override
-    public UserProductEarnings findOneByUidPidLid(Integer uid, Integer pid, Integer lid) {
-        logger.info("UserProductEarningsFacade.findOneByUidPidLid.uid = [" + uid + "], pid = [" + pid + "], lid = [" + lid + "]");
-        return userProductEarningsService.findOneByUidPidLid(uid, pid, lid);
+    public UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate) {
+        logger.info("findOneByUidPidLid.uid = [" + uid + "], pid = [" + pid + "], interestrate = [" + interestrate + "]");
+        return userProductEarningsService.findOneByUidPidInterestrate(uid, pid, interestrate);
     }
 
     @Override
     public void save(UserProductEarnings userProductEarnings) {
-        logger.info("UserProductEarningsFacade.save.userProductEarnings = [" + userProductEarnings + "]");
+        logger.info("save.userProductEarnings = [" + userProductEarnings + "]");
         userProductEarningsService.save(userProductEarnings);
     }
 
     @Override
     public void update(UserProductEarnings userProductEarnings) {
-        logger.info("UserProductEarningsFacade.update.userProductEarnings = [" + userProductEarnings + "]");
+        logger.info("update.userProductEarnings = [" + userProductEarnings + "]");
         userProductEarningsService.update(userProductEarnings);
     }
 }
