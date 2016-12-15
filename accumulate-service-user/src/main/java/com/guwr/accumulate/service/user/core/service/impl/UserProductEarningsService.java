@@ -7,6 +7,8 @@ import com.guwr.accumulate.service.user.core.service.IUserProductEarningsService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gwr
  * Description
@@ -32,7 +34,7 @@ public class UserProductEarningsService implements IUserProductEarningsService {
     }
 
     @Override
-    public UserProductEarnings findOneByUidPidLid(Integer uid, Integer pid, Integer lid) {
-        return repository.findOneByUidPidLid(uid, pid, lid);
+    public UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate) {
+        return repository.findOneByUidPidInterestrate(uid, pid, interestrate);
     }
 }

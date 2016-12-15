@@ -3,6 +3,8 @@ package com.guwr.accumulate.service.user.core.dao;
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gwr
  * Description
@@ -12,5 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserProductEarningsRepository extends JpaRepository<UserProductEarnings, Integer> {
 
-    UserProductEarnings findOneByUidPidLid(Integer uid, Integer pid, Integer lid);
+    UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate);
 }
