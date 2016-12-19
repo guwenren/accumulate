@@ -23,6 +23,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class DubboProvider {
@@ -33,8 +34,9 @@ public class DubboProvider {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
             System.out.println("accumulate-service-test");
             System.out.println("context = " + context);
+            getBorrowSignature(context);
 //            getRepayShow(context);
-            autoRepayOverdue(context);
+//            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
 //            borrowAPP(context);
@@ -59,13 +61,28 @@ public class DubboProvider {
     /**
      * 正在还款的借款
      */
+    private static void getBorrowSignature(ClassPathXmlApplicationContext context) {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.getBorrowSignature");
+        BorrowSignatureVo info = new BorrowSignatureVo();
+        info.setTid(1045132);
+        info.setUtype(2);
+        ILogicBorrowSignatureService api = context.getBean("logicBorrowSignatureService", ILogicBorrowSignatureService.class);
+        PublicResult<PageList<BorrowSignatureVo>> result = api.newgetBorrowSignature(info);
+//        PublicResult<PageList<BorrowSignature>> result = (PublicResult<PageList<BorrowSignature>>) pageListPublicResult;
+        System.out.println("result = " + JSON.toJSONString(result));
+    }
+
+    /**
+     * 正在还款的借款
+     */
     private static void countPayBackBail(ClassPathXmlApplicationContext context) {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.getRepayShow");
         PayBackBailAPI api = context.getBean("payBackBailAPI", PayBackBailAPI.class);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("tenderId",1028468);
+        map.put("tenderId", 1028468);
         Result result = api.countPayBackBail(map);
         System.out.println("result = " + JSON.toJSONString(result));
     }
@@ -78,8 +95,14 @@ public class DubboProvider {
         System.out.println("DubboProvider.getRepayShow");
         RepaymentAPI api = context.getBean("repaymentAPI", RepaymentAPI.class);
 
-        com.eloancn.entity.Result<List<RepayShowVO>> result = api.getRepayShowByUid(710327);
+        com.eloancn.entity.Result<List<RepayShowVO>> result = api.getRepayShowByUid(1044098);
         System.out.println("result = " + JSON.toJSONString(result));
+
+        Map<String,Object> mapParam = new HashMap<>();
+        mapParam.put("status",7);
+        mapParam.put("uid",202);
+        com.eloancn.entity.Result<List<RepayShowVO>> result1 = api.getRepayShowByUid(mapParam);
+        System.out.println("result1 = " + JSON.toJSONString(result1));
     }
 
     /**
@@ -119,13 +142,13 @@ public class DubboProvider {
         IBorrowAppAPI borrowAppAPI = context.getBean("borrowAppAPI", IBorrowAppAPI.class);
         System.out.println("borrowAppAPI = " + borrowAppAPI);
 
-        Result result = borrowAppAPI.borroweTenderInfo(67,null);
+        Result result = borrowAppAPI.borroweTenderInfo(67, null);
 
         System.out.println("result = " + JSON.toJSONString(result));
         Integer uid = 707020;
         Integer tid = 1026390;
         Integer publisheddate = 1461901569;
-        result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate,null);
+        result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 
