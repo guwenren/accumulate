@@ -22,4 +22,6 @@
 	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.user.facade.IUserInfoFacade" ref="userInfoFacade" />
 	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade" ref="userProductLevelFacade" />
 	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.user.facade.IUserProductEarningsFacade" ref="userProductEarningsFacade" />
+	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.user.facade.IUserProductDayInterFacade" ref="userProductDayInterFacade" />
+	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.user.facade.IUserProductFundsInfoFacade" ref="userProductFundsInfoFacade" />
 </beans>

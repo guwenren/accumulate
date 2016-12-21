@@ -11,9 +11,7 @@ import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
-import com.guwr.accumulate.facade.user.facade.IUserInfoFacade;
-import com.guwr.accumulate.facade.user.facade.IUserProductEarningsFacade;
-import com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade;
+import com.guwr.accumulate.facade.user.facade.*;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
 import com.guwr.accumulate.facade.wmps.entity.Product;
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
@@ -75,6 +73,11 @@ public class ProductRecordService implements IProductRecordService {
     @Autowired
     private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
 
+    @Autowired
+    private IUserProductDayInterFacade userProductDayInterFacade;
+    @Autowired
+    private IUserProductFundsInfoFacade userProductFundsInfoFacade;
+
     @Override
     public ProductRecord save(ProductRecord entity) {
         return repository.save(entity);
@@ -102,7 +105,7 @@ public class ProductRecordService implements IProductRecordService {
         }
         ExecutorService executorService = Executors.newFixedThreadPool(threadTaskSize);
         for (int i = 0; i < threadTaskSize; i++) {
-            InterestTask task = new InterestTask(threadTaskSize, i, this, interestDate);
+            InterestTask task = new InterestTask(threadTaskSize, i, this, interestDate, userProductDayInterFacade, userProductFundsInfoFacade);
             FutureTask<Integer> funcTrue = new FutureTask<>(task);
             executorService.execute(funcTrue);
         }

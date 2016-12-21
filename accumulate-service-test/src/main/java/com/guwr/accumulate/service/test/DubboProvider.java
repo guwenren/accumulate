@@ -34,8 +34,8 @@ public class DubboProvider {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
             System.out.println("accumulate-service-test");
             System.out.println("context = " + context);
-            getBorrowSignature(context);
-//            getRepayShow(context);
+//            getBorrowSignature(context);
+            getRepayShow(context);
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
@@ -112,7 +112,7 @@ public class DubboProvider {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.autoRepayOverdue");
         OverdueRepaymentAPI api = context.getBean("overdueRepaymentAPI", OverdueRepaymentAPI.class);
-        com.eloancn.entity.Result<Object> objectResult = api.autoRepayOverdue(20161232);
+        com.eloancn.entity.Result<Object> objectResult = api.autoRepayOverdue(709595);
         System.out.println("result = " + JSON.toJSONString(objectResult));
     }
 

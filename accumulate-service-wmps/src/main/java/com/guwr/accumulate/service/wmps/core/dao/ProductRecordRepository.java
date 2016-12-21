@@ -39,6 +39,13 @@ public interface ProductRecordRepository extends JpaRepository<ProductRecord, In
     List<Integer> findListByMOD(Integer mod,Integer number, Integer interestDate);
 
 
+    /**
+     * 查找需要发息的用户信息
+     * @param mod
+     * @param number
+     * @param interestDate
+     * @return
+     */
     List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate);
 
 }

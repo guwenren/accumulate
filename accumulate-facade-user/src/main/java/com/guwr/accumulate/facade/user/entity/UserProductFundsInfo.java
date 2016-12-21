@@ -9,21 +9,23 @@ import java.math.BigDecimal;
 
 /**
  * Created by gwr
- * Description  每日发息表
- * Path com.guwr.accumulate.facade.wmps.entity.UserProductDayInter
+ * Description  每日发息资金流水
+ * Path com.guwr.accumulate.facade.wmps.entity.UserProductFundsInfo
  * Date 2016/8/21
  * Time 14:32
  */
 @Entity
-@Table(name = "tbl_user_wmps_day_inter")
-public class UserProductDayInter extends BaseEntity {
+@Table(name = "tbl_user_wmps_funds_info")
+public class UserProductFundsInfo extends BaseEntity {
 
 
     private static final long serialVersionUID = 7057799382653381564L;
 
     private Integer uid; //用户ID
     private BigDecimal inter; //利息
-    private Integer status; // 状态：0未发 1已发
+    private Integer bid; //购买记录ID
+    private Integer pid; //产品ID
+    private Integer sid; //发息总表ID
 
     public Integer getUid() {
         return uid;
@@ -41,12 +43,28 @@ public class UserProductDayInter extends BaseEntity {
         this.inter = inter;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getBid() {
+        return bid;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setBid(Integer bid) {
+        this.bid = bid;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
     }
 
     @Override

@@ -19,6 +19,15 @@ public class AmountUtils {
      * 四舍五入
      *
      * @param v     需要四舍五入的数字
+     * @return
+     */
+    public static BigDecimal round(BigDecimal v) {
+        return v.divide(BigDecimal.ONE, 2, BigDecimal.ROUND_HALF_UP);
+    }
+    /**
+     * 四舍五入
+     *
+     * @param v     需要四舍五入的数字
      * @param scale 小数点后保留几位
      * @return
      */

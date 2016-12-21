@@ -75,7 +75,7 @@ public class ProductRecordRepositoryExtend {
 
     public List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate) {
         StringBuilder qlStringB = new StringBuilder();
-        qlStringB.append(" SELECT a.uid,a.pid,a.effect_amount effectAmount,a.interestrate FROM tbl_wmps_product_record a");
+        qlStringB.append(" SELECT a.uid,a.pid,a.effect_amount effectAmount,a.interestrate,b.interestrate pnterestrate FROM tbl_wmps_product_record a");
         qlStringB.append(" LEFT JOIN tbl_wmps_product b on a.pid=b.id ");
         qlStringB.append(" WHERE a.status=7 AND b.status=3");
         qlStringB.append(" and  b.interdate >= ? and b.enddate > ?");
@@ -86,6 +86,7 @@ public class ProductRecordRepositoryExtend {
         query.setParameter(2, interestDate);
         query.setParameter(3, mod);
         query.setParameter(4, number);
-        return query.getResultList();
+        List<ProductRecordExtend> productRecordExtends = query.getResultList();
+        return productRecordExtends;
     }
 }

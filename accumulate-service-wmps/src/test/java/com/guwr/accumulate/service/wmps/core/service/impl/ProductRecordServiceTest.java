@@ -23,9 +23,9 @@ public class ProductRecordServiceTest extends BaseTest {
     private IProductRecordService productRecordService;
 
     @Test
-    public void findInterestCount1() throws Exception {
+    public void interestTask() throws Exception {
         productRecordService.interestTask();
-        System.in.read();
+//        System.in.read();
     }
 
     @Test
