@@ -29,4 +29,9 @@ public class UserProductFundsInfoFacade implements IUserProductFundsInfoFacade {
         logger.info("saveUserProductFundsInfos.entitys = [" + entitys + "]");
         return userProductFundsInfoService.saveUserProductFundsInfos(entitys);
     }
+    @Override
+    public void saveEntity(List<UserProductFundsInfo> entitys){
+        logger.info("entitys = [" + entitys + "]");
+
+    }
 }

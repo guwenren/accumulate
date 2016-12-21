@@ -2,6 +2,7 @@ package com.guwr.accumulate.service.wmps.core.service.impl;
 
 import com.guwr.accumulate.common.util.DateUtils;
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
+import com.guwr.accumulate.facade.wmps.entity.ProductRecordExtend;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 import com.guwr.accumulate.service.wmps.BaseTest;
 import com.guwr.accumulate.service.wmps.core.service.IProductRecordService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by gwr
@@ -25,7 +27,7 @@ public class ProductRecordServiceTest extends BaseTest {
     @Test
     public void interestTask() throws Exception {
         productRecordService.interestTask();
-//        System.in.read();
+        System.in.read();
     }
 
     @Test
@@ -34,6 +36,13 @@ public class ProductRecordServiceTest extends BaseTest {
         int interestCount = productRecordService.findInterestCount(queryDate);
         System.out.println("interestCount = " + interestCount);
     }
+
+    @Test
+    public void findProductRecordExtendListByMOD() throws Exception {
+        List<ProductRecordExtend> productRecordExtendListByMOD = productRecordService.findProductRecordExtendListByMOD(4, 0, 1481817600);
+        System.out.println("productRecordExtendListByMOD = " + productRecordExtendListByMOD);
+    }
+
 
     @Test
     public void save() throws Exception {

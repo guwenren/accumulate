@@ -26,6 +26,7 @@ public class UserProductFundsInfo extends BaseEntity {
     private Integer bid; //购买记录ID
     private Integer pid; //产品ID
     private Integer sid; //发息总表ID
+    private BigDecimal interestrate; //利率
 
     public Integer getUid() {
         return uid;
@@ -65,6 +66,14 @@ public class UserProductFundsInfo extends BaseEntity {
 
     public void setSid(Integer sid) {
         this.sid = sid;
+    }
+
+    public BigDecimal getInterestrate() {
+        return interestrate;
+    }
+
+    public void setInterestrate(BigDecimal interestrate) {
+        this.interestrate = interestrate;
     }
 
     @Override

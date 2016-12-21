@@ -28,7 +28,7 @@ public class UserProductEarningsFacade implements IUserProductEarningsFacade {
 
     @Override
     public UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate) {
-        logger.info("findOneByUidPidLid.uid = [" + uid + "], pid = [" + pid + "], interestrate = [" + interestrate + "]");
+        logger.info("findOneByUidPidInterestrate.uid = [" + uid + "], pid = [" + pid + "], interestrate = [" + interestrate + "]");
         return userProductEarningsService.findOneByUidPidInterestrate(uid, pid, interestrate);
     }
 

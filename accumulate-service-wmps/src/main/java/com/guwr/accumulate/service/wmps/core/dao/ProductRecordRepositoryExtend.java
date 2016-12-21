@@ -75,11 +75,11 @@ public class ProductRecordRepositoryExtend {
 
     public List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate) {
         StringBuilder qlStringB = new StringBuilder();
-        qlStringB.append(" SELECT a.uid,a.pid,a.effect_amount effectAmount,a.interestrate,b.interestrate pnterestrate FROM tbl_wmps_product_record a");
+        qlStringB.append(" SELECT a.id,a.uid,a.pid,a.effect_amount effectAmount,a.interestrate,b.interestrate pinterestrate FROM tbl_wmps_product_record a");
         qlStringB.append(" LEFT JOIN tbl_wmps_product b on a.pid=b.id ");
         qlStringB.append(" WHERE a.status=7 AND b.status=3");
         qlStringB.append(" and  b.interdate >= ? and b.enddate > ?");
-        qlStringB.append(" and  (a.uid MOD ? = ?)");
+        qlStringB.append(" and  (a.uid MOD ? = ?) order by a.uid asc");
         Query query = em.createNativeQuery(qlStringB.toString());
         query.unwrap(SQLQuery.class).setResultTransformer(Transformers.aliasToBean(ProductRecordExtend.class));
         query.setParameter(1, interestDate);

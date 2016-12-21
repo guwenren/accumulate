@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface IUserProductFundsInfoFacade {
     List<UserProductFundsInfo> saveUserProductFundsInfos(List<UserProductFundsInfo> entitys);
+
+    void saveEntity(List<UserProductFundsInfo> entitys);
 }

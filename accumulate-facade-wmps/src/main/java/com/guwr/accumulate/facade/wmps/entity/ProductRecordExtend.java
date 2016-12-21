@@ -45,7 +45,7 @@ public class ProductRecordExtend extends ProductRecord {
         BigDecimal effectAmount = getEffectAmount();//投资金额
         BigDecimal interestrate = getInterestrate().add(getPinterestrate());
 
-        BigDecimal multiplyInter = AmountUtils.round(effectAmount).multiply(AmountUtils.round(interestrate));
+        BigDecimal multiplyInter = effectAmount.multiply(interestrate);
         System.out.println("multiplyInter = " + multiplyInter);
         inter = AmountUtils.div(multiplyInter, new BigDecimal(YEAR));
         System.out.println("inter = " + inter);
