@@ -34,6 +34,7 @@
         <!--web-->
         <!--<module>accumulate-web</module>-->
         <module>accumulate-test</module>
+        <module>accumulate-parent</module>
     </modules>
 
     <properties>
