@@ -24,6 +24,7 @@ import com.guwr.accumulate.service.wmps.core.dao.ProductRecordRepository;
 import com.guwr.accumulate.service.wmps.core.service.IProductRecordService;
 import com.guwr.accumulate.service.wmps.core.service.IProductService;
 import com.guwr.accumulate.service.wmps.task.InterestTask;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,19 +126,7 @@ public class ProductRecordService implements IProductRecordService {
         Date date = new Date();
         BigDecimal investAmount = info.getInvestAmount();
 
-        BigDecimal[] divideAndRemainder = investAmount.divideAndRemainder(MULTIPLE_AMOUNT);
-        if (divideAndRemainder[1].compareTo(BigDecimal.ZERO) != 0) { //不是100的整倍数
-            throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
-        }
-
-        userInfoFacade.findOneCheck(uid);
-
-        AccountBalance accountBalance = accountBalanceFacade.findOneByUidCheck(uid);
-
-        BigDecimal balance = accountBalance.getBalance();//账户余额
-        if (investAmount.compareTo(balance) > 0) { //账户余额是否足够
-            throw WmpsBizException.YU_E_BU_ZU.print();
-        }
+        check(info); //检查
 
         Product product = productService.findOneCheck(pid);//加载购买产品信息
 
@@ -151,16 +140,17 @@ public class ProductRecordService implements IProductRecordService {
 
         BigDecimal subtractAmount = amount.subtract(productEffectAmount); //剩余金额
 
-        if (subtractAmount.compareTo(BigDecimal.ZERO) != 1) {
-            throw WmpsBizException.CHAN_PIN_YI_WAN_CHENG.print();
+        BigDecimal effectAmount;//有效金额
+//        if (investAmount.compareTo(subtractAmount) > 0) {
+//            effectAmount = subtractAmount;
+//        } else {
+//            effectAmount = investAmount;
+//        }
+        if(investAmount.compareTo(subtractAmount) == 1){ // 投资金额>可投总额
+            throw WmpsBizException.TOU_ZI_JIN_E_DA_YU_CHAN_PIN_KE_TOU_ZONG_E.print();
         }
 
-        BigDecimal effectAmount;//有效金额
-        if (investAmount.compareTo(subtractAmount) > 0) {
-            effectAmount = subtractAmount;
-        } else {
-            effectAmount = investAmount;
-        }
+        effectAmount = investAmount;
 
         BigDecimal invest_amount = productInvestAmount.add(investAmount); //总投资金额
         BigDecimal effect_amount = productEffectAmount.add(effectAmount); //总有效金额
@@ -229,7 +219,6 @@ public class ProductRecordService implements IProductRecordService {
         productRecord.setUuid(uuid);
         productRecord.setStatus(ProductRecordStatus.WMPS_BUY_RECORD_STATUS_SUCCESS.getValue());
 
-
 //        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();//消息体
 //        notifyMessageVO.setUid(uid);
 //        notifyMessageVO.setTitle(uid + "购买产品");
@@ -289,6 +278,28 @@ public class ProductRecordService implements IProductRecordService {
     public List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate) {
         logger.info("findProductRecordExtendListByMOD.mod = [" + mod + "], number = [" + number + "], interestDate = [" + interestDate + "]");
         return repository.findProductRecordExtendListByMOD(mod, number, interestDate);
+    }
+
+    /**
+     * 检查参数是否有效
+     *
+     * @param info
+     */
+    private void check(ProductRecordVO info) {
+        Integer uid = info.getUid();
+        BigDecimal investAmount = info.getInvestAmount();
+        BigDecimal[] divideAndRemainder = investAmount.divideAndRemainder(MULTIPLE_AMOUNT);
+        if (divideAndRemainder[1].compareTo(BigDecimal.ZERO) != 0) { //不是100的整倍数
+            throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
+        }
+        userInfoFacade.findOneCheck(uid);
+
+        AccountBalance accountBalance = accountBalanceFacade.findOneByUidCheck(uid);
+
+        BigDecimal balance = accountBalance.getBalance();//账户余额
+        if (investAmount.compareTo(balance) > 0) { //账户余额是否足够
+            throw WmpsBizException.YU_E_BU_ZU.print();
+        }
     }
 }
 

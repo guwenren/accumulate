@@ -21,6 +21,7 @@ public class WmpsBizException extends BizException {
     public static final WmpsBizException TOU_ZI_JIN_E_YOU_WU = new WmpsBizException(40080003, "投资金额有误");
     public static final WmpsBizException CHAN_PIN_BU_CUN_ZAI = new WmpsBizException(40080004, "产品不存在");
     public static final WmpsBizException CHAN_PIN_WEI_KAI_SHI_REN_GOU = new WmpsBizException(40080005, "产品未开始认购");
+    public static final WmpsBizException TOU_ZI_JIN_E_DA_YU_CHAN_PIN_KE_TOU_ZONG_E = new WmpsBizException(40080006, "投资金额大于产品可投总额");
 
     public WmpsBizException() {
         super();
