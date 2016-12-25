@@ -14,7 +14,12 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 /**
- *
+ * Created by   guwr
+ * Project_name accumulate
+ * Path         com.guwr.accumulate.queue.notify.message.ConsumerSessionAwareMessageListener
+ * Date         2016/11/26
+ * Time         16:49
+ * Description
  */
 @Component
 public class ConsumerSessionAwareMessageListener implements SessionAwareMessageListener<Message> {
