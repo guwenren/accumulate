@@ -3,6 +3,8 @@ package com.guwr.accumulate.service.account.core.service;
 
 import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
 
+import java.util.List;
+
 /**
  * Created by gwr
  * Description
@@ -18,4 +20,6 @@ public interface IAccountBalanceRecordService {
     AccountBalanceRecord income(AccountBalanceRecord entity);
 
     AccountBalanceRecord findOne(Integer id);
+
+    void saveAccountBalanceRecords(List<AccountBalanceRecord> accountBalanceRecords);
 }

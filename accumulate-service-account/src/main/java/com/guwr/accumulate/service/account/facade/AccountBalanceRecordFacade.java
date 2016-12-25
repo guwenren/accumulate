@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by gwr
  * Description
@@ -45,5 +48,21 @@ public class AccountBalanceRecordFacade implements IAccountBalanceRecordFacade {
         accountBalanceRecord.setAmount(info.getAmount());
         accountBalanceRecord.setUuid(info.getUuid());
         return accountBalanceRecordService.income(accountBalanceRecord);
+    }
+
+    @Override
+    public void  income(List<AccountBalanceRecordVO> vos) {
+        logger.info("AccountBalanceRecordFacade.income");//
+        List<AccountBalanceRecord> accountBalanceRecords = new ArrayList<>();
+        for (AccountBalanceRecordVO vo : vos) {
+            AccountBalanceRecord accountBalanceRecord = new AccountBalanceRecord();
+            accountBalanceRecord.setBalance(vo.getBalance());
+            accountBalanceRecord.setUid(vo.getUid());
+            accountBalanceRecord.setType(AccountBalanceRecordEnum.AccountBalanceRecordEnumType.INCOME.getValue());
+            accountBalanceRecord.setAmount(vo.getAmount());
+            accountBalanceRecord.setUuid(vo.getUuid());
+            accountBalanceRecords.add(accountBalanceRecord);
+        }
+        accountBalanceRecordService.saveAccountBalanceRecords(accountBalanceRecords);
     }
 }

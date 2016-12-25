@@ -105,10 +105,12 @@ public class ProductRecordService implements IProductRecordService {
         }
         ExecutorService executorService = Executors.newFixedThreadPool(threadTaskSize);
         for (int i = 0; i < threadTaskSize; i++) {
-            InterestTask task = new InterestTask(threadTaskSize, i, this, interestDate);
+            InterestTask task = new InterestTask(threadTaskSize, i, interestDate);
+            task.setProductRecordService(this);
             task.setUserProductDayInterFacade(userProductDayInterFacade);
             task.setUserProductFundsInfoFacade(userProductFundsInfoFacade);
             task.setUserProductEarningsFacade(userProductEarningsFacade);
+            task.setAccountBalanceRecordFacade(accountBalanceRecordFacade);
             FutureTask<Integer> funcTrue = new FutureTask<>(task);
             executorService.execute(funcTrue);
         }

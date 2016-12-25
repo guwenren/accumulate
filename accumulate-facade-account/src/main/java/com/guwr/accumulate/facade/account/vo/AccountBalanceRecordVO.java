@@ -3,7 +3,9 @@ package com.guwr.accumulate.facade.account.vo;
 import com.guwr.accumulate.common.util.CommonUtils;
 import com.guwr.accumulate.common.web.vo.BaseVO;
 
+import javax.persistence.Column;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by gwr
@@ -21,6 +23,8 @@ public class AccountBalanceRecordVO extends BaseVO {
     private BigDecimal amount;
     private BigDecimal balance;
     private String description;
+    private Date createTime; //创建时间
+    private Date updateTime; //更新时间
 
     public Integer getUid() {
         return uid;
@@ -60,6 +64,22 @@ public class AccountBalanceRecordVO extends BaseVO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override

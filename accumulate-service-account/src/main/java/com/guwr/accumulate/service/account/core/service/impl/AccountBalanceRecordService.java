@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by gwr
@@ -71,6 +72,9 @@ public class AccountBalanceRecordService implements IAccountBalanceRecordService
         BigDecimal balance = accountBalance.getBalance();
         BigDecimal addBalance = balance.add(amount);
         accountBalance.setBalance(addBalance);
+        accountBalance.setCreateTime(accountBalance.getCreateTime());
+        accountBalance.setUpdateTime(accountBalance.getUpdateTime());
+        accountBalance.setUuid(accountBalance.getUuid());
         accountBalanceService.save(accountBalance);
 
         entity.setBalance(addBalance);
@@ -81,5 +85,13 @@ public class AccountBalanceRecordService implements IAccountBalanceRecordService
     @Override
     public AccountBalanceRecord findOne(Integer id) {
         return repository.findOne(id);
+    }
+
+    @Override
+    public void saveAccountBalanceRecords(List<AccountBalanceRecord> accountBalanceRecords) {
+        logger.info("AccountBalanceRecordService.saveAccountBalanceRecords");
+        for (AccountBalanceRecord accountBalanceRecord : accountBalanceRecords) {
+            income(accountBalanceRecord);
+        }
     }
 }

@@ -3,6 +3,8 @@ package com.guwr.accumulate.facade.account.facade;
 import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
 
+import java.util.List;
+
 /**
  * Created by gwr
  * Description
@@ -14,4 +16,6 @@ public interface IAccountBalanceRecordFacade {
     AccountBalanceRecord outgo(AccountBalanceRecordVO vo);
 
     AccountBalanceRecord income(AccountBalanceRecordVO vo);
+
+    void income(List<AccountBalanceRecordVO> vos);
 }

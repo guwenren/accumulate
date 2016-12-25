@@ -2,6 +2,9 @@ package com.guwr.accumulate.service.wmps.task;
 
 import com.alibaba.fastjson.JSON;
 import com.guwr.accumulate.common.util.StringUtils;
+import com.guwr.accumulate.facade.account.enums.AccountBalanceRecordEnum;
+import com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade;
+import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
 import com.guwr.accumulate.facade.user.entity.UserProductDayInter;
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import com.guwr.accumulate.facade.user.entity.UserProductFundsInfo;
@@ -31,13 +34,17 @@ public class InterestTask implements Callable<Integer> {
     private IUserProductDayInterFacade userProductDayInterFacade;
     private IUserProductFundsInfoFacade userProductFundsInfoFacade;
     private IUserProductEarningsFacade userProductEarningsFacade;
+    private IAccountBalanceRecordFacade accountBalanceRecordFacade;
     private Integer interestDate;//计息时间
 
-    public InterestTask(Integer mod, Integer number, IProductRecordService productRecordService, Integer interestDate) {
+    public InterestTask(Integer mod, Integer number, Integer interestDate) {
         this.mod = mod;
         this.number = number;
-        this.productRecordService = productRecordService;
         this.interestDate = interestDate;
+    }
+
+    public void setProductRecordService(IProductRecordService productRecordService) {
+        this.productRecordService = productRecordService;
     }
 
     public void setUserProductDayInterFacade(IUserProductDayInterFacade userProductDayInterFacade) {
@@ -52,16 +59,19 @@ public class InterestTask implements Callable<Integer> {
         this.userProductEarningsFacade = userProductEarningsFacade;
     }
 
+    public void setAccountBalanceRecordFacade(IAccountBalanceRecordFacade accountBalanceRecordFacade) {
+        this.accountBalanceRecordFacade = accountBalanceRecordFacade;
+    }
+
     @Override
     public Integer call() throws Exception {
         String uuid = StringUtils.getUUID();
         Date date = new Date();
         List<ProductRecordExtend> productRecordExtends = productRecordService.findProductRecordExtendListByMOD(mod, number, interestDate);
         System.out.println("number = " + number + ",productRecordExtends = " + JSON.toJSONString(productRecordExtends));
-        // 每日用户总利息
-        Map<Integer, BigDecimal> mapInter = new HashMap<>();
-        List<UserProductDayInter> userProductDayInters = new ArrayList<>();
-        List<UserProductFundsInfo> userProductFundsInfos = new ArrayList<>();
+        Map<Integer, BigDecimal> mapInter = new HashMap<>();//存储用户每日总利息
+        List<UserProductDayInter> userProductDayInters = new ArrayList<>(); //每日利息汇总
+        List<UserProductFundsInfo> userProductFundsInfos = new ArrayList<>();//每日计息资金流水
 
         for (ProductRecordExtend productRecordExtend : productRecordExtends) {
             Integer uid = productRecordExtend.getUid();
@@ -69,7 +79,7 @@ public class InterestTask implements Callable<Integer> {
             Integer pid = productRecordExtend.getPid();
             BigDecimal interestrate = productRecordExtend.getInterestrate();//投资时vip利率
             BigDecimal inter = productRecordExtend.getInter();//每天利息
-            BigDecimal mInter = mapInter.get(uid);
+            BigDecimal mInter = mapInter.get(uid); //
             if (mInter == null) {
                 uuid = StringUtils.getUUID();
                 UserProductDayInter userProductDayInter = new UserProductDayInter();
@@ -102,19 +112,32 @@ public class InterestTask implements Callable<Integer> {
                 userProductEarningsFacade.update(userProductEarnings);
             }
         }
-        setSumuInters(userProductDayInters, mapInter);//根据UID汇总每日计息
+        List<AccountBalanceRecordVO> accountBalanceRecordVOS = new ArrayList<>();
+        setSumInters(userProductDayInters, accountBalanceRecordVOS, mapInter);//根据UID汇总每日计息
         userProductDayInterFacade.saveUserProductDayInters(userProductDayInters);
         userProductFundsInfoFacade.saveUserProductFundsInfos(userProductFundsInfos);
+        accountBalanceRecordFacade.income(accountBalanceRecordVOS);
         return BigDecimal.ONE.intValue();
     }
 
     /**
-     * 设置每日付息总金额
+     * 设置每日付息总金额、存储需要更改的资金流水记录
      */
-    private void setSumuInters(List<UserProductDayInter> userProductDayInters, Map<Integer, BigDecimal> mapInter) {
+    private void setSumInters(List<UserProductDayInter> userProductDayInters, List<AccountBalanceRecordVO> accountBalanceRecordVOS, Map<Integer, BigDecimal> mapInter) {
+        AccountBalanceRecordVO accountBalanceRecordVO;
+        String desc = "产品利息";
         for (UserProductDayInter userProductDayInter : userProductDayInters) {
             Integer uid = userProductDayInter.getUid();
             userProductDayInter.setInter(mapInter.get(uid));
+            accountBalanceRecordVO = new AccountBalanceRecordVO();
+            accountBalanceRecordVO.setUid(uid);
+            accountBalanceRecordVO.setUuid(userProductDayInter.getUuid());
+            accountBalanceRecordVO.setUpdateTime(userProductDayInter.getUpdateTime());
+            accountBalanceRecordVO.setCreateTime(userProductDayInter.getCreateTime());
+            accountBalanceRecordVO.setType(AccountBalanceRecordEnum.AccountBalanceRecordEnumType.INCOME.getValue());
+            accountBalanceRecordVO.setAmount(userProductDayInter.getInter());
+            accountBalanceRecordVO.setDescription(desc);
+            accountBalanceRecordVOS.add(accountBalanceRecordVO);
         }
     }
 }
