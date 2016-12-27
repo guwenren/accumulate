@@ -21,6 +21,8 @@ public interface INotifyTransactionMessageService {
      */
     NotifyTransactionMessage saveNotifyTransactionMessage(NotifyTransactionMessage entity);
 
+    NotifyTransactionMessage saveNotifyTransactionMessageAndFlush(NotifyTransactionMessage entity);
+
     /**
      * 发送
      *
@@ -82,4 +84,12 @@ public interface INotifyTransactionMessageService {
     int deleteNotifyTransactionMessageByUUID(String uuid);
 
     NotifyTransactionMessage update(NotifyTransactionMessage entity);
+
+    /**
+     * 删除消息根据UUID和队列名称
+     *
+     * @param uuid
+     * @param consumerQueue
+     */
+    int deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue);
 }

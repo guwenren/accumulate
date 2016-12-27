@@ -1,16 +1,13 @@
 package com.guwr.accumulate.queue.notify.message;
 
 import com.alibaba.fastjson.JSON;
-import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
-import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SessionAwareMessageListener;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +43,7 @@ public class UserProductLevelMessageListener implements SessionAwareMessageListe
         UserProductLevelVO info = JSON.parseObject(msgText, UserProductLevelVO.class);
         userProductLevelFacade.findUserProductLevelByIn(info);
         String uuid = info.getUuid();
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUID(uuid);
+        String consumerQueue = info.getConsumerQueue();
+        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);
     }
 }

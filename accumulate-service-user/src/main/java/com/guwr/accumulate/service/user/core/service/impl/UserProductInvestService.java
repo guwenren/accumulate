@@ -60,14 +60,20 @@ public class UserProductInvestService implements IUserProductInvestService {
     }
 
     @Override
+    public UserProductInvest findOneByUid(Integer uid) {
+        logger.info("findOneByUid.uid = " + uid);
+        return repository.findOneByUid(uid);
+    }
+
+    @Override
     public BigDecimal changeInInvest(UserProductInvestVO info) {
         logger.info("changeInInvest.info = [" + info + "]");
         Integer uid = info.getUid();
         logger.info("{},查询投资总额", uid);
         BigDecimal invest = info.getInvest();
         String uuid = info.getUuid();
-        BigDecimal beforTotalInvest; //用户变更前在投资金额
-        BigDecimal afterTotalInvest; //用户变更后在投资金额 根据此金额计算当前用户VIP等级
+        BigDecimal beforTotalInvest; //用户变更前投资金额
+        BigDecimal afterTotalInvest; //用户变更后投资金额 根据此金额计算当前用户VIP等级
         //当前投资总额
         Date date = new Date();
         UserProductInvest userProductInvest = repository.findOneByUid(uid);
@@ -102,12 +108,30 @@ public class UserProductInvestService implements IUserProductInvestService {
         entity.setInvestType(UserProductInvestLogInvestType.IN.getValue());
         // 添加变更记录
         userProductInvestLogService.save(entity);
-        logger.info("{}_插入变更记录",uid);
+        logger.info("{}_插入变更记录", uid);
         return afterTotalInvest;
     }
 
     @Override
     public BigDecimal changeOutInvest(UserProductInvestVO info) {
         return null;
+    }
+
+    @Override
+    public void changeInInvest(UserProductInvest userProductInvest, BigDecimal invest, BigDecimal afterTotalInvest, String uuid) {
+        save(userProductInvest);
+        // 添加投资总额变更记录
+        UserProductInvestLog entity = new UserProductInvestLog();
+        entity.setPid(userProductInvest.getId());
+        entity.setAfterTotalInvest(afterTotalInvest);
+        entity.setBeforTotalInvest(userProductInvest.getTotalInvest());
+        entity.setCreateTime(userProductInvest.getUpdateTime());
+        entity.setUpdateTime(userProductInvest.getUpdateTime());
+        entity.setUuid(uuid);
+        entity.setInvestMoney(invest);
+        entity.setInvestType(UserProductInvestLogInvestType.IN.getValue());
+        // 添加变更记录
+        userProductInvestLogService.save(entity);
+        logger.info("{}_插入变更记录", userProductInvest.getUid());
     }
 }

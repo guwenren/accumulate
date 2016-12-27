@@ -16,7 +16,7 @@ public class NotifyMessageVO extends BaseVO{
     private Integer uid;
     private String title;
     private String content;
-
+    private String consumerQueue;
 
     public Integer getUid() {
         return uid;
@@ -40,6 +40,14 @@ public class NotifyMessageVO extends BaseVO{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getConsumerQueue() {
+        return consumerQueue;
+    }
+
+    public void setConsumerQueue(String consumerQueue) {
+        this.consumerQueue = consumerQueue;
     }
 
     @Override

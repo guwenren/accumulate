@@ -16,6 +16,8 @@ public interface INotifyTransactionMessageFacade {
 
     NotifyTransactionMessage saveNotifyTransactionMessage(NotifyTransactionMessageVO info);
 
+    NotifyTransactionMessage saveNotifyTransactionMessageAndFlush(NotifyTransactionMessageVO info);
+
     NotifyTransactionMessage findNotifyTransactionMessageByUUID(String uuid);
 
     void sendNotifyTransactionMessage(Integer id);
@@ -27,6 +29,8 @@ public interface INotifyTransactionMessageFacade {
     void deleteNotifyTransactionMessageById(Integer id);
 
     void deleteNotifyTransactionMessageByUUID(String uuid);
+
+    void deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue);
 
     NotifyTransactionMessage update(NotifyTransactionMessage entity);
 

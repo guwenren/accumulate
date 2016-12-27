@@ -20,4 +20,6 @@ public interface NotifyTransactionMessageRepository extends JpaRepository<Notify
     List<NotifyTransactionMessage> listPage(String listPageStr, PageParam pageParam);
 
     int deleteNotifyTransactionMessageByUUID(String uuid);
+
+    int deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue);
 }

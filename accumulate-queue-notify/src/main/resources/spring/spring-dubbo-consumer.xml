@@ -14,4 +14,6 @@
     <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade" id="notifyTransactionMessageFacade" check="false"/>
     <!--accumulate-service-wmps-->
     <dubbo:reference interface="com.guwr.accumulate.facade.wmps.facade.IProductRecordFacade" id="productRecordFacade" check="false"/>
+    <!--accumulate-service-user-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade" id="userProductLevelFacade" check="false"/>
 </beans>

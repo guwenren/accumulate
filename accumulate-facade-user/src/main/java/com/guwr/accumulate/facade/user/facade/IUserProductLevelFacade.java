@@ -12,5 +12,5 @@ import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
  * Time 18:33
  */
 public interface IUserProductLevelFacade {
-     UserProductLevel findUserProductLevelByIn(UserProductLevelVO info);
+     void findUserProductLevelByIn(UserProductLevelVO info);
 }

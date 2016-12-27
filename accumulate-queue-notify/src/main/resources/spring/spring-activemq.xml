@@ -33,11 +33,13 @@
 
     <bean id="notifyMessageListener" class="com.guwr.accumulate.queue.notify.message.NotifyMessageListener"/>
     <bean id="userProductLevelMessageListener" class="com.guwr.accumulate.queue.notify.message.UserProductLevelMessageListener"/>
+    <bean id="productRecordMessageListener" class="com.guwr.accumulate.queue.notify.message.ProductRecordMessageListener"/>
 
     <jms:listener-container concurrency = "1">
         <!-- concurrency指定最多可并发开启2个监听器 -->
         <jms:listener id="jmsNotifyMessageListener" destination="MESSAGE_NOTIFY" ref="notifyMessageListener"/>
         <jms:listener id="jmsUserProductLevelMessageListener" destination="USER_PRODUCT_LEVEL_MESSAGE" ref="userProductLevelMessageListener"/>
+        <jms:listener id="jmsProductRecordMessageListener" destination="UPDATE_PROEARN_INTERESTRATE_MESSAGE" ref="productRecordMessageListener"/>
     </jms:listener-container>
 
 

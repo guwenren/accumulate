@@ -25,8 +25,8 @@ public class UserProductLevelFacade implements IUserProductLevelFacade {
     private IUserProductLevelService userProductLevelService;
 
     @Override
-    public UserProductLevel findUserProductLevelByIn(UserProductLevelVO info) {
-        logger.info("findUserProductLevelByIn.info = [" + info + "]");
-        return userProductLevelService.findUserProductLevelByIn(info);
+    public void findUserProductLevelByIn(UserProductLevelVO info) {
+        logger.info("updateUserProductLevelByIn.info = [" + info + "]");
+        userProductLevelService.updateUserProductLevelByIn(info);
     }
 }

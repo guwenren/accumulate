@@ -28,9 +28,8 @@ public interface IUserProductLevelService {
     /**
      *
      * @param info
-     * @return
      */
-    UserProductLevel findUserProductLevelByIn(UserProductLevelVO info);
+    void updateUserProductLevelByIn(UserProductLevelVO info);
 
     /**
      *

@@ -22,6 +22,7 @@ public class ProductRecordVO extends BaseVO {
     private BigDecimal investAmount; //投资金额
     private BigDecimal proearn;//预期收益
     private BigDecimal interestrate; //vip利率
+    private String consumerQueue;
 
     public Integer getUid() {
         return uid;
@@ -61,6 +62,14 @@ public class ProductRecordVO extends BaseVO {
 
     public void setInterestrate(BigDecimal interestrate) {
         this.interestrate = interestrate;
+    }
+
+    public String getConsumerQueue() {
+        return consumerQueue;
+    }
+
+    public void setConsumerQueue(String consumerQueue) {
+        this.consumerQueue = consumerQueue;
     }
 
     @Override

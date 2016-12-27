@@ -29,10 +29,21 @@ public class NotifyTransactionMessageRepositoryExtend extends BaseRepository<Not
 
     @Modifying
     public int deleteNotifyTransactionMessageByUUID(String uuid) {
-        logger.info("NotifyTransactionMessageRepositoryExtend.deleteNotifyTransactionMessageByUUID.uuid = " + uuid);
+        logger.info("deleteNotifyTransactionMessageByUUID.uuid = " + uuid);
         String qlString = " delete NotifyTransactionMessage o where o.uuid = ?";
         Query query = em.createQuery(qlString);
         query.setParameter(1, uuid);
+        int executeUpdate = query.executeUpdate();
+        return executeUpdate;
+    }
+
+    @Modifying
+    public int deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue) {
+        logger.info("deleteNotifyTransactionMessageByUUIDAndQueue.uuid = " + uuid + " , consumerQueue =" + consumerQueue);
+        String qlString = " delete NotifyTransactionMessage o where o.uuid = ? and o.consumerQueue = ?";
+        Query query = em.createQuery(qlString);
+        query.setParameter(1, uuid);
+        query.setParameter(2, consumerQueue);
         int executeUpdate = query.executeUpdate();
         return executeUpdate;
     }

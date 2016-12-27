@@ -7,10 +7,11 @@ import com.guwr.accumulate.common.util.AmountUtils;
 import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
+import com.guwr.accumulate.facade.user.entity.UserProductInvest;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
+import com.guwr.accumulate.facade.user.enums.UserProductInvestUserType;
 import com.guwr.accumulate.facade.user.vo.UserProductInvestVO;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
-import com.guwr.accumulate.facade.wmps.entity.Product;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 import com.guwr.accumulate.service.user.core.dao.UserProductLevelRepository;
 import com.guwr.accumulate.service.user.core.service.IUserProductInvestService;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by gwr
@@ -54,50 +56,74 @@ public class UserProductLevelService implements IUserProductLevelService {
     }
 
     @Override
-    public UserProductLevel findUserProductLevelByIn(UserProductLevelVO info) {
-        logger.info("findUserProductLevelByIn.info = [" + info + "]");
+    public void updateUserProductLevelByIn(UserProductLevelVO info) {
+        logger.info("updateUserProductLevelByIn.info = [" + info + "]");
+        Date date = new Date();
         Integer uid = info.getUid();
         String uuid = info.getUuid();
         BigDecimal invest = info.getInvest();
         Integer phases = info.getPhases();
         BigDecimal interestrate = info.getInterestrate();
         logger.info("{},查找用户当前投资级别", uid);
-        UserProductLevel userProductLevel;
 
-        NotifyTransactionMessageVO messageVO = new NotifyTransactionMessageVO();
-        messageVO.setMessageBody("");
-        messageVO.setUuid(uuid);
-        messageVO.setConsumerQueue(NotifyDestination.UPDATE_PROEARN_INTERESTRATE_MESSAGE.name());
+        BigDecimal afterTotalInvest = BigDecimal.ZERO; //总投资金额
+        BigDecimal totalInvest = BigDecimal.ZERO; //总投资金额
 
+        UserProductInvest userProductInvest = userProductInvestService.findOneByUid(uid);
+        logger.info("{}_用户产品投资清楚_{}", uid, userProductInvest);
+        if (userProductInvest == null) {
+            userProductInvest = new UserProductInvest();
+            userProductInvest.setUuid(uuid);
+            userProductInvest.setUid(uid);
+            userProductInvest.setCreateTime(date);
+            userProductInvest.setUpdateTime(date);
+            userProductInvest.setUserType(UserProductInvestUserType.USERTYPE_NORMAL.getValue());
+            totalInvest = invest;
+        } else {
+            afterTotalInvest = userProductInvest.getTotalInvest();
+            userProductInvest.setUpdateTime(date);
+            totalInvest = totalInvest.add(afterTotalInvest);
+        }
+        userProductInvest.setTotalInvest(totalInvest);
+
+        UserProductLevel productLevel = findOneByInvest(totalInvest);
+        logger.info("{}_vip级别_{}", uid, productLevel);
+        BigDecimal vipInterestrate = productLevel.getInterestrate(); // vip利率
+        BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
+
+        NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, interestrate, uuid);
 
         NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(messageVO);
         logger.info(uid + "_保存修改投资预期收益与利率消息");
 
-
-
-        UserProductInvestVO userProductInvestVO = new UserProductInvestVO();
-        userProductInvestVO.setInvest(invest);
-        userProductInvestVO.setUid(uid);
-        userProductInvestVO.setUuid(info.getUuid());
-        BigDecimal afterTotalInvest = userProductInvestService.changeInInvest(userProductInvestVO);
-        userProductLevel = this.findOneByInvest(afterTotalInvest);
-
-
-        BigDecimal vipInterestrate = userProductLevel.getInterestrate(); // vip利率
-        BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
-
-        ProductRecordVO productRecordVO = new ProductRecordVO();
-        productRecordVO.setProearn(proearn);
-        productRecordVO.setInterestrate(vipInterestrate);
-        productRecordVO.setUuid(uuid);
-        String messageBody = JSON.toJSONString(productRecordVO);
-        notifyMessage.setMessageBody(messageBody);
-        notifyTransactionMessageFacade.update(notifyMessage);
+        //修改投资总额，添加修改记录
+        userProductInvestService.changeInInvest(userProductInvest,invest,afterTotalInvest,uuid);
+//
+//        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessageAndFlush(messageVO);
+//        logger.info(uid + "_保存修改投资预期收益与利率消息");
+//
+//        UserProductInvestVO userProductInvestVO = new UserProductInvestVO();
+//        userProductInvestVO.setInvest(invest);
+//        userProductInvestVO.setUid(uid);
+//        userProductInvestVO.setUuid(info.getUuid());
+//        BigDecimal afterTotalInvest = userProductInvestService.changeInInvest(userProductInvestVO);
+//        logger.info("{}_afterTotalInvest = " + afterTotalInvest, uid);
+//        userProductLevel = this.findOneByInvest(afterTotalInvest);
+//
+//        BigDecimal vipInterestrate = userProductLevel.getInterestrate(); // vip利率
+//        BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
+//
+//        ProductRecordVO productRecordVO = new ProductRecordVO();
+//        productRecordVO.setProearn(proearn);
+//        productRecordVO.setInterestrate(vipInterestrate);
+//        productRecordVO.setUuid(uuid);
+//        productRecordVO.setConsumerQueue(consumerQueue);
+//        String messageBody = JSON.toJSONString(productRecordVO);
+//        notifyMessage.setMessageBody(messageBody);
+//        notifyTransactionMessageFacade.update(notifyMessage);
 
         notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyMessage);//将消息发送至mq
         logger.info(uid + "_发送修改投资预期收益与利率消息到MQ");
-
-        return userProductLevel;
     }
 
     @Override
@@ -109,35 +135,35 @@ public class UserProductLevelService implements IUserProductLevelService {
     /**
      * 计算预期收益
      *
-     * @param interestrate
-     * @param vipInterestrate
-     * @param phases
-     * @param invest
+     * @param interestrate  vip利率
+     * @param pInterestrate 产品利率
+     * @param phases        期限
+     * @param invest        投资总额
      * @return
      */
-    private BigDecimal getProearn(BigDecimal interestrate,BigDecimal  vipInterestrate, Integer phases,BigDecimal invest) {
+    private BigDecimal getProearn(BigDecimal interestrate, BigDecimal pInterestrate, Integer phases, BigDecimal invest) {
         BigDecimal proearn;
-        BigDecimal realInterestrate = vipInterestrate.add(interestrate); // 真实利率 = 产品利率+ vip利率
+        BigDecimal realInterestrate = interestrate.add(pInterestrate); // 真实利率 =  vip利率 + 产品利率
         BigDecimal multiply = invest.multiply(realInterestrate);// 真实利率 * 投资有效金额
         BigDecimal divAmount = AmountUtils.div(multiply, new BigDecimal(365));// 每天收益
         proearn = divAmount.multiply(new BigDecimal(phases)); // 预期收益
         return proearn;
     }
 
-    private NotifyTransactionMessageVO buildMessageByProductRecordVO(Integer uid,String uuid) {
-        ProductRecordVO productRecordVO = new ProductRecordVO();
 
-        productRecordVO.setUid(uid);
-//        productRecordVO.setProearn(proearn);
-//        productRecordVO.setInterestrate(interestrate);
+    private NotifyTransactionMessageVO buildMessageByProductRecordVO(Integer uid, BigDecimal proearn, BigDecimal interestrate, String uuid) {
+        ProductRecordVO productRecordVO = new ProductRecordVO();
+        productRecordVO.setProearn(proearn);
+        productRecordVO.setInterestrate(interestrate);
         productRecordVO.setUuid(uuid);
+        productRecordVO.setUid(uid);
+        productRecordVO.setConsumerQueue(NotifyDestination.UPDATE_PROEARN_INTERESTRATE_MESSAGE.name());
         String messageBody = JSON.toJSONString(productRecordVO);
 
-        NotifyTransactionMessageVO messageVO = new NotifyTransactionMessageVO();
-        messageVO.setMessageBody(messageBody);
-        messageVO.setUuid(uuid);
-        messageVO.setConsumerQueue(NotifyDestination.UPDATE_PROEARN_INTERESTRATE_MESSAGE.name());
-
-        return messageVO;
+        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
+        info.setMessageBody(messageBody);
+        info.setUuid(uuid);
+        info.setConsumerQueue(productRecordVO.getConsumerQueue());
+        return info;
     }
 }

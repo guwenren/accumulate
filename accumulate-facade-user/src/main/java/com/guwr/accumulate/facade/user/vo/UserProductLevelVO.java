@@ -20,6 +20,7 @@ public class UserProductLevelVO extends BaseVO {
     private BigDecimal invest; //变动金额
     private Integer phases; //期限
     private BigDecimal interestrate; //发行年利率
+    private String consumerQueue;
 
     public Integer getUid() {
         return uid;
@@ -59,6 +60,14 @@ public class UserProductLevelVO extends BaseVO {
 
     public void setInterestrate(BigDecimal interestrate) {
         this.interestrate = interestrate;
+    }
+
+    public String getConsumerQueue() {
+        return consumerQueue;
+    }
+
+    public void setConsumerQueue(String consumerQueue) {
+        this.consumerQueue = consumerQueue;
     }
 
     @Override

@@ -64,7 +64,7 @@ public class ProductRecordServiceTest extends BaseTest {
 
     @Test
     public void addProductRecord() throws Exception {
-        for (int i = 9; i >= 5; i--) {
+        for (int i = 9; i >= 9; i--) {
             ProductRecordVO vo = new ProductRecordVO();
             vo.setUid(i - 2);
             vo.setPid(i - 1);

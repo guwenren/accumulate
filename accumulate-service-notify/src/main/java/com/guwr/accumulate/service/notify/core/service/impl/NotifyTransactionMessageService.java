@@ -52,6 +52,13 @@ public class NotifyTransactionMessageService implements INotifyTransactionMessag
     }
 
     @Override
+    public NotifyTransactionMessage saveNotifyTransactionMessageAndFlush(NotifyTransactionMessage entity) {
+        NotifyTransactionMessage notifyTransactionMessage = saveNotifyTransactionMessage(entity);
+        repository.flush();
+        return notifyTransactionMessage;
+    }
+
+    @Override
     public void sendNotifyTransactionMessage(Integer id) {
         final NotifyTransactionMessage entity = repository.findOne(id);
         if (entity == null) {
@@ -215,16 +222,23 @@ public class NotifyTransactionMessageService implements INotifyTransactionMessag
         return pageBean;
     }
 
-    @Transactional
+
     @Override
+    @Transactional
+    public NotifyTransactionMessage update(NotifyTransactionMessage entity) {
+        entity.setUpdateTime(new Date());
+        return repository.save(entity);
+    }
+
+    @Override
+    @Transactional
     public int deleteNotifyTransactionMessageByUUID(String uuid) {
         return repository.deleteNotifyTransactionMessageByUUID(uuid);
     }
 
-    @Transactional
     @Override
-    public NotifyTransactionMessage update(NotifyTransactionMessage entity) {
-        entity.setUpdateTime(new Date());
-        return repository.save(entity);
+    @Transactional
+    public int deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue) {
+        return repository.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);
     }
 }

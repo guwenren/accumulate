@@ -45,6 +45,22 @@ public class NotifyTransactionMessageFacade implements INotifyTransactionMessage
     }
 
     @Override
+    public NotifyTransactionMessage saveNotifyTransactionMessageAndFlush(NotifyTransactionMessageVO info) {
+        logger.info("saveNotifyTransactionMessage.info = [" + info + "]");
+        String uuid = info.getUuid();
+        String consumerQueue = info.getConsumerQueue();
+        String messageBody = info.getMessageBody();
+        NotifyTransactionMessage entity = new NotifyTransactionMessage();
+        entity.setUuid(uuid);
+        entity.setConsumerQueue(consumerQueue);
+        entity.setMessageBody(messageBody);
+        entity.setMessageDataType(NotifyDataType.JSON.name());
+        return service.saveNotifyTransactionMessageAndFlush(entity);
+    }
+
+
+
+    @Override
     public NotifyTransactionMessage findNotifyTransactionMessageByUUID(String uuid) {
         return null;
     }
@@ -86,6 +102,13 @@ public class NotifyTransactionMessageFacade implements INotifyTransactionMessage
         logger.info("deleteNotifyTransactionMessageByUUID.uuid = [" + uuid + "]");
         service.deleteNotifyTransactionMessageByUUID(uuid);
     }
+
+    @Override
+    public void deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue) {
+        logger.info("deleteNotifyTransactionMessageByUUIDAndQueue.uuid = [" + uuid + "],consumerQueue = [" + consumerQueue + "]");
+        service.deleteNotifyTransactionMessageByUUIDAndQueue(uuid,consumerQueue);
+    }
+
 
     @Override
     public NotifyTransactionMessage update(NotifyTransactionMessage entity) {

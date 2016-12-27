@@ -27,14 +27,14 @@ public class UserInfoFacade implements IUserInfoFacade {
 
     @Override
     public UserInfo findOne(int id) {
-        logger.info("UserInfoFacade.findOne");
-        logger.info("id = " + id);
+        logger.info("findOne.id =[" + id + "]");
         UserInfo userInfo = userInfoService.findOne(id);
         return userInfo;
     }
 
     @Override
     public UserInfo findOneCheck(int id) {
+        logger.info("findOneCheck.id =[" + id + "]");
         UserInfo userInfo = this.findOne(id);
         if (userInfo == null) { //用户
             throw UserBizException.YONG_HU_BU_CUN_ZAI.print();
@@ -44,22 +44,19 @@ public class UserInfoFacade implements IUserInfoFacade {
 
     @Override
     public UserInfo findOneByMobile(String mobile) {
-        logger.info("UserInfoFacade.findOneByMobile");
-        logger.info("mobile = " + mobile);
+        logger.info("findOneByMobile.mobile = [" + mobile + "]");
         return userInfoService.findOneByMobile(mobile);
     }
 
     @Override
     public PageBean<UserInfo> findListPage(UserInfoVO info) {
-        logger.info("UserInfoFacade.findListPageByCondition");
-        logger.info("info = " + info);
+        logger.info("findListPage.info = [" + info + "]");
         return userInfoService.findListPage(info);
     }
 
     @Override
     public UserInfo save(UserInfoVO info) {
-        logger.info("UserInfoFacade.save");
-        logger.info("info = " + info);
+        logger.info("findListPage.save = [" + info + "]");
         UserInfo entity = new UserInfo();
         entity.setMobile(info.getMobile());
         entity.setPassword(info.getPassword());

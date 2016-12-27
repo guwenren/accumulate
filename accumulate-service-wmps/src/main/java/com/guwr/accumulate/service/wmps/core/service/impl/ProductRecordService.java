@@ -228,7 +228,7 @@ public class ProductRecordService implements IProductRecordService {
 
         NotifyTransactionMessageVO notifyMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
 
-        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid);
+        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid,product.getPhases(),product.getInterestrate());
 
         NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(notifyMessageVO);
         logger.info(uid + "_保存邮件待确认消息");
@@ -344,29 +344,31 @@ public class ProductRecordService implements IProductRecordService {
         notifyMessageVO.setTitle(uid + "_购买产品");
         notifyMessageVO.setContent(uid + "_购买，" + pid + "_产品");
         notifyMessageVO.setUuid(uuid);
+        notifyMessageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
         String messageBody = JSON.toJSONString(notifyMessageVO);
 
         NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
-        NotifyTransactionMessageVO notifyTransactionMessageVO = new NotifyTransactionMessageVO();
-        notifyTransactionMessageVO.setMessageBody(messageBody);
-        notifyTransactionMessageVO.setUuid(uuid);
-        notifyTransactionMessageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
+        info.setMessageBody(messageBody);
+        info.setUuid(uuid);
+        info.setConsumerQueue(notifyMessageVO.getConsumerQueue());
         return info;
     }
 
-    private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid) {
+    private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid,Integer phases,BigDecimal interestrate) {
         UserProductLevelVO userProductLevelVO = new UserProductLevelVO();
 
         userProductLevelVO.setUid(uid);
         userProductLevelVO.setInvest(effectAmount);
         userProductLevelVO.setUuid(uuid);
+        userProductLevelVO.setPhases(phases);
+        userProductLevelVO.setInterestrate(interestrate);
+        userProductLevelVO.setConsumerQueue(NotifyDestination.USER_PRODUCT_LEVEL_MESSAGE.name());
         String messageBody = JSON.toJSONString(userProductLevelVO);
 
         NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
-        NotifyTransactionMessageVO notifyTransactionMessageVO = new NotifyTransactionMessageVO();
-        notifyTransactionMessageVO.setMessageBody(messageBody);
-        notifyTransactionMessageVO.setUuid(uuid);
-        notifyTransactionMessageVO.setConsumerQueue(NotifyDestination.USER_PRODUCT_LEVEL_MESSAGE.name());
+        info.setMessageBody(messageBody);
+        info.setUuid(uuid);
+        info.setConsumerQueue(userProductLevelVO.getConsumerQueue());
 
         return info;
     }

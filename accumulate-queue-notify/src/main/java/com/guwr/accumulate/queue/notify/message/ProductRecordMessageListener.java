@@ -43,6 +43,7 @@ public class ProductRecordMessageListener implements SessionAwareMessageListener
         ProductRecordVO info = JSON.parseObject(msgText, ProductRecordVO.class);
         productRecordFacade.updateProearnAndInterestrateByUUID(info);
         String uuid = info.getUuid();
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUID(uuid);
+        String consumerQueue = info.getConsumerQueue();
+        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(uuid,consumerQueue);
     }
 }
