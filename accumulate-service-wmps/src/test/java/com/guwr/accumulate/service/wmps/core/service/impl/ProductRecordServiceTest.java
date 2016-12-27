@@ -71,5 +71,6 @@ public class ProductRecordServiceTest extends BaseTest {
             vo.setInvestAmount(new BigDecimal(i * 1300));
             productRecordService.addProductRecord(vo);
         }
+        System.in.read();
     }
 }

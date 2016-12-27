@@ -45,5 +45,6 @@ public class UserProductLevelMessageListener implements SessionAwareMessageListe
         String uuid = info.getUuid();
         String consumerQueue = info.getConsumerQueue();
         notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);
+        logger.info("删除队列消息_{}_{}", uuid, consumerQueue);
     }
 }

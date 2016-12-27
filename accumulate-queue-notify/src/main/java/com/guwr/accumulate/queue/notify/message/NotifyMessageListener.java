@@ -8,7 +8,6 @@ import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SessionAwareMessageListener;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +44,7 @@ public class NotifyMessageListener implements SessionAwareMessageListener<Messag
         notifyMessageFacade.save(info);
         String uuid = info.getUuid();
         String consumerQueue = info.getConsumerQueue();
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(uuid,consumerQueue);//测试消息通知结果处理完成但是删除消息失败
+        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);//测试消息通知结果处理完成但是删除消息失败
+        logger.info("删除队列消息_{}_{}", uuid, consumerQueue);
     }
 }
