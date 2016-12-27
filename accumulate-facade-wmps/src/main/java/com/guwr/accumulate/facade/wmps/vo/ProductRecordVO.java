@@ -20,6 +20,8 @@ public class ProductRecordVO extends BaseVO {
     private Integer uid; //用户ID
     private Integer pid; //产品ID
     private BigDecimal investAmount; //投资金额
+    private BigDecimal proearn;//预期收益
+    private BigDecimal interestrate; //vip利率
 
     public Integer getUid() {
         return uid;
@@ -43,6 +45,22 @@ public class ProductRecordVO extends BaseVO {
 
     public void setInvestAmount(BigDecimal investAmount) {
         this.investAmount = investAmount;
+    }
+
+    public BigDecimal getProearn() {
+        return proearn;
+    }
+
+    public void setProearn(BigDecimal proearn) {
+        this.proearn = proearn;
+    }
+
+    public BigDecimal getInterestrate() {
+        return interestrate;
+    }
+
+    public void setInterestrate(BigDecimal interestrate) {
+        this.interestrate = interestrate;
     }
 
     @Override

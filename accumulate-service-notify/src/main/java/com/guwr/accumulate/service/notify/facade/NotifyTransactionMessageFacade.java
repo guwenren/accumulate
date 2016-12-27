@@ -26,13 +26,13 @@ public class NotifyTransactionMessageFacade implements INotifyTransactionMessage
 
     @Override
     public PageBean<NotifyTransactionMessage> findListPageByCondition(NotifyTransactionMessageVO info) {
-        logger.info("NotifyTransactionMessageFacade.findListPageByCondition.info = [" + info + "]");
+        logger.info("findListPageByCondition.info = [" + info + "]");
         return service.findListPageByCondition(info);
     }
 
     @Override
     public NotifyTransactionMessage saveNotifyTransactionMessage(NotifyTransactionMessageVO info) {
-        logger.info("NotifyTransactionMessageFacade.saveNotifyTransactionMessage.info = [" + info + "]");
+        logger.info("saveNotifyTransactionMessage.info = [" + info + "]");
         String uuid = info.getUuid();
         String consumerQueue = info.getConsumerQueue();
         String messageBody = info.getMessageBody();
@@ -45,20 +45,25 @@ public class NotifyTransactionMessageFacade implements INotifyTransactionMessage
     }
 
     @Override
+    public NotifyTransactionMessage findNotifyTransactionMessageByUUID(String uuid) {
+        return null;
+    }
+
+    @Override
     public void sendNotifyTransactionMessage(Integer id) {
-        logger.info("NotifyTransactionMessageFacade.sendNotifyTransactionMessage.id = [" + id + "]");
+        logger.info("sendNotifyTransactionMessage.id = [" + id + "]");
         service.sendNotifyTransactionMessage(id);
     }
 
     @Override
     public void sendNotifyTransactionMessage(NotifyTransactionMessage entity) {
-        logger.info("NotifyTransactionMessageFacade.sendNotifyTransactionMessage.entity = [" + entity + "]");
+        logger.info("sendNotifyTransactionMessage.entity = [" + entity + "]");
         service.sendNotifyTransactionMessage(entity);
     }
 
     @Override
     public NotifyTransactionMessage saveAndSendNotifyTransactionMessage(NotifyTransactionMessageVO info) {
-        logger.info("NotifyTransactionMessageFacade.saveAndSendNotifyTransactionMessage.info = [" + info + "]");
+        logger.info("saveAndSendNotifyTransactionMessage.info = [" + info + "]");
         String uuid = info.getUuid();
         String consumerQueue = info.getConsumerQueue();
         String messageBody = info.getMessageBody();
@@ -72,25 +77,25 @@ public class NotifyTransactionMessageFacade implements INotifyTransactionMessage
 
     @Override
     public void deleteNotifyTransactionMessageById(Integer id) {
-        logger.info("NotifyTransactionMessageFacade.deleteNotifyTransactionMessageById.id = [" + id + "]");
+        logger.info("deleteNotifyTransactionMessageById.id = [" + id + "]");
         service.deleteNotifyTransactionMessageById(id);
     }
 
     @Override
     public void deleteNotifyTransactionMessageByUUID(String uuid) {
-        logger.info("NotifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUID.uuid = [" + uuid + "]");
+        logger.info("deleteNotifyTransactionMessageByUUID.uuid = [" + uuid + "]");
         service.deleteNotifyTransactionMessageByUUID(uuid);
     }
 
     @Override
     public NotifyTransactionMessage update(NotifyTransactionMessage entity) {
-        logger.info("NotifyTransactionMessageFacade.update.entity = [" + entity + "]");
+        logger.info("update.entity = [" + entity + "]");
         return service.update(entity);
     }
 
     @Override
     public void repeatSendNotifyTransactionMessage(NotifyTransactionMessage entity) {
-        logger.info("NotifyTransactionMessageFacade.repeatSendNotifyTransactionMessage.entity = [" + entity + "]");
+        logger.info("repeatSendNotifyTransactionMessage.entity = [" + entity + "]");
         service.repeatSendNotifyTransactionMessage(entity);
     }
 }

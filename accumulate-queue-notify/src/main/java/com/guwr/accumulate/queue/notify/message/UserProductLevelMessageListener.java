@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
+import com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade;
+import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,21 +21,21 @@ import javax.jms.Session;
 /**
  * Created by   guwr
  * Project_name accumulate
- * Path         com.guwr.accumulate.queue.notify.message.NotifyMessageListener
+ * Path         com.guwr.accumulate.queue.notify.message.UserProductLevelMessageListener
  * Date         2016/11/25
  * Time         11:38
- * Description
+ * Description  用户投资级别变换
  */
 @Component
-public class NotifyMessageListener implements SessionAwareMessageListener<Message> {
+public class UserProductLevelMessageListener implements SessionAwareMessageListener<Message> {
 
-    private static Logger logger = LoggerFactory.getLogger(NotifyMessageListener.class);
-
-    @Autowired
-    private INotifyMessageFacade notifyMessageFacade;
+    private static Logger logger = LoggerFactory.getLogger(UserProductLevelMessageListener.class);
 
     @Autowired
     private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+
+    @Autowired
+    private IUserProductLevelFacade userProductLevelFacade;
 
     @Override
     public void onMessage(Message message, Session session) throws JMSException {
@@ -41,9 +43,9 @@ public class NotifyMessageListener implements SessionAwareMessageListener<Messag
         ActiveMQTextMessage textMessage = (ActiveMQTextMessage) message;
         String msgText = textMessage.getText();
         logger.info("msgText = " + msgText);
-        NotifyMessageVO info = JSON.parseObject(msgText, NotifyMessageVO.class);
-        notifyMessageFacade.save(info);
+        UserProductLevelVO info = JSON.parseObject(msgText, UserProductLevelVO.class);
+        userProductLevelFacade.findUserProductLevelByIn(info);
         String uuid = info.getUuid();
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUID(uuid);//测试消息通知结果处理完成但是删除消息失败
+        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUID(uuid);
     }
 }

@@ -53,6 +53,14 @@ public interface IProductRecordService {
     ProductRecord findOneProductRecordByUUID(String uuid);
 
     /**
+     * 更新投资记录
+     *
+     * @param productRecord
+     * @return
+     */
+    ProductRecord updateProductRecord(ProductRecord productRecord);
+
+    /**
      * 需要发息的人数
      *
      * @return
@@ -62,20 +70,28 @@ public interface IProductRecordService {
     /**
      * 根据MOD查找发息用户
      *
+     * @param mod
+     * @param number
+     * @param interestDate
+     * @return
+     */
+    List<Integer> findListByMOD(Integer mod, Integer number, Integer interestDate);
+
+    /**
+     * 根据MOD查找发息model
      *
      * @param mod
      * @param number
      * @param interestDate
      * @return
      */
-    List<Integer> findListByMOD(Integer mod,Integer number, Integer interestDate);
+    List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate);
 
     /**
-     * 根据MOD查找发息model
-     * @param mod
-     * @param number
-     * @param interestDate
+     * 更新投资记录逾期收益与年利率
+     *
+     * @param info
      * @return
      */
-    List<ProductRecordExtend> findProductRecordExtendListByMOD(Integer mod, Integer number, Integer interestDate);
+    void updateProearnAndInterestrateByUUID(ProductRecordVO info);
 }

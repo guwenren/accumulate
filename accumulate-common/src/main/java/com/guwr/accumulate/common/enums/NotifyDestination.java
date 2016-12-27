@@ -9,10 +9,10 @@ package com.guwr.accumulate.common.enums;
  * Description   消息队列名称
  */
 public enum NotifyDestination {
-    /**
-     * 消息通知
-     */
-    MESSAGE_NOTIFY("消息通知");
+
+    MESSAGE_NOTIFY("消息通知"),
+    USER_PRODUCT_LEVEL_MESSAGE("用户投资级别消息"),
+    UPDATE_PROEARN_INTERESTRATE_MESSAGE("修改投资预期收益与利率");
     /**
      * 描述
      */

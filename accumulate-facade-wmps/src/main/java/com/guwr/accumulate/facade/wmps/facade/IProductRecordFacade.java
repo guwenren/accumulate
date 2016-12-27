@@ -2,6 +2,7 @@ package com.guwr.accumulate.facade.wmps.facade;
 
 
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
+import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 
 /**
  * Created by gwr
@@ -14,4 +15,6 @@ public interface IProductRecordFacade {
     ProductRecord save(ProductRecord entity);
 
     ProductRecord findOneProductRecordByUUID(String uuid);
+
+    void updateProearnAndInterestrateByUUID(ProductRecordVO info);
 }

@@ -16,6 +16,8 @@ public interface INotifyTransactionMessageFacade {
 
     NotifyTransactionMessage saveNotifyTransactionMessage(NotifyTransactionMessageVO info);
 
+    NotifyTransactionMessage findNotifyTransactionMessageByUUID(String uuid);
+
     void sendNotifyTransactionMessage(Integer id);
 
     void sendNotifyTransactionMessage(NotifyTransactionMessage entity);

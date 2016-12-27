@@ -18,7 +18,8 @@ public class UserProductLevelVO extends BaseVO {
     private Integer uid; //用户ID
     private Integer pid; //产品ID
     private BigDecimal invest; //变动金额
-
+    private Integer phases; //期限
+    private BigDecimal interestrate; //发行年利率
 
     public Integer getUid() {
         return uid;
@@ -42,6 +43,22 @@ public class UserProductLevelVO extends BaseVO {
 
     public void setInvest(BigDecimal invest) {
         this.invest = invest;
+    }
+
+    public Integer getPhases() {
+        return phases;
+    }
+
+    public void setPhases(Integer phases) {
+        this.phases = phases;
+    }
+
+    public BigDecimal getInterestrate() {
+        return interestrate;
+    }
+
+    public void setInterestrate(BigDecimal interestrate) {
+        this.interestrate = interestrate;
     }
 
     @Override
