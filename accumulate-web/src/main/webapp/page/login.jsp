@@ -30,13 +30,13 @@
 				<form action="login" method="post">
 					<p>
 						<label>用户名：</label>
-						<input name="mobile" value="13167309518" type="text" style="width:140px;height:20px;" class="login_input" />
+						<input name="mobile" value="13455650931" type="text" style="width:140px;height:20px;" class="login_input" />
 						<br/>
 						<span class="info">${userNoMsg}</span>
 					</p>
 					<p>
 						<label>密&nbsp;&nbsp;&nbsp;码：</label>
-						<input name="password" type="password" style="width:140px;height:20px;" class="login_input" value="123456" />
+						<input name="password" type="password" style="width:140px;height:20px;" class="login_input" value="Z3VXHk" />
 						<br/>
 						<span class="info">${userPwdMsg}</span>
 					</p>

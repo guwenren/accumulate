@@ -14,7 +14,6 @@ import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
-import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
 import com.guwr.accumulate.facade.user.facade.*;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
@@ -176,15 +175,15 @@ public class ProductRecordService implements IProductRecordService {
 //        logger.info("addProductRecord.userProductLevel = " + userProductLevel + "");
 //        BigDecimal vipInterestrate = userProductLevel.getInterestrate(); // vip利率
 //        BigDecimal proearn = proearn(userProductLevel, product, effectAmount);
-//        /**
-//         *  添加资金流水，同时修改用户账户总额
-//         */
-//        AccountBalanceRecordVO accountBalanceRecordVO = new AccountBalanceRecordVO();
-//        accountBalanceRecordVO.setAmount(effectAmount);
-//        accountBalanceRecordVO.setUid(uid);
-//        accountBalanceRecordVO.setUuid(uuid);
-//        AccountBalanceRecord outgo = accountBalanceRecordFacade.outgo(accountBalanceRecordVO);
-//        logger.info("addProductRecord.outgo = " + outgo);
+        /**
+         *  添加资金流水，同时修改用户账户总额
+         */
+        AccountBalanceRecordVO accountBalanceRecordVO = new AccountBalanceRecordVO();
+        accountBalanceRecordVO.setAmount(effectAmount);
+        accountBalanceRecordVO.setUid(uid);
+        accountBalanceRecordVO.setUuid(uuid);
+        AccountBalanceRecord outgo = accountBalanceRecordFacade.outgo(accountBalanceRecordVO);
+        logger.info("addProductRecord.outgo = " + outgo);
 //
 //        // 同一利率同一产品是否投资过
 //        UserProductEarnings userProductEarnings = userProductEarningsFacade.findOneByUidPidInterestrate(uid, pid, vipInterestrate);
@@ -228,7 +227,7 @@ public class ProductRecordService implements IProductRecordService {
 
         NotifyTransactionMessageVO notifyMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
 
-        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid,product.getPhases(),product.getInterestrate());
+        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate());
 
         NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(notifyMessageVO);
         logger.info(uid + "_保存邮件待确认消息");
@@ -316,6 +315,9 @@ public class ProductRecordService implements IProductRecordService {
         Integer uid = info.getUid();
         BigDecimal investAmount = info.getInvestAmount();
         BigDecimal[] divideAndRemainder = investAmount.divideAndRemainder(MULTIPLE_AMOUNT);
+        if (investAmount.compareTo(BigDecimal.ZERO) < 1) {
+            throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
+        }
         if (divideAndRemainder[1].compareTo(BigDecimal.ZERO) != 0) { //不是100的整倍数
             throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
         }
@@ -354,7 +356,7 @@ public class ProductRecordService implements IProductRecordService {
         return info;
     }
 
-    private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid,Integer phases,BigDecimal interestrate) {
+    private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid, Integer phases, BigDecimal interestrate) {
         UserProductLevelVO userProductLevelVO = new UserProductLevelVO();
 
         userProductLevelVO.setUid(uid);

@@ -64,11 +64,24 @@ public class ProductRecordServiceTest extends BaseTest {
 
     @Test
     public void addProductRecord() throws Exception {
-        for (int i = 9; i >= 9; i--) {
+//        for (int i = 9; i >= 9; i--) {
+//            ProductRecordVO vo = new ProductRecordVO();
+//            vo.setUid(i - 2);
+//            vo.setPid(i - 1);
+//            vo.setInvestAmount(new BigDecimal(i * 1300));
+//            productRecordService.addProductRecord(vo);
+//        }
+//        System.in.read();
+        for (int b = 0; b < 15; b++) {
+            java.util.Random random = new java.util.Random();// 定义随机类
+            int i = random.nextInt(10);// 返回[0,10)集合中的整数，注意不包括10
+            if (i == 0) {
+                continue;
+            }
             ProductRecordVO vo = new ProductRecordVO();
-            vo.setUid(i - 2);
-            vo.setPid(i - 1);
-            vo.setInvestAmount(new BigDecimal(i * 1300));
+            vo.setUid(2);
+            vo.setPid(1);
+            vo.setInvestAmount(new BigDecimal(i * 3000));
             productRecordService.addProductRecord(vo);
         }
         System.in.read();

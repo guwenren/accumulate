@@ -2,8 +2,10 @@ package com.guwr.accumulate.service.user.core.service;
 
 
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by gwr
@@ -18,4 +20,7 @@ public interface IUserProductEarningsService {
     UserProductEarnings update(UserProductEarnings entity);
 
     UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate);
+
+    @Transactional(rollbackFor = Exception.class)
+    void saveOrUpdateUserProductEarnings(Date date, Integer uid, String uuid, BigDecimal invest, Integer pid, BigDecimal vipInterestrate, BigDecimal proearn);
 }

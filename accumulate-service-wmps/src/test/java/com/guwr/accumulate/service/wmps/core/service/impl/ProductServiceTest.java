@@ -26,29 +26,51 @@ public class ProductServiceTest extends BaseTest {
 
     @Test
     public void save() throws Exception {
-        for (int i = 0; i < 10; i++) {
-            Date date = new Date();
+//        for (int i = 0; i < 10; i++) {
+//            Date date = new Date();
+//
+//            int day = 3;
+//            Date enddate = DateUtils.addDay(date, 3);
+//            Date interdate = DateUtils.addDay(date, 1);
+//
+//            String uuid = com.guwr.accumulate.common.util.StringUtils.getUUID();
+//            Product product = new Product();
+//            product.setAmount(new BigDecimal(1000000));
+//            product.setEffectAmount(BigDecimal.ZERO);
+//            product.setInvestAmount(BigDecimal.ZERO);
+//            product.setInterestrate(new BigDecimal(0.073));
+//            product.setPhases(day);
+//            product.setCreateTime(date);
+//            product.setUpdateTime(date);
+//            product.setPublisheddate(date);
+//            product.setInterdate(interdate);
+//            product.setEnddate(enddate);
+//            product.setUuid(uuid);
+//            product.setStatus(ProductStatus.PUBLISHED.getValue());
+//            productService.save(product);
+//        }
 
-            int day = 3;
-            Date enddate = DateUtils.addDay(date, 3);
-            Date interdate = DateUtils.addDay(date, 1);
+        Date date = new Date();
 
-            String uuid = com.guwr.accumulate.common.util.StringUtils.getUUID();
-            Product product = new Product();
-            product.setAmount(new BigDecimal(1000000));
-            product.setEffectAmount(BigDecimal.ZERO);
-            product.setInvestAmount(BigDecimal.ZERO);
-            product.setInterestrate(new BigDecimal(0.073));
-            product.setPhases(day);
-            product.setCreateTime(date);
-            product.setUpdateTime(date);
-            product.setPublisheddate(date);
-            product.setInterdate(interdate);
-            product.setEnddate(enddate);
-            product.setUuid(uuid);
-            product.setStatus(ProductStatus.PUBLISHED.getValue());
-            productService.save(product);
-        }
+        int day = 3;
+        Date enddate = DateUtils.addDay(date, 3);
+        Date interdate = DateUtils.addDay(date, 1);
+
+        String uuid = com.guwr.accumulate.common.util.StringUtils.getUUID();
+        Product product = new Product();
+        product.setAmount(new BigDecimal(1000000));
+        product.setEffectAmount(BigDecimal.ZERO);
+        product.setInvestAmount(BigDecimal.ZERO);
+        product.setInterestrate(new BigDecimal(0.073));
+        product.setPhases(day);
+        product.setCreateTime(date);
+        product.setUpdateTime(date);
+        product.setPublisheddate(date);
+        product.setInterdate(interdate);
+        product.setEnddate(enddate);
+        product.setUuid(uuid);
+        product.setStatus(ProductStatus.PUBLISHED.getValue());
+        productService.save(product);
     }
 
     @Test

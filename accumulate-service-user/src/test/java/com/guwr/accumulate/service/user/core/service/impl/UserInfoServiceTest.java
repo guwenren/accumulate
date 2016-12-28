@@ -54,15 +54,24 @@ public class UserInfoServiceTest extends BaseTest {
         System.out.println("userInfo = " + userInfo);
     }
 
+
     @Test
     public void register() throws Exception {
-        for (int i = 1; i < 15; i++) {
-            UserInfoVO info = new UserInfoVO();
-            info.setMobile("13" + UUIDUitls.generateInteger(9));
-            info.setPassword(UUIDUitls.generateString(6));
-            info.setRealname("李" + UUIDUitls.generateString(8));
-            info.setUuid(StringUtils.getUUID());
-            userInfoService.register(info);
-        }
+//        for (int i = 1; i < 15; i++) {
+//            UserInfoVO info = new UserInfoVO();
+//            info.setMobile("13" + UUIDUitls.generateInteger(9));
+//            info.setPassword(UUIDUitls.generateString(6));
+//            info.setRealname("李" + UUIDUitls.generateString(8));
+//            info.setUuid(StringUtils.getUUID());
+//            userInfoService.register(info);
+//        }
+
+        UserInfoVO info = new UserInfoVO();
+        info.setMobile("13" + UUIDUitls.generateInteger(9));
+        info.setPassword(UUIDUitls.generateString(6));
+        info.setRealname("李四毛");
+        info.setUuid(StringUtils.getUUID());
+        userInfoService.register(info);
     }
+
 }

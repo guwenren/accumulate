@@ -10,10 +10,10 @@ import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
 import com.guwr.accumulate.facade.user.entity.UserProductInvest;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
 import com.guwr.accumulate.facade.user.enums.UserProductInvestUserType;
-import com.guwr.accumulate.facade.user.vo.UserProductInvestVO;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 import com.guwr.accumulate.service.user.core.dao.UserProductLevelRepository;
+import com.guwr.accumulate.service.user.core.service.IUserProductEarningsService;
 import com.guwr.accumulate.service.user.core.service.IUserProductInvestService;
 import com.guwr.accumulate.service.user.core.service.IUserProductLevelService;
 import org.slf4j.Logger;
@@ -45,6 +45,9 @@ public class UserProductLevelService implements IUserProductLevelService {
     @Autowired
     private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
 
+    @Autowired
+    private IUserProductEarningsService userProductEarningsService;
+
     @Override
     public UserProductLevel save(UserProductLevel entity) {
         return repository.save(entity);
@@ -63,6 +66,7 @@ public class UserProductLevelService implements IUserProductLevelService {
         String uuid = info.getUuid();
         BigDecimal invest = info.getInvest();
         Integer phases = info.getPhases();
+        Integer pid = info.getPid();
         BigDecimal interestrate = info.getInterestrate();
         logger.info("{},查找用户当前投资级别", uid);
 
@@ -70,7 +74,7 @@ public class UserProductLevelService implements IUserProductLevelService {
         BigDecimal totalInvest = BigDecimal.ZERO; //总投资金额
 
         UserProductInvest userProductInvest = userProductInvestService.findOneByUid(uid);
-        logger.info("{}_用户产品投资清楚_{}", uid, userProductInvest);
+        logger.info("{}_用户产品投资总额_{}", uid, JSON.toJSON(userProductInvest));
         if (userProductInvest == null) {
             userProductInvest = new UserProductInvest();
             userProductInvest.setUuid(uuid);
@@ -91,40 +95,21 @@ public class UserProductLevelService implements IUserProductLevelService {
         BigDecimal vipInterestrate = productLevel.getInterestrate(); // vip利率
         BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
 
+        // 用户投资收益
+        userProductEarningsService.saveOrUpdateUserProductEarnings(date, uid, uuid, invest, pid, vipInterestrate, proearn);
+
         NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, interestrate, uuid);
 
         NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(messageVO);
         logger.info(uid + "_保存修改投资预期收益与利率消息");
 
         //修改投资总额，添加修改记录
-        userProductInvestService.changeInInvest(userProductInvest,invest,afterTotalInvest,uuid);
-//
-//        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessageAndFlush(messageVO);
-//        logger.info(uid + "_保存修改投资预期收益与利率消息");
-//
-//        UserProductInvestVO userProductInvestVO = new UserProductInvestVO();
-//        userProductInvestVO.setInvest(invest);
-//        userProductInvestVO.setUid(uid);
-//        userProductInvestVO.setUuid(info.getUuid());
-//        BigDecimal afterTotalInvest = userProductInvestService.changeInInvest(userProductInvestVO);
-//        logger.info("{}_afterTotalInvest = " + afterTotalInvest, uid);
-//        userProductLevel = this.findOneByInvest(afterTotalInvest);
-//
-//        BigDecimal vipInterestrate = userProductLevel.getInterestrate(); // vip利率
-//        BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
-//
-//        ProductRecordVO productRecordVO = new ProductRecordVO();
-//        productRecordVO.setProearn(proearn);
-//        productRecordVO.setInterestrate(vipInterestrate);
-//        productRecordVO.setUuid(uuid);
-//        productRecordVO.setConsumerQueue(consumerQueue);
-//        String messageBody = JSON.toJSONString(productRecordVO);
-//        notifyMessage.setMessageBody(messageBody);
-//        notifyTransactionMessageFacade.update(notifyMessage);
+        userProductInvestService.changeInInvest(userProductInvest, invest, afterTotalInvest, uuid);
 
         notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyMessage);//将消息发送至mq
         logger.info(uid + "_发送修改投资预期收益与利率消息到MQ");
     }
+
 
     @Override
     public UserProductLevel findUserProductLevelByOut(UserProductLevelVO info) {

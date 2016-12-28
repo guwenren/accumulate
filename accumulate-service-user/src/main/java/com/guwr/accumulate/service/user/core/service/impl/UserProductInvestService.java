@@ -2,6 +2,7 @@ package com.guwr.accumulate.service.user.core.service.impl;
 
 
 import com.guwr.accumulate.common.util.CommonUtils;
+import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import com.guwr.accumulate.facade.user.entity.UserProductInvest;
 import com.guwr.accumulate.facade.user.entity.UserProductInvestLog;
 import com.guwr.accumulate.facade.user.enums.UserProductInvestLogInvestType;
@@ -35,8 +36,6 @@ public class UserProductInvestService implements IUserProductInvestService {
     private UserProductInvestRepository repository;
     @Autowired
     private IUserProductLevelService userProductLevelService;
-    @Autowired
-    private IUserProductEarningsService userProductEarningsService;
 
     @Autowired
     private IUserProductInvestLogService userProductInvestLogService;

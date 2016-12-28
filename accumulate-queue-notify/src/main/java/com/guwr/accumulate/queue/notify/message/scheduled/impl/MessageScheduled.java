@@ -103,6 +103,7 @@ public class MessageScheduled implements IMessageScheduled {
             Integer id = message.getId();
             long time = message.getUpdateTime().getTime();
             Integer messageSendTimes = message.getMessageSendTimes();
+//            String consumerQueue = message.getConsumerQueue();
             logger.info("开始处理[already_confirm]消息ID为[" + id + "]的消息");
 
             logger.info("[already_confirm]消息ID为[" + id + "]的消息,已经重新发送的次数[" + messageSendTimes + "]");
