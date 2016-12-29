@@ -227,7 +227,7 @@ public class ProductRecordService implements IProductRecordService {
 
         NotifyTransactionMessageVO notifyMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
 
-        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate());
+        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
 
         NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(notifyMessageVO);
         logger.info(uid + "_保存邮件待确认消息");
@@ -299,6 +299,7 @@ public class ProductRecordService implements IProductRecordService {
         logger.info("{}_根据UUID修改投资记录利率与预期收益", uuid);
         ProductRecord productRecord = findOneProductRecordByUUID(uuid);
         if (productRecord == null) {
+            System.out.println("---------------------------------------------------------------------------_" + uuid);
             throw WmpsBizException.CHAN_PIN_BU_CUN_ZAI.print();
         }
         productRecord.setProearn(proearn);
@@ -356,9 +357,9 @@ public class ProductRecordService implements IProductRecordService {
         return info;
     }
 
-    private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid, Integer phases, BigDecimal interestrate) {
+    private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid, Integer phases, BigDecimal interestrate, Integer pid) {
         UserProductLevelVO userProductLevelVO = new UserProductLevelVO();
-
+        userProductLevelVO.setPid(pid);
         userProductLevelVO.setUid(uid);
         userProductLevelVO.setInvest(effectAmount);
         userProductLevelVO.setUuid(uuid);

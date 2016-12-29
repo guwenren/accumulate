@@ -12,6 +12,8 @@ import com.el.common.result.PublicResult;
 import com.eloancn.app.IBorrowAppAPI;
 import com.eloancn.entity.repay.RepayShowVO;
 import com.eloancn.fornew.result.Result;
+import com.eloancn.nback.common.vo.SysSendMessageVo;
+import com.eloancn.nback.systemapi.SysSendMessageAPI;
 import com.eloancn.overdueAccrue.OverdueAccrueAPI;
 import com.eloancn.repayment.OverdueRepaymentAPI;
 import com.eloancn.repayment.PayBackBailAPI;
@@ -34,8 +36,9 @@ public class DubboProvider {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
             System.out.println("accumulate-service-test");
             System.out.println("context = " + context);
+            sendMessage(context);
 //            getBorrowSignature(context);
-            getRepayShow(context);
+//            getRepayShow(context);
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
@@ -56,6 +59,26 @@ public class DubboProvider {
 //                }
 //            }
 //        }
+    }
+
+    /**
+     * 正在还款的借款
+     */
+    private static void sendMessage(ClassPathXmlApplicationContext context) {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.sendMessage");
+        BorrowSignatureVo info = new BorrowSignatureVo();
+
+        SysSendMessageVo sysSendMessageVo = new SysSendMessageVo();
+        sysSendMessageVo.setMobile("13167309518");
+                sysSendMessageVo.setJsonData("{\"mobileCode\":\"12345\"}");
+        sysSendMessageVo.setMsgCode("MODIFY_WITHHOLDING_CARD_CODE");
+
+        SysSendMessageAPI api = context.getBean("sysSendMessageService", SysSendMessageAPI.class);
+//        String result = api.sendMessage("MODIFY_WITHHOLDING_CARD_CODE", , null, "814F4C07C57E45CB9B2ECC3D1042843F");
+        String result = api.sendSingleMessage(sysSendMessageVo,"814F4C07C57E45CB9B2ECC3D1042843F");
+//        PublicResult<PageList<BorrowSignature>> result = (PublicResult<PageList<BorrowSignature>>) pageListPublicResult;
+        System.out.println("result = " + result);
     }
 
     /**
@@ -98,9 +121,9 @@ public class DubboProvider {
         com.eloancn.entity.Result<List<RepayShowVO>> result = api.getRepayShowByUid(1044098);
         System.out.println("result = " + JSON.toJSONString(result));
 
-        Map<String,Object> mapParam = new HashMap<>();
-        mapParam.put("status",7);
-        mapParam.put("uid",202);
+        Map<String, Object> mapParam = new HashMap<>();
+        mapParam.put("status", 7);
+        mapParam.put("uid", 202);
         com.eloancn.entity.Result<List<RepayShowVO>> result1 = api.getRepayShowByUid(mapParam);
         System.out.println("result1 = " + JSON.toJSONString(result1));
     }

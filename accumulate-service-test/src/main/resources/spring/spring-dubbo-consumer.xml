@@ -28,4 +28,9 @@
 
     <dubbo:reference interface="com.eloancn.repayment.PayBackBailAPI" id="payBackBailAPI" group="destress-soa-test-repay" version="1.0.0"
                      registry="elZookeeper" timeout="5000" protocol="dubbo"  validation="false" lazy="true" check="false"/>
+
+    <!-- 短信发送-->
+    <dubbo:reference id="sysSendMessageService" version="0.0.1"   group="nback-system-soa-test"
+                     interface="com.eloancn.nback.systemapi.SysSendMessageAPI"
+                     timeout="120000" check="false" protocol="dubbo" registry="elZookeeper"  lazy="true"/>
 </beans>

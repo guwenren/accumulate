@@ -72,14 +72,14 @@ public class ProductRecordServiceTest extends BaseTest {
 //            productRecordService.addProductRecord(vo);
 //        }
 //        System.in.read();
-        for (int b = 0; b < 15; b++) {
+        for (int b = 0; b < 10; b++) {
             java.util.Random random = new java.util.Random();// 定义随机类
             int i = random.nextInt(10);// 返回[0,10)集合中的整数，注意不包括10
             if (i == 0) {
                 continue;
             }
             ProductRecordVO vo = new ProductRecordVO();
-            vo.setUid(2);
+            vo.setUid(1);
             vo.setPid(1);
             vo.setInvestAmount(new BigDecimal(i * 3000));
             productRecordService.addProductRecord(vo);

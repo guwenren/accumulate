@@ -80,6 +80,8 @@ public class UserInfoService implements IUserInfoService {
         NotifyMessageVO notifyMessageVO = new NotifyMessageVO();
         notifyMessageVO.setUid(id);
         notifyMessageVO.setUuid(uuid);
+        notifyMessageVO.setTitle(info.getRealname() +",注册成功");
+        notifyMessageVO.setContent(info.getRealname() +",发送注册成功短信");
         notifyMessageFacade.save(notifyMessageVO);
         return userInfo;
     }

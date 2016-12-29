@@ -71,7 +71,7 @@ public class UserProductLevelService implements IUserProductLevelService {
         logger.info("{},查找用户当前投资级别", uid);
 
         BigDecimal afterTotalInvest = BigDecimal.ZERO; //总投资金额
-        BigDecimal totalInvest = BigDecimal.ZERO; //总投资金额
+        BigDecimal totalInvest = invest; //总投资金额
 
         UserProductInvest userProductInvest = userProductInvestService.findOneByUid(uid);
         logger.info("{}_用户产品投资总额_{}", uid, JSON.toJSON(userProductInvest));
@@ -82,7 +82,6 @@ public class UserProductLevelService implements IUserProductLevelService {
             userProductInvest.setCreateTime(date);
             userProductInvest.setUpdateTime(date);
             userProductInvest.setUserType(UserProductInvestUserType.USERTYPE_NORMAL.getValue());
-            totalInvest = invest;
         } else {
             afterTotalInvest = userProductInvest.getTotalInvest();
             userProductInvest.setUpdateTime(date);
@@ -95,10 +94,12 @@ public class UserProductLevelService implements IUserProductLevelService {
         BigDecimal vipInterestrate = productLevel.getInterestrate(); // vip利率
         BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
 
+        BigDecimal currentInterestrate = vipInterestrate.add(interestrate);
+
         // 用户投资收益
         userProductEarningsService.saveOrUpdateUserProductEarnings(date, uid, uuid, invest, pid, vipInterestrate, proearn);
 
-        NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, interestrate, uuid);
+        NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, currentInterestrate, uuid);
 
         NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(messageVO);
         logger.info(uid + "_保存修改投资预期收益与利率消息");

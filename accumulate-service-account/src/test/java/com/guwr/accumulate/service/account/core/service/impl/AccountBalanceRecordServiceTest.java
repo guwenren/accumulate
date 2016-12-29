@@ -65,7 +65,7 @@ public class AccountBalanceRecordServiceTest extends BaseTest {
 
         String uuid = StringUtils.getUUID();
         AccountBalanceRecord accountBalanceRecord = new AccountBalanceRecord();
-        accountBalanceRecord.setUid(2);
+        accountBalanceRecord.setUid(1);
         accountBalanceRecord.setAmount(new BigDecimal(1000000));
         accountBalanceRecord.setDescription("在线充值");
         accountBalanceRecord.setUuid(uuid);
