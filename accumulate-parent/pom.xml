@@ -35,7 +35,7 @@
         <module>../accumulate-service-test</module>
         <!--web-->
         <module>../accumulate-web</module>
-        <!--<module>../accumulate-test</module>-->
+        <module>../accumulate-test</module>
     </modules>
 
     <properties>

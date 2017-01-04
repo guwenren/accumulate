@@ -94,21 +94,21 @@ public class UserProductLevelService implements IUserProductLevelService {
         BigDecimal vipInterestrate = productLevel.getInterestrate(); // vip利率
         BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
 
-        BigDecimal currentInterestrate = vipInterestrate.add(interestrate);
+//        BigDecimal currentInterestrate = vipInterestrate.add(interestrate);
 
         // 用户投资收益
         userProductEarningsService.saveOrUpdateUserProductEarnings(date, uid, uuid, invest, pid, vipInterestrate, proearn);
 
-        NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, currentInterestrate, uuid);
-
-        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(messageVO);
-        logger.info(uid + "_保存修改投资预期收益与利率消息");
+//        NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, currentInterestrate, uuid);
+//
+//        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(messageVO);
+//        logger.info(uid + "_保存修改投资预期收益与利率消息");
 
         //修改投资总额，添加修改记录
         userProductInvestService.changeInInvest(userProductInvest, invest, afterTotalInvest, uuid);
 
-        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyMessage);//将消息发送至mq
-        logger.info(uid + "_发送修改投资预期收益与利率消息到MQ");
+//        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyMessage);//将消息发送至mq
+//        logger.info(uid + "_发送修改投资预期收益与利率消息到MQ");
     }
 
 

@@ -36,9 +36,9 @@ public class DubboProvider {
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
             System.out.println("accumulate-service-test");
             System.out.println("context = " + context);
-            sendMessage(context);
+//            sendMessage(context);
 //            getBorrowSignature(context);
-//            getRepayShow(context);
+            getRepayShow(context);
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
@@ -118,14 +118,14 @@ public class DubboProvider {
         System.out.println("DubboProvider.getRepayShow");
         RepaymentAPI api = context.getBean("repaymentAPI", RepaymentAPI.class);
 
-        com.eloancn.entity.Result<List<RepayShowVO>> result = api.getRepayShowByUid(1044098);
+        com.eloancn.entity.Result<List<RepayShowVO>> result = api.getRepayShowByUid(710327);
         System.out.println("result = " + JSON.toJSONString(result));
 
-        Map<String, Object> mapParam = new HashMap<>();
-        mapParam.put("status", 7);
-        mapParam.put("uid", 202);
-        com.eloancn.entity.Result<List<RepayShowVO>> result1 = api.getRepayShowByUid(mapParam);
-        System.out.println("result1 = " + JSON.toJSONString(result1));
+//        Map<String, Object> mapParam = new HashMap<>();
+//        mapParam.put("status", 7);
+//        mapParam.put("uid", 202);
+//        com.eloancn.entity.Result<List<RepayShowVO>> result1 = api.getRepayShowByUid(mapParam);
+//        System.out.println("result1 = " + JSON.toJSONString(result1));
     }
 
     /**

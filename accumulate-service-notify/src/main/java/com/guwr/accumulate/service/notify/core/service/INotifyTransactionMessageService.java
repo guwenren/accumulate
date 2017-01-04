@@ -21,6 +21,11 @@ public interface INotifyTransactionMessageService {
      */
     NotifyTransactionMessage saveNotifyTransactionMessage(NotifyTransactionMessage entity);
 
+    /**
+     *
+     * @param entity
+     * @return
+     */
     NotifyTransactionMessage saveNotifyTransactionMessageAndFlush(NotifyTransactionMessage entity);
 
     /**
@@ -31,6 +36,10 @@ public interface INotifyTransactionMessageService {
      */
     void sendNotifyTransactionMessage(Integer id);
 
+    /**
+     *
+     * @param entity
+     */
     void sendNotifyTransactionMessage(NotifyTransactionMessage entity);
 
     /**
@@ -78,11 +87,26 @@ public interface INotifyTransactionMessageService {
     void deleteNotifyTransactionMessageById(Integer id);
 
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     PageBean<NotifyTransactionMessage> findListPageByCondition(NotifyTransactionMessageVO info);
 
 
+    /**
+     *
+     * @param uuid
+     * @return
+     */
     int deleteNotifyTransactionMessageByUUID(String uuid);
 
+    /**
+     *
+     * @param entity
+     * @return
+     */
     NotifyTransactionMessage update(NotifyTransactionMessage entity);
 
     /**

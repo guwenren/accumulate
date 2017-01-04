@@ -68,6 +68,7 @@ public class MessageScheduled implements IMessageScheduled {
                 logger.debug("投资没有成功,删除[waiting_confirm]消息id[" + id + "]的消息");
                 notifyTransactionMessageFacade.deleteNotifyTransactionMessageById(id);
             } else {
+                logger.debug("投资成功,重新发送消息id[" + id + "]的消息");
                 notifyTransactionMessageFacade.sendNotifyTransactionMessage(id);
             }
         }
