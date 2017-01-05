@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gwr
  * Description
@@ -28,5 +30,10 @@ public class UserProductLevelFacade implements IUserProductLevelFacade {
     public void findUserProductLevelByIn(UserProductLevelVO info) {
         logger.info("updateUserProductLevelByIn.info = [" + info + "]");
         userProductLevelService.updateUserProductLevelByIn(info);
+    }
+
+    @Override
+    public UserProductLevel findUserProductLevelByInvest(BigDecimal invest) {
+        return userProductLevelService.findOneByInvest(invest);
     }
 }

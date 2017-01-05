@@ -16,4 +16,5 @@
     <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductEarningsFacade" id="userProductEarningsFacade" check="false"/>
     <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductDayInterFacade" id="userProductDayInterFacade" check="false"/>
     <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductFundsInfoFacade" id="userProductFundsInfoFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductInvestFacade" id="userProductInvestFacade" check="false"/>
 </beans>

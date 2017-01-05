@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
-public class DubboProvider {
-	private static Logger LOGGER = LoggerFactory.getLogger(DubboProvider.class);
+public class DubboProviderServiceWmps {
+	private static Logger LOGGER = LoggerFactory.getLogger(DubboProviderServiceWmps.class);
 
 	public static void main(String[] args) {
 		try {
@@ -15,13 +15,13 @@ public class DubboProvider {
 			LOGGER.info("context = " + context);
 			context.start();
 		} catch (Exception e) {
-			LOGGER.error("== DubboProvider context start error:", e);
+			LOGGER.error("== DubboProviderServiceWmps context start error:", e);
 		}
 
-		synchronized (DubboProvider.class) {
+		synchronized (DubboProviderServiceWmps.class) {
 			while (true) {
 				try {
-					DubboProvider.class.wait();
+					DubboProviderServiceWmps.class.wait();
 				} catch (InterruptedException e) {
 					LOGGER.error("== synchronized error:", e);
 				}

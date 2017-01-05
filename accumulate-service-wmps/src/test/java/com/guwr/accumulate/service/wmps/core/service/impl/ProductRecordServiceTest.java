@@ -83,6 +83,7 @@ public class ProductRecordServiceTest extends BaseTest {
             vo.setPid(1);
             vo.setInvestAmount(new BigDecimal(i * 3000));
             productRecordService.addProductRecord(vo);
+            Thread.sleep(2000);
         }
         System.in.read();
     }

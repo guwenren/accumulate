@@ -60,7 +60,7 @@ public class UserProductInvestService implements IUserProductInvestService {
 
     @Override
     public UserProductInvest findOneByUid(Integer uid) {
-        logger.info("findOneByUid.uid = " + uid);
+        logger.info("uid_{}_查看用户投资信息" + uid);
         return repository.findOneByUid(uid);
     }
 
@@ -118,6 +118,7 @@ public class UserProductInvestService implements IUserProductInvestService {
 
     @Override
     public void changeInInvest(UserProductInvest userProductInvest, BigDecimal invest, BigDecimal afterTotalInvest, String uuid) {
+        logger.info("userProductInvest = [" + userProductInvest + "], invest = [" + invest + "], afterTotalInvest = [" + afterTotalInvest + "], uuid = [" + uuid + "]");
         save(userProductInvest);
         // 添加投资总额变更记录
         UserProductInvestLog entity = new UserProductInvestLog();

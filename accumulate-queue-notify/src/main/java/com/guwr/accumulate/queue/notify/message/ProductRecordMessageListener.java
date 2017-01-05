@@ -36,7 +36,7 @@ public class ProductRecordMessageListener implements SessionAwareMessageListener
 
     @Override
     public void onMessage(Message message, Session session) throws JMSException {
-        logger.info("onMessage.message = [" + message + "], session = [" + session + "]");
+        logger.info("ProductRecordMessageListener.onMessage.message = [" + message + "], session = [" + session + "]");
         ActiveMQTextMessage textMessage = (ActiveMQTextMessage) message;
         String msgText = textMessage.getText();
         logger.info("msgText = " + msgText);

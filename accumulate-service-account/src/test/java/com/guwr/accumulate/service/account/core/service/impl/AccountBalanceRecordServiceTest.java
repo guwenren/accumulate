@@ -62,7 +62,6 @@ public class AccountBalanceRecordServiceTest extends BaseTest {
 //            AccountBalanceRecord save = accountBalanceRecordService.income(accountBalanceRecord);
 //            System.out.println("save = " + save);
 //        }
-
         String uuid = StringUtils.getUUID();
         AccountBalanceRecord accountBalanceRecord = new AccountBalanceRecord();
         accountBalanceRecord.setUid(1);
@@ -71,6 +70,5 @@ public class AccountBalanceRecordServiceTest extends BaseTest {
         accountBalanceRecord.setUuid(uuid);
         AccountBalanceRecord save = accountBalanceRecordService.income(accountBalanceRecord);
         System.out.println("save = " + save);
-
     }
 }

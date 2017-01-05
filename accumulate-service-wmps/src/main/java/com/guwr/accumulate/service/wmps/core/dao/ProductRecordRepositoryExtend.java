@@ -49,7 +49,7 @@ public class ProductRecordRepositoryExtend {
         StringBuilder qlStringB = new StringBuilder();
         qlStringB.append(" SELECT count(DISTINCT(a.uid)) FROM tbl_wmps_product_record a");
         qlStringB.append(" LEFT JOIN tbl_wmps_product b on a.pid=b.id");
-        qlStringB.append(" WHERE a.status=7 AND b.status=3");
+        qlStringB.append(" WHERE a.status=7 AND b.status=3 ");
         qlStringB.append(" and  b.interdate >= ? and b.enddate > ?");
         Query query = em.createNativeQuery(qlStringB.toString());
         query.setParameter(1, interestDate);

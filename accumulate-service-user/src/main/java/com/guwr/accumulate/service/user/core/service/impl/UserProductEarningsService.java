@@ -1,6 +1,7 @@
 package com.guwr.accumulate.service.user.core.service.impl;
 
 
+import com.guwr.accumulate.common.util.AmountUtils;
 import com.guwr.accumulate.facade.user.entity.UserProductEarnings;
 import com.guwr.accumulate.service.user.core.dao.UserProductEarningsRepository;
 import com.guwr.accumulate.service.user.core.service.IUserProductEarningsService;
@@ -47,8 +48,8 @@ public class UserProductEarningsService implements IUserProductEarningsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveOrUpdateUserProductEarnings(Date date, Integer uid, String uuid, BigDecimal invest, Integer pid, BigDecimal vipInterestrate, BigDecimal proearn) {
-        logger.info("date = [" + date + "], uid = [" + uid + "], uuid = [" + uuid + "], invest = [" + invest + "], pid = [" + pid + "], vipInterestrate = [" + vipInterestrate + "], proearn = [" + proearn + "]");
+    public void saveOrUpdateUserProductEarnings(Date date, Integer uid, String uuid, BigDecimal invest, Integer pid, BigDecimal vipInterestrate, BigDecimal proearn, BigDecimal interestrate, Integer phases) {
+        logger.info("uid = [" + uid + "], 保存或者修改用户收益,date = [" + date + "], uuid = [" + uuid + "], invest = [" + invest + "], pid = [" + pid + "], vipInterestrate = [" + vipInterestrate + "], proearn = [" + proearn + "]");
         UserProductEarnings userProductEarnings = findOneByUidPidInterestrate(uid, pid, vipInterestrate);
         logger.info("saveOrUpdateUserProductEarnings = " + userProductEarnings);
         if (userProductEarnings == null) {
@@ -64,9 +65,10 @@ public class UserProductEarningsService implements IUserProductEarningsService {
             userProductEarnings.setRealearn(BigDecimal.ZERO);
             save(userProductEarnings);
         } else {
-            BigDecimal sumAmount = userProductEarnings.getInvestAmount().add(invest);
+            BigDecimal sumAmount = userProductEarnings.getInvestAmount().add(invest);//投资金额累加
+            BigDecimal sumProearn = AmountUtils.calculateProearn(vipInterestrate, interestrate, phases, sumAmount);//预期收益累加
             userProductEarnings.setInvestAmount(sumAmount);
-            userProductEarnings.setProearn(proearn);
+            userProductEarnings.setProearn(sumProearn);
             userProductEarnings.setUpdateTime(date);
             update(userProductEarnings);
         }

@@ -22,5 +22,5 @@ public interface IUserProductEarningsService {
     UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate);
 
     @Transactional(rollbackFor = Exception.class)
-    void saveOrUpdateUserProductEarnings(Date date, Integer uid, String uuid, BigDecimal invest, Integer pid, BigDecimal vipInterestrate, BigDecimal proearn);
+    void saveOrUpdateUserProductEarnings(Date date, Integer uid, String uuid, BigDecimal invest, Integer pid, BigDecimal vipInterestrate, BigDecimal proearn, BigDecimal interestrate, Integer phases);
 }

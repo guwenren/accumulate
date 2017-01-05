@@ -24,7 +24,7 @@ public class UserProductEarningsRepositoryExtend {
     private EntityManager em;
 
     public UserProductEarnings findOneByUidPidInterestrate(Integer uid, Integer pid, BigDecimal interestrate) {
-        String qlString = "from  UserProductEarnings o where o.uid = ?  and o.pid = ? and o.interestrate = ?";
+        String qlString = "from  UserProductEarnings o where o.uid = ?  and o.pid = ? and o.interestrate = ? ";
         Query query = em.createQuery(qlString);
         query.setParameter(1, uid);
         query.setParameter(2, pid);
@@ -33,7 +33,7 @@ public class UserProductEarningsRepositoryExtend {
         try {
             result = (UserProductEarnings) query.getSingleResult();
         } catch (NoResultException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             logger.info(e.getMessage());
         }
         return result;

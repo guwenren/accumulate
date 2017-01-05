@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,17 +65,15 @@ public class AccountBalanceRecordService implements IAccountBalanceRecordService
     @Override
     public AccountBalanceRecord income(AccountBalanceRecord entity) {
         logger.info("AccountBalanceRecordService.income");
+        Date date = new Date();
         BigDecimal amount = entity.getAmount(); //收入金额
         Integer uid = entity.getUid();   //用户id
-
         AccountBalance accountBalance = accountBalanceService.findOneByUid(uid);
         //账户余额
         BigDecimal balance = accountBalance.getBalance();
         BigDecimal addBalance = balance.add(amount);
         accountBalance.setBalance(addBalance);
-        accountBalance.setCreateTime(accountBalance.getCreateTime());
-        accountBalance.setUpdateTime(accountBalance.getUpdateTime());
-        accountBalance.setUuid(accountBalance.getUuid());
+        accountBalance.setUpdateTime(date);
         accountBalanceService.save(accountBalance);
 
         entity.setBalance(addBalance);

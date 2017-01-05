@@ -4,7 +4,6 @@ package com.guwr.accumulate.service.user.core.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.guwr.accumulate.common.enums.NotifyDestination;
 import com.guwr.accumulate.common.util.AmountUtils;
-import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
 import com.guwr.accumulate.facade.user.entity.UserProductInvest;
@@ -92,12 +91,12 @@ public class UserProductLevelService implements IUserProductLevelService {
         UserProductLevel productLevel = findOneByInvest(totalInvest);
         logger.info("{}_vip级别_{}", uid, productLevel);
         BigDecimal vipInterestrate = productLevel.getInterestrate(); // vip利率
-        BigDecimal proearn = getProearn(vipInterestrate, interestrate, phases, invest);
+        BigDecimal proearn = AmountUtils.calculateProearn(vipInterestrate, interestrate, phases, invest);
 
 //        BigDecimal currentInterestrate = vipInterestrate.add(interestrate);
 
         // 用户投资收益
-        userProductEarningsService.saveOrUpdateUserProductEarnings(date, uid, uuid, invest, pid, vipInterestrate, proearn);
+        userProductEarningsService.saveOrUpdateUserProductEarnings(date, uid, uuid, invest, pid, vipInterestrate, proearn,interestrate,phases);
 
 //        NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, currentInterestrate, uuid);
 //
@@ -117,25 +116,6 @@ public class UserProductLevelService implements IUserProductLevelService {
         UserProductLevel userProductLevel = null;
         return userProductLevel;
     }
-
-    /**
-     * 计算预期收益
-     *
-     * @param interestrate  vip利率
-     * @param pInterestrate 产品利率
-     * @param phases        期限
-     * @param invest        投资总额
-     * @return
-     */
-    private BigDecimal getProearn(BigDecimal interestrate, BigDecimal pInterestrate, Integer phases, BigDecimal invest) {
-        BigDecimal proearn;
-        BigDecimal realInterestrate = interestrate.add(pInterestrate); // 真实利率 =  vip利率 + 产品利率
-        BigDecimal multiply = invest.multiply(realInterestrate);// 真实利率 * 投资有效金额
-        BigDecimal divAmount = AmountUtils.div(multiply, new BigDecimal(365));// 每天收益
-        proearn = divAmount.multiply(new BigDecimal(phases)); // 预期收益
-        return proearn;
-    }
-
 
     private NotifyTransactionMessageVO buildMessageByProductRecordVO(Integer uid, BigDecimal proearn, BigDecimal interestrate, String uuid) {
         ProductRecordVO productRecordVO = new ProductRecordVO();

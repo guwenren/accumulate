@@ -32,7 +32,7 @@ public class UserProductLevelRepositoryExtend {
         try {
             result = (UserProductLevel) query.getSingleResult();
         } catch (NoResultException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             logger.info(e.getMessage());
         }
         return result;

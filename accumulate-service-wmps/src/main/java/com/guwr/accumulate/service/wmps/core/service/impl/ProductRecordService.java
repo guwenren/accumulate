@@ -14,6 +14,7 @@ import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
+import com.guwr.accumulate.facade.user.entity.UserProductInvest;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
 import com.guwr.accumulate.facade.user.facade.*;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
@@ -56,32 +57,26 @@ public class ProductRecordService implements IProductRecordService {
     private static Logger logger = LoggerFactory.getLogger(ProductRecordService.class);
     @Autowired
     private ProductRecordRepository repository;
-
     @Autowired
     private IProductService productService;
-
     @Autowired
     private IUserInfoFacade userInfoFacade;
-
-    @Autowired
-    private IUserProductLevelFacade userProductLevelFacade;
-
     @Autowired
     private IAccountBalanceRecordFacade accountBalanceRecordFacade;
-
     @Autowired
     private IAccountBalanceFacade accountBalanceFacade;
-
     @Autowired
     private IUserProductEarningsFacade userProductEarningsFacade;
-
     @Autowired
     private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
-
     @Autowired
     private IUserProductDayInterFacade userProductDayInterFacade;
     @Autowired
     private IUserProductFundsInfoFacade userProductFundsInfoFacade;
+    @Autowired
+    private IUserProductLevelFacade userProductLevelFacade;
+    @Autowired
+    private IUserProductInvestFacade userProductInvestFacade;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -164,17 +159,17 @@ public class ProductRecordService implements IProductRecordService {
         product.setEffectAmount(effect_amount);
         product.setUpdateTime(date);
 
-//        /**
-//         * 计算当笔投资VIP利率
-//         */
-//        UserProductLevelVO userProductLevelVO = new UserProductLevelVO();
-//        userProductLevelVO.setUid(uid);
-//        userProductLevelVO.setInvest(effectAmount);
-//        userProductLevelVO.setUuid(uuid);
-//        UserProductLevel userProductLevel1 = userProductLevelFacade.findUserProductLevelByIn(userProductLevelVO);
-//        logger.info("addProductRecord.userProductLevel = " + userProductLevel + "");
-//        BigDecimal vipInterestrate = userProductLevel.getInterestrate(); // vip利率
-//        BigDecimal proearn = proearn(userProductLevel, product, effectAmount);
+        BigDecimal invest = effectAmount;
+        UserProductInvest userProductInvest = userProductInvestFacade.findUserProductInvestByUid(uid);
+        if (userProductInvest != null) {
+            invest = invest.add(userProductInvest.getTotalInvest());
+        }
+
+        UserProductLevel userProductLevel = userProductLevelFacade.findUserProductLevelByInvest(invest);
+        BigDecimal vipInterestrate = userProductLevel.getInterestrate();//vip级别利息
+
+        BigDecimal proearn = AmountUtils.calculateProearn(vipInterestrate, product.getInterestrate(), product.getPhases(), effectAmount);
+
         /**
          *  添加资金流水，同时修改用户账户总额
          */
@@ -184,38 +179,12 @@ public class ProductRecordService implements IProductRecordService {
         accountBalanceRecordVO.setUuid(uuid);
         AccountBalanceRecord outgo = accountBalanceRecordFacade.outgo(accountBalanceRecordVO);
         logger.info("addProductRecord.outgo = " + outgo);
-//
-//        // 同一利率同一产品是否投资过
-//        UserProductEarnings userProductEarnings = userProductEarningsFacade.findOneByUidPidInterestrate(uid, pid, vipInterestrate);
-//        logger.info("addProductRecord.userProductEarnings = " + userProductEarnings);
-//        if (userProductEarnings == null) {
-//            userProductEarnings = new UserProductEarnings();
-//            userProductEarnings.setInvestAmount(effectAmount);
-//            userProductEarnings.setCreateTime(date);
-//            userProductEarnings.setUpdateTime(date);
-//            userProductEarnings.setUid(uid);
-//            userProductEarnings.setPid(pid);
-//            userProductEarnings.setInterestrate(vipInterestrate);
-//            userProductEarnings.setProearn(proearn);
-//            userProductEarnings.setUuid(uuid);
-//            userProductEarnings.setRealearn(BigDecimal.ZERO);
-//            userProductEarningsFacade.save(userProductEarnings);
-//        } else {
-//            BigDecimal sumAmount = userProductEarnings.getInvestAmount().add(effectAmount);
-//            proearn = proearn(userProductLevel, product, sumAmount);
-//            userProductEarnings.setInvestAmount(sumAmount);
-//            userProductEarnings.setProearn(proearn);
-//            userProductEarnings.setUpdateTime(date);
-//            userProductEarningsFacade.update(userProductEarnings);
-//        }
-
         /**
          * 添加用户投资记录
          */
         ProductRecord productRecord = new ProductRecord();
-//        proearn = AmountUtils.round(proearn, 2);
-//        productRecord.setProearn(proearn);
-//        productRecord.setInterestrate(vipInterestrate);
+        productRecord.setProearn(proearn);
+        productRecord.setInterestrate(vipInterestrate);
         productRecord.setEffectAmount(effectAmount);
         productRecord.setInvestAmount(investAmount);
         productRecord.setCreateTime(date);
@@ -252,24 +221,6 @@ public class ProductRecordService implements IProductRecordService {
     @Override
     public ProductRecord updateProductRecord(ProductRecord productRecord) {
         return repository.save(productRecord);
-    }
-
-    /**
-     * 计算预期收益
-     *
-     * @param userProductLevel
-     * @param product
-     * @param effectAmount
-     * @return
-     */
-    private BigDecimal proearn(UserProductLevel userProductLevel, Product product, BigDecimal effectAmount) {
-        BigDecimal proearn;
-        BigDecimal interestrate = userProductLevel.getInterestrate(); //vip利率
-        BigDecimal realInterestrate = product.getInterestrate().add(interestrate); // 真实利率 = 产品利率+ vip利率
-        BigDecimal multiply = effectAmount.multiply(realInterestrate);// 真实利率 * 投资有效金额
-        BigDecimal divAmount = AmountUtils.div(multiply, new BigDecimal(365));// 每天收益
-        proearn = divAmount.multiply(new BigDecimal(product.getPhases())); // 预期收益
-        return proearn;
     }
 
     @Override

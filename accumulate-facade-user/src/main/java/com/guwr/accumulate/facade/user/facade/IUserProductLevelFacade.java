@@ -4,6 +4,8 @@ package com.guwr.accumulate.facade.user.facade;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
 import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gwr
  * Description
@@ -13,4 +15,6 @@ import com.guwr.accumulate.facade.user.vo.UserProductLevelVO;
  */
 public interface IUserProductLevelFacade {
      void findUserProductLevelByIn(UserProductLevelVO info);
+
+    UserProductLevel findUserProductLevelByInvest(BigDecimal invest);
 }
