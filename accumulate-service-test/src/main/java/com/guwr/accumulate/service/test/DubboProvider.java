@@ -7,6 +7,7 @@ import com.el.borrow.soa.domain.borrowsignature.model.BorrowSignature;
 import com.el.borrow.soa.domain.borrowsignature.vo.BorrowSignatureVo;
 import com.el.borrow.soa.service.logic.borrowauth.ILogicBorrowAuthService;
 import com.el.borrow.soa.service.logic.borrowsignature.ILogicBorrowSignatureService;
+import com.el.borrowuser.soa.service.logic.userverifyinfo.ILogicUserVerifyInfoService;
 import com.el.common.page.PageList;
 import com.el.common.result.PublicResult;
 import com.eloancn.app.IBorrowAppAPI;
@@ -25,7 +26,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class DubboProvider {
@@ -38,12 +38,14 @@ public class DubboProvider {
             System.out.println("context = " + context);
 //            sendMessage(context);
 //            getBorrowSignature(context);
-            getRepayShow(context);
+//            getRepayShow(context);
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
 //            borrowAPP(context);
 //            countPayBackBail(context);
+            authByIdcardAndName(context);
+
             context.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,6 +64,19 @@ public class DubboProvider {
     }
 
     /**
+     * 身份证认证信息
+     */
+    private static void authByIdcardAndName(ClassPathXmlApplicationContext context) {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.authByIdcardAndName");
+        ILogicUserVerifyInfoService api = context.getBean("logicUserVerifyInfoService", ILogicUserVerifyInfoService.class);
+        String name = "张三";
+        String idcard = "123456";
+        PublicResult<String> result = api.authByIdcardAndName(name, idcard);
+        System.out.println("result = " + result);
+    }
+
+    /**
      * 正在还款的借款
      */
     private static void sendMessage(ClassPathXmlApplicationContext context) {
@@ -71,12 +86,12 @@ public class DubboProvider {
 
         SysSendMessageVo sysSendMessageVo = new SysSendMessageVo();
         sysSendMessageVo.setMobile("13167309518");
-                sysSendMessageVo.setJsonData("{\"mobileCode\":\"12345\"}");
+        sysSendMessageVo.setJsonData("{\"mobileCode\":\"12345\"}");
         sysSendMessageVo.setMsgCode("MODIFY_WITHHOLDING_CARD_CODE");
 
         SysSendMessageAPI api = context.getBean("sysSendMessageService", SysSendMessageAPI.class);
 //        String result = api.sendMessage("MODIFY_WITHHOLDING_CARD_CODE", , null, "814F4C07C57E45CB9B2ECC3D1042843F");
-        String result = api.sendSingleMessage(sysSendMessageVo,"814F4C07C57E45CB9B2ECC3D1042843F");
+        String result = api.sendSingleMessage(sysSendMessageVo, "814F4C07C57E45CB9B2ECC3D1042843F");
 //        PublicResult<PageList<BorrowSignature>> result = (PublicResult<PageList<BorrowSignature>>) pageListPublicResult;
         System.out.println("result = " + result);
     }
@@ -163,15 +178,15 @@ public class DubboProvider {
 
     private static void borrowAPP(ClassPathXmlApplicationContext context) {
         IBorrowAppAPI borrowAppAPI = context.getBean("borrowAppAPI", IBorrowAppAPI.class);
-        System.out.println("borrowAppAPI = " + borrowAppAPI);
+//        System.out.println("borrowAppAPI = " + borrowAppAPI);
 
-        Result result = borrowAppAPI.borroweTenderInfo(67, null);
+//        Result result = borrowAppAPI.borroweTenderInfo(67, null);
 
-        System.out.println("result = " + JSON.toJSONString(result));
-        Integer uid = 707020;
-        Integer tid = 1026390;
+//        System.out.println("result = " + JSON.toJSONString(result));
+        Integer uid = 2273;
+        Integer tid = 966;
         Integer publisheddate = 1461901569;
-        result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
+        Result result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 

@@ -2,6 +2,7 @@ package com.guwr.accumulate.service.notify.facade;
 
 import com.guwr.accumulate.common.enums.NotifyDataType;
 import com.guwr.accumulate.common.page.PageBean;
+import com.guwr.accumulate.common.web.vo.BaseVO;
 import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
@@ -59,7 +60,6 @@ public class NotifyTransactionMessageFacade implements INotifyTransactionMessage
     }
 
 
-
     @Override
     public NotifyTransactionMessage findNotifyTransactionMessageByUUID(String uuid) {
         return null;
@@ -105,10 +105,16 @@ public class NotifyTransactionMessageFacade implements INotifyTransactionMessage
 
     @Override
     public void deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue) {
-        logger.info("deleteNotifyTransactionMessageByUUIDAndQueue.uuid = [" + uuid + "],consumerQueue = [" + consumerQueue + "]");
-        service.deleteNotifyTransactionMessageByUUIDAndQueue(uuid,consumerQueue);
+        logger.info("uuid_{}_consumerQueue{}_通过uuid删除队列消息", uuid, consumerQueue);
+        service.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);
     }
 
+    @Override
+    public void deleteNotifyTransactionMessageByUUIDAndQueue(BaseVO info) {
+        String uuid = info.getUuid();
+        String consumerQueue = info.getConsumerQueue();
+        service.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);
+    }
 
     @Override
     public NotifyTransactionMessage update(NotifyTransactionMessage entity) {

@@ -1,6 +1,7 @@
 package com.guwr.accumulate.facade.notify.facade;
 
 import com.guwr.accumulate.common.page.PageBean;
+import com.guwr.accumulate.common.web.vo.BaseVO;
 import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
 import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
 
@@ -31,6 +32,8 @@ public interface INotifyTransactionMessageFacade {
     void deleteNotifyTransactionMessageByUUID(String uuid);
 
     void deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue);
+
+    void deleteNotifyTransactionMessageByUUIDAndQueue(BaseVO info);
 
     NotifyTransactionMessage update(NotifyTransactionMessage entity);
 

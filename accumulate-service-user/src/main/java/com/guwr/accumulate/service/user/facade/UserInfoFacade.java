@@ -56,7 +56,7 @@ public class UserInfoFacade implements IUserInfoFacade {
 
     @Override
     public UserInfo save(UserInfoVO info) {
-        logger.info("findListPage.save = [" + info + "]");
+        logger.info("findListPage.saveAccountBalance = [" + info + "]");
         UserInfo entity = new UserInfo();
         entity.setMobile(info.getMobile());
         entity.setPassword(info.getPassword());

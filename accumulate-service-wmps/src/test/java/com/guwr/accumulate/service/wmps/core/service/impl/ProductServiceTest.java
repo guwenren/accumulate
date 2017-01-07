@@ -47,7 +47,7 @@ public class ProductServiceTest extends BaseTest {
 //            product.setEnddate(enddate);
 //            product.setUuid(uuid);
 //            product.setStatus(ProductStatus.PUBLISHED.getValue());
-//            productService.save(product);
+//            productService.saveAccountBalance(product);
 //        }
 
         Date date = new Date();

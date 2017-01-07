@@ -1,12 +1,16 @@
 package com.guwr.accumulate.service.user.core.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
+import com.guwr.accumulate.common.enums.NotifyDestination;
 import com.guwr.accumulate.common.page.PageBean;
 import com.guwr.accumulate.common.page.PageParam;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceVO;
 import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
+import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
+import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
 import com.guwr.accumulate.facade.user.entity.UserInfo;
 import com.guwr.accumulate.facade.user.exception.UserBizException;
 import com.guwr.accumulate.facade.user.vo.UserInfoVO;
@@ -42,6 +46,9 @@ public class UserInfoService implements IUserInfoService {
     @Autowired
     private INotifyMessageFacade notifyMessageFacade;
 
+    @Autowired
+    private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+
     @Override
     public UserInfo save(UserInfo entity) {
         return repository.save(entity);
@@ -71,18 +78,26 @@ public class UserInfoService implements IUserInfoService {
 
         Integer id = userInfo.getId();
         // 2、添加用户账户
-        AccountBalanceVO accountBalanceVO = new AccountBalanceVO();
-        accountBalanceVO.setUid(id);
-        accountBalanceVO.setUuid(uuid);
-        accountBalanceFacade.save(accountBalanceVO);
+//        AccountBalanceVO accountBalanceVO = new AccountBalanceVO();
+//        accountBalanceVO.setUid(id);
+//        accountBalanceVO.setUuid(uuid);
+//        accountBalanceFacade.saveAccountBalance(accountBalanceVO);
+
+        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByAccountBalanceVO(id, uuid);
+
+        notifyTransactionMessageFacade.saveAndSendNotifyTransactionMessage(notifyTransactionMessageVO);
+
+        NotifyTransactionMessageVO notifyTransactionMessageVO2 = buildMessageByNotifyMessageVO(id, uuid);
+
+        notifyTransactionMessageFacade.saveAndSendNotifyTransactionMessage(notifyTransactionMessageVO2);
 
         // 3、发送短信通知
-        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();
-        notifyMessageVO.setUid(id);
-        notifyMessageVO.setUuid(uuid);
-        notifyMessageVO.setTitle(info.getRealname() +",注册成功");
-        notifyMessageVO.setContent(info.getRealname() +",发送注册成功短信");
-        notifyMessageFacade.save(notifyMessageVO);
+//        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();
+//        notifyMessageVO.setUid(id);
+//        notifyMessageVO.setUuid(uuid);
+//        notifyMessageVO.setTitle(info.getRealname() + ",注册成功");
+//        notifyMessageVO.setContent(info.getRealname() + ",发送注册成功短信");
+//        notifyMessageFacade.save(notifyMessageVO);
         return userInfo;
     }
 
@@ -131,5 +146,49 @@ public class UserInfoService implements IUserInfoService {
         List<UserInfo> recordList = repository.listPage(listPageStr, pageParam);
         pageBean = new PageBean<>(pageNum, numPerPage, total, recordList);
         return pageBean;
+    }
+
+    /**
+     * 组装预发送消息
+     *
+     * @param uid
+     * @param uuid
+     * @return
+     */
+    public NotifyTransactionMessageVO buildMessageByAccountBalanceVO(Integer uid, String uuid) {
+        AccountBalanceVO accountBalanceVO = new AccountBalanceVO();//消息体
+        accountBalanceVO.setUid(uid);
+        accountBalanceVO.setUuid(uuid);
+        accountBalanceVO.setConsumerQueue(NotifyDestination.ADD_ACCOUNT_BALANCE_REGISTER.name());
+        String messageBody = JSON.toJSONString(accountBalanceVO);
+
+        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
+        info.setMessageBody(messageBody);
+        info.setUuid(uuid);
+        info.setConsumerQueue(accountBalanceVO.getConsumerQueue());
+        return info;
+    }
+
+    /**
+     * 组装预发送消息
+     *
+     * @param uid
+     * @param uuid
+     * @return
+     */
+    public NotifyTransactionMessageVO buildMessageByNotifyMessageVO(Integer uid, String uuid) {
+        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();//消息体
+        notifyMessageVO.setUid(uid);
+        notifyMessageVO.setTitle(uid + "_注册成功Title");
+        notifyMessageVO.setContent(uid + "_注册成功Content");
+        notifyMessageVO.setUuid(uuid);
+        notifyMessageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
+        String messageBody = JSON.toJSONString(notifyMessageVO);
+
+        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
+        info.setMessageBody(messageBody);
+        info.setUuid(uuid);
+        info.setConsumerQueue(notifyMessageVO.getConsumerQueue());
+        return info;
     }
 }

@@ -12,7 +12,8 @@ public enum NotifyDestination {
 
     MESSAGE_NOTIFY("消息通知"),
     USER_PRODUCT_LEVEL_MESSAGE("用户投资级别消息"),
-    UPDATE_PROEARN_INTERESTRATE_MESSAGE("修改投资预期收益与利率");
+    UPDATE_PROEARN_INTERESTRATE_MESSAGE("修改投资预期收益与利率"),
+    ADD_ACCOUNT_BALANCE_REGISTER("注册成功，添加账户");
     /**
      * 描述
      */

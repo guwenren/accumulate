@@ -14,7 +14,7 @@
 
 
     <!-- back-destress-->
-    <dubbo:reference interface="com.eloancn.app.IBorrowAppAPI" id="borrowAppAPI" group="destress-soa-test-repay" registry="elZookeeper" version="1.0.0" check="false" />
+    <dubbo:reference interface="com.eloancn.app.IBorrowAppAPI" id="borrowAppAPI" group="destress-soa-gwr" registry="elZookeeper" version="1.0.0" check="false" />
 
 
     <dubbo:reference interface="com.eloancn.repayment.OverdueRepaymentAPI" id="overdueRepaymentAPI" group="destress-soa-test-repay" version="1.0.0"
@@ -33,4 +33,8 @@
     <dubbo:reference id="sysSendMessageService" version="0.0.1"   group="nback-system-soa-test"
                      interface="com.eloancn.nback.systemapi.SysSendMessageAPI"
                      timeout="120000" check="false" protocol="dubbo" registry="elZookeeper"  lazy="true"/>
+
+    <dubbo:reference interface="com.el.borrowuser.soa.service.logic.userverifyinfo.ILogicUserVerifyInfoService" group="borrowuser-soa"
+                     version="1.1.0"
+                   timeout="60000" protocol="dubbo" registry="elZookeeper" />
 </beans>

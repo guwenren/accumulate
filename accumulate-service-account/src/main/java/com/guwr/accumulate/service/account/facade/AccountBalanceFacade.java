@@ -27,8 +27,8 @@ public class AccountBalanceFacade implements IAccountBalanceFacade {
     private IAccountBalanceService accountBalanceService;
 
     @Override
-    public AccountBalance save(AccountBalanceVO info) {
-        logger.info("AccountBalanceFacade.save.info = [" + info + "]");
+    public AccountBalance saveAccountBalance(AccountBalanceVO info) {
+        logger.info("AccountBalanceFacade.saveAccountBalance.info = [" + info + "]");
         Integer uid = info.getUid();
         BigDecimal balance = BigDecimal.ZERO;
         AccountBalance accountBalance = new AccountBalance();
@@ -39,7 +39,7 @@ public class AccountBalanceFacade implements IAccountBalanceFacade {
     }
 
     @Override
-    public AccountBalance update(AccountBalanceVO info) {
+    public AccountBalance updateAccountBalance(AccountBalanceVO info) {
         return null;
     }
 

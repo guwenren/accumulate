@@ -42,4 +42,5 @@ public class AccountBalanceVO extends BaseVO {
     public void setId(Integer id) {
         this.id = id;
     }
+
 }

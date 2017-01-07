@@ -26,7 +26,7 @@ public class UserProductInvestLogService implements IUserProductInvestLogService
 
     @Override
     public UserProductInvestLog save(UserProductInvestLog entity) {
-        logger.info("UserProductInvestLogService.save.entity = [" + CommonUtils.obj2Json(entity) + "]");
+        logger.info("UserProductInvestLogService.saveAccountBalance.entity = [" + CommonUtils.obj2Json(entity) + "]");
         return repository.save(entity);
     }
 }

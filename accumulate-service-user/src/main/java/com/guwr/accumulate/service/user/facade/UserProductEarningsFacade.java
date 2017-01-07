@@ -34,13 +34,13 @@ public class UserProductEarningsFacade implements IUserProductEarningsFacade {
 
     @Override
     public void save(UserProductEarnings userProductEarnings) {
-        logger.info("save.userProductEarnings = [" + userProductEarnings + "]");
+        logger.info("saveAccountBalance.userProductEarnings = [" + userProductEarnings + "]");
         userProductEarningsService.save(userProductEarnings);
     }
 
     @Override
     public void update(UserProductEarnings userProductEarnings) {
-        logger.info("update.userProductEarnings = [" + userProductEarnings + "]");
+        logger.info("updateAccountBalance.userProductEarnings = [" + userProductEarnings + "]");
         userProductEarningsService.update(userProductEarnings);
     }
 }

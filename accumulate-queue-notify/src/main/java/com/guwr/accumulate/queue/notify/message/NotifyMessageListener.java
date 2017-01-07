@@ -42,9 +42,6 @@ public class NotifyMessageListener implements SessionAwareMessageListener<Messag
         logger.info("msgText = " + msgText);
         NotifyMessageVO info = JSON.parseObject(msgText, NotifyMessageVO.class);
         notifyMessageFacade.save(info);
-        String uuid = info.getUuid();
-        String consumerQueue = info.getConsumerQueue();
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);//测试消息通知结果处理完成但是删除消息失败
-        logger.info("删除队列消息_{}_{}", uuid, consumerQueue);
+        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(info);//测试消息通知结果处理完成但是删除消息失败
     }
 }

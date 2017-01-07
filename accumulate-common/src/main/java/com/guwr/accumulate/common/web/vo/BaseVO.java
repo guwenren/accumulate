@@ -1,5 +1,7 @@
 package com.guwr.accumulate.common.web.vo;
 
+import com.guwr.accumulate.common.util.CommonUtils;
+
 import java.io.Serializable;
 
 /**
@@ -10,16 +12,17 @@ import java.io.Serializable;
  * Time 23:47
  */
 public class BaseVO implements Serializable {
+    public final static String SORT_TYPE_ASC = "asc";
+    public final static String SORT_TYPE_DESC = "desc";
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    public final static String SORT_TYPE_ASC = "asc";
-    public final static String SORT_TYPE_DESC = "desc";
     private Integer pageNum; //页码
     private Integer numPerPage;  //数量
     private String sortType = SORT_TYPE_DESC;//排序方式
     private String uuid;
+    private String consumerQueue;
 
     public Integer getPageNum() {
         if (pageNum == null || pageNum <= 1)
@@ -37,6 +40,10 @@ public class BaseVO implements Serializable {
         return numPerPage;
     }
 
+    public void setNumPerPage(Integer numPerPage) {
+        this.numPerPage = numPerPage;
+    }
+
     public String getSortType() {
         return sortType;
     }
@@ -45,15 +52,24 @@ public class BaseVO implements Serializable {
         this.sortType = sortType;
     }
 
-    public void setNumPerPage(Integer numPerPage) {
-        this.numPerPage = numPerPage;
-    }
-
     public String getUuid() {
         return uuid;
     }
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getConsumerQueue() {
+        return consumerQueue;
+    }
+
+    public void setConsumerQueue(String consumerQueue) {
+        this.consumerQueue = consumerQueue;
+    }
+
+    @Override
+    public String toString() {
+        return CommonUtils.obj2Json(this);
     }
 }

@@ -17,19 +17,10 @@ public class NotifyTransactionMessageVO extends BaseVO {
 
 
     private static final long serialVersionUID = 2773955965211920688L;
-    private String consumerQueue;
     private Integer status;
     private String messageBody;
     private Integer areadlyDead;
     private String createTimeBefore; //
-
-    public String getConsumerQueue() {
-        return consumerQueue;
-    }
-
-    public void setConsumerQueue(String consumerQueue) {
-        this.consumerQueue = consumerQueue;
-    }
 
     public Integer getStatus() {
         return status;

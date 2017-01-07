@@ -11,9 +11,9 @@ import com.guwr.accumulate.facade.account.vo.AccountBalanceVO;
  * Time 18:33
  */
 public interface IAccountBalanceFacade {
-    AccountBalance save(AccountBalanceVO vo);
+    AccountBalance saveAccountBalance(AccountBalanceVO vo);
 
-    AccountBalance update(AccountBalanceVO vo);
+    AccountBalance updateAccountBalance(AccountBalanceVO vo);
 
     AccountBalance findOneByUid(int uid);
 

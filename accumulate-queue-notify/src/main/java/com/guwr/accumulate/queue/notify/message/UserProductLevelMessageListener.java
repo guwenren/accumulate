@@ -42,9 +42,6 @@ public class UserProductLevelMessageListener implements SessionAwareMessageListe
         logger.info("msgText = " + msgText);
         UserProductLevelVO info = JSON.parseObject(msgText, UserProductLevelVO.class);
         userProductLevelFacade.findUserProductLevelByIn(info);
-        String uuid = info.getUuid();
-        String consumerQueue = info.getConsumerQueue();
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(uuid, consumerQueue);
-        logger.info("删除队列消息_{}_{}", uuid, consumerQueue);
+        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(info);
     }
 }
