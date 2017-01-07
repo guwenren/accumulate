@@ -16,4 +16,6 @@
     <dubbo:reference interface="com.guwr.accumulate.facade.wmps.facade.IProductRecordFacade" id="productRecordFacade" check="false"/>
     <!--accumulate-service-user-->
     <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserProductLevelFacade" id="userProductLevelFacade" check="false"/>
+    <!--accumulate-service-account-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade" id="accountBalanceFacade" check="false"/>
 </beans>

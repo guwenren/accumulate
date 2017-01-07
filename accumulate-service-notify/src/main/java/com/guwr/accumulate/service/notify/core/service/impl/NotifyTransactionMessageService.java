@@ -94,7 +94,7 @@ public class NotifyTransactionMessageService implements INotifyTransactionMessag
         entity.setAreadlyDead(1);
         entity.setMessageSendTimes(0);
         entity.setStatus(NotifyTransactionMessageStatus.ALREADY_CONFIRM.getValue());
-        final NotifyTransactionMessage notifyTransactionMessage = saveNotifyTransactionMessage(entity);
+        final NotifyTransactionMessage notifyTransactionMessage = repository.save(entity);
         jmsTemplate.setDefaultDestinationName(notifyTransactionMessage.getConsumerQueue());
         jmsTemplate.send(new MessageCreator() {
             public Message createMessage(Session session) throws JMSException {

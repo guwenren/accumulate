@@ -41,12 +41,6 @@ public class UserInfoService implements IUserInfoService {
     private UserInfoRepository repository;
 
     @Autowired
-    private IAccountBalanceFacade accountBalanceFacade;
-
-    @Autowired
-    private INotifyMessageFacade notifyMessageFacade;
-
-    @Autowired
     private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
 
     @Override
