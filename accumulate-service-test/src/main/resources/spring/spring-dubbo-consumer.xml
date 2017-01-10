@@ -34,7 +34,7 @@
                      interface="com.eloancn.nback.systemapi.SysSendMessageAPI"
                      timeout="120000" check="false" protocol="dubbo" registry="elZookeeper"  lazy="true"/>
 
-    <dubbo:reference interface="com.el.borrowuser.soa.service.logic.userverifyinfo.ILogicUserVerifyInfoService" group="borrowuser-soa"
+    <dubbo:reference interface="com.el.borrowuser.soa.service.logic.userverifyinfo.ILogicUserVerifyInfoService" id="logicUserVerifyInfoService" group="borrowuser-soa"
                      version="1.1.0"
                    timeout="60000" protocol="dubbo" registry="elZookeeper" />
 </beans>

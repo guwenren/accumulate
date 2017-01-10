@@ -42,9 +42,9 @@ public class DubboProvider {
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
-//            borrowAPP(context);
+            borrowAPP(context);
 //            countPayBackBail(context);
-            authByIdcardAndName(context);
+//            authByIdcardAndName(context);
 
             context.start();
         } catch (Exception e) {
@@ -70,10 +70,11 @@ public class DubboProvider {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.authByIdcardAndName");
         ILogicUserVerifyInfoService api = context.getBean("logicUserVerifyInfoService", ILogicUserVerifyInfoService.class);
-        String name = "张三";
-        String idcard = "123456";
+        String name = "谷文明";
+        String idcard = "430481198902234532";
         PublicResult<String> result = api.authByIdcardAndName(name, idcard);
-        System.out.println("result = " + result);
+        System.out.println("result = " + result.getResult());
+        System.out.println("result = " + JSON.toJSONString(result));
     }
 
     /**
@@ -180,13 +181,13 @@ public class DubboProvider {
         IBorrowAppAPI borrowAppAPI = context.getBean("borrowAppAPI", IBorrowAppAPI.class);
 //        System.out.println("borrowAppAPI = " + borrowAppAPI);
 
-//        Result result = borrowAppAPI.borroweTenderInfo(67, null);
+        Result result = borrowAppAPI.borroweTenderInfo(1046108, null);
 
-//        System.out.println("result = " + JSON.toJSONString(result));
-        Integer uid = 2273;
-        Integer tid = 966;
+        System.out.println("result = " + JSON.toJSONString(result));
+        Integer uid = 701082;
+        Integer tid = 1046108;
         Integer publisheddate = 1461901569;
-        Result result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
+         result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 
