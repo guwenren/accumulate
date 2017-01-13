@@ -166,25 +166,26 @@ public class ProductRecordService implements IProductRecordService {
         }
 
         UserProductLevel userProductLevel = userProductLevelFacade.findUserProductLevelByInvest(invest);
-        BigDecimal vipInterestrate = userProductLevel.getInterestrate();//vip级别利息
+        BigDecimal interestrate = userProductLevel.getInterestrate();//vip级别利息
 
-        BigDecimal proearn = AmountUtils.calculateProearn(vipInterestrate, product.getInterestrate(), product.getPhases(), effectAmount);
+        //预期收益
+        BigDecimal proearn = AmountUtils.calculateProearn(interestrate, product.getInterestrate(), product.getPhases(), effectAmount);
 
         /**
          *  添加资金流水，同时修改用户账户总额
          */
-        AccountBalanceRecordVO accountBalanceRecordVO = new AccountBalanceRecordVO();
-        accountBalanceRecordVO.setAmount(effectAmount);
-        accountBalanceRecordVO.setUid(uid);
-        accountBalanceRecordVO.setUuid(uuid);
-        AccountBalanceRecord outgo = accountBalanceRecordFacade.outgo(accountBalanceRecordVO);
+        AccountBalanceRecordVO balanceRecordVO = new AccountBalanceRecordVO();
+        balanceRecordVO.setAmount(effectAmount);
+        balanceRecordVO.setUid(uid);
+        balanceRecordVO.setUuid(uuid);
+        AccountBalanceRecord outgo = accountBalanceRecordFacade.outgo(balanceRecordVO);
         logger.info("addProductRecord.outgo = " + outgo);
         /**
          * 添加用户投资记录
          */
         ProductRecord productRecord = new ProductRecord();
         productRecord.setProearn(proearn);
-        productRecord.setInterestrate(vipInterestrate);
+        productRecord.setInterestrate(interestrate);
         productRecord.setEffectAmount(effectAmount);
         productRecord.setInvestAmount(investAmount);
         productRecord.setCreateTime(date);
@@ -194,13 +195,13 @@ public class ProductRecordService implements IProductRecordService {
         productRecord.setUuid(uuid);
         productRecord.setStatus(ProductRecordStatus.WMPS_BUY_RECORD_STATUS_SUCCESS.getValue());
 
-        NotifyTransactionMessageVO notifyMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
+        NotifyTransactionMessageVO transactionMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
 
-        NotifyTransactionMessageVO notifyTransactionMessageVO = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
+        NotifyTransactionMessageVO transactionMessageVO1 = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
 
-        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(notifyMessageVO);
+        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO);
         logger.info(uid + "_保存邮件待确认消息");
-        NotifyTransactionMessage notifyTransactionMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(notifyTransactionMessageVO);
+        NotifyTransactionMessage notifyTransactionMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO1);
         logger.info(uid + "_保存用户投资等级待确认消息");
 
         this.save(productRecord);  //保存购买记录

@@ -42,9 +42,9 @@ public class DubboProvider {
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
-            borrowAPP(context);
+//            borrowAPP(context);
 //            countPayBackBail(context);
-//            authByIdcardAndName(context);
+            authByIdcardAndName(context);
 
             context.start();
         } catch (Exception e) {
@@ -74,7 +74,6 @@ public class DubboProvider {
         String idcard = "430481198902234532";
         PublicResult<String> result = api.authByIdcardAndName(name, idcard);
         System.out.println("result = " + result.getResult());
-        System.out.println("result = " + JSON.toJSONString(result));
     }
 
     /**

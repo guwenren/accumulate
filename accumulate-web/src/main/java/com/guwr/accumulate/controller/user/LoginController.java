@@ -51,8 +51,7 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(value = "login", method = {RequestMethod.POST})
     public String login(Model model, String mobile, String password) {
-        logger.info("LoginController.login");
-        logger.info("mobile = [" + mobile + "], password = [" + password + "]");
+        logger.info("model = [" + model + "], mobile = [" + mobile + "], password = [" + password + "]");
         UserInfo userInfo = userInfoFacade.findOneByMobile(mobile);
         model.addAttribute(MODEL_KEY, userInfo);
         return "index";
