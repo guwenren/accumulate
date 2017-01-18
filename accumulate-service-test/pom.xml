@@ -50,11 +50,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.el.borrow.soa</groupId>
-            <artifactId>borrow-soa-domain</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>com.el.common</groupId>
             <artifactId>el-common-util</artifactId>
             <version>1.2.0-SNAPSHOT</version>
@@ -104,12 +99,12 @@
             <artifactId>borrowuser-soa-iservice</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.el.borrowuser.soa</groupId>
-            <artifactId>borrowuser-soa-domain</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
 
+        <dependency>
+            <artifactId>wst-soa-iservice</artifactId>
+            <groupId>com.el.wst.soa</groupId>
+            <version>1.2.0-SNAPSHOT</version>
+        </dependency>
 
         <!--<dependency>-->
             <!--<groupId>com.eloancn</groupId>-->

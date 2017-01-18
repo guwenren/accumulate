@@ -178,8 +178,8 @@ public class ProductRecordService implements IProductRecordService {
         balanceRecordVO.setAmount(effectAmount);
         balanceRecordVO.setUid(uid);
         balanceRecordVO.setUuid(uuid);
-        AccountBalanceRecord outgo = accountBalanceRecordFacade.outgo(balanceRecordVO);
-        logger.info("addProductRecord.outgo = " + outgo);
+        AccountBalanceRecord record = accountBalanceRecordFacade.outgo(balanceRecordVO);
+        logger.info("addProductRecord.record = " + record);
         /**
          * 添加用户投资记录
          */
@@ -294,36 +294,36 @@ public class ProductRecordService implements IProductRecordService {
      */
     public NotifyTransactionMessageVO buildMessageByNotifyMessageVO(Integer uid, String uuid, Integer pid) {
 
-        NotifyMessageVO notifyMessageVO = new NotifyMessageVO();//消息体
-        notifyMessageVO.setUid(uid);
-        notifyMessageVO.setTitle(uid + "_购买产品");
-        notifyMessageVO.setContent(uid + "_购买，" + pid + "_产品");
-        notifyMessageVO.setUuid(uuid);
-        notifyMessageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
-        String messageBody = JSON.toJSONString(notifyMessageVO);
+        NotifyMessageVO messageVO = new NotifyMessageVO();//消息体
+        messageVO.setUid(uid);
+        messageVO.setTitle(uid + "_购买产品");
+        messageVO.setContent(uid + "_购买，" + pid + "_产品");
+        messageVO.setUuid(uuid);
+        messageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
+        String messageBody = JSON.toJSONString(messageVO);
 
         NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
         info.setMessageBody(messageBody);
         info.setUuid(uuid);
-        info.setConsumerQueue(notifyMessageVO.getConsumerQueue());
+        info.setConsumerQueue(messageVO.getConsumerQueue());
         return info;
     }
 
     private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid, Integer phases, BigDecimal interestrate, Integer pid) {
-        UserProductLevelVO userProductLevelVO = new UserProductLevelVO();
-        userProductLevelVO.setPid(pid);
-        userProductLevelVO.setUid(uid);
-        userProductLevelVO.setInvest(effectAmount);
-        userProductLevelVO.setUuid(uuid);
-        userProductLevelVO.setPhases(phases);
-        userProductLevelVO.setInterestrate(interestrate);
-        userProductLevelVO.setConsumerQueue(NotifyDestination.USER_PRODUCT_LEVEL_MESSAGE.name());
-        String messageBody = JSON.toJSONString(userProductLevelVO);
+        UserProductLevelVO productLevelVO = new UserProductLevelVO();
+        productLevelVO.setPid(pid);
+        productLevelVO.setUid(uid);
+        productLevelVO.setInvest(effectAmount);
+        productLevelVO.setUuid(uuid);
+        productLevelVO.setPhases(phases);
+        productLevelVO.setInterestrate(interestrate);
+        productLevelVO.setConsumerQueue(NotifyDestination.USER_PRODUCT_LEVEL_MESSAGE.name());
+        String messageBody = JSON.toJSONString(productLevelVO);
 
         NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
         info.setMessageBody(messageBody);
         info.setUuid(uuid);
-        info.setConsumerQueue(userProductLevelVO.getConsumerQueue());
+        info.setConsumerQueue(productLevelVO.getConsumerQueue());
 
         return info;
     }

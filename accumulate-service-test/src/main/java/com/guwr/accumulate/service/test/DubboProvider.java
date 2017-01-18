@@ -10,6 +10,8 @@ import com.el.borrow.soa.service.logic.borrowsignature.ILogicBorrowSignatureServ
 import com.el.borrowuser.soa.service.logic.userverifyinfo.ILogicUserVerifyInfoService;
 import com.el.common.page.PageList;
 import com.el.common.result.PublicResult;
+import com.el.wst.soa.domain.buyrecord.vo.WmpsBuyRecordVo;
+import com.el.wst.soa.service.logic.buyrecord.ILogicBuyRecordService;
 import com.eloancn.app.IBorrowAppAPI;
 import com.eloancn.entity.repay.RepayShowVO;
 import com.eloancn.fornew.result.Result;
@@ -23,7 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,7 +48,8 @@ public class DubboProvider {
 //            countAccruedByUid(context);
 //            borrowAPP(context);
 //            countPayBackBail(context);
-            authByIdcardAndName(context);
+//            authByIdcardAndName(context);
+            logicBuyRecordService(context);
 
             context.start();
         } catch (Exception e) {
@@ -61,6 +66,26 @@ public class DubboProvider {
 //                }
 //            }
 //        }
+    }
+    /**
+     * 身份证认证信息
+     */
+    private static void logicBuyRecordService(ClassPathXmlApplicationContext context) throws Exception {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.logicBuyRecordService");
+        String sdate1 = "2015-01-01";
+        String sdate2 = "2015-02-28";
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = sf.parse(sdate1);
+        Date date2 = sf.parse(sdate2);
+        int int1 = (int)(date1.getTime() / 1000);
+        int int2 = (int)(date2.getTime() / 1000);
+        System.out.println("int1 = " + int1);
+        System.out.println("int2 = " + int2);
+        ILogicBuyRecordService api = context.getBean("logicBuyRecordService", ILogicBuyRecordService.class);
+        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
+//        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
+        System.out.println("result = " + JSON.toJSONString(result.getResult()));
     }
 
     /**
