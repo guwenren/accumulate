@@ -10,11 +10,14 @@ import com.el.borrow.soa.service.logic.borrowsignature.ILogicBorrowSignatureServ
 import com.el.borrowuser.soa.service.logic.userverifyinfo.ILogicUserVerifyInfoService;
 import com.el.common.page.PageList;
 import com.el.common.result.PublicResult;
-import com.el.wst.soa.domain.buyrecord.vo.WmpsBuyRecordVo;
+//import com.el.wst.soa.domain.buyrecord.vo.WmpsBuyRecordVo;
 import com.el.wst.soa.service.logic.buyrecord.ILogicBuyRecordService;
 import com.eloancn.app.IBorrowAppAPI;
+import com.eloancn.dkweb.sevice.api.tender.ILoadTenderDetailsService;
+import com.eloancn.dkweb.sevice.dto.tender.LoadTenderDetailsDto;
 import com.eloancn.entity.repay.RepayShowVO;
 import com.eloancn.fornew.result.Result;
+import com.eloancn.framework.sevice.api.ResultDTO;
 import com.eloancn.nback.common.vo.SysSendMessageVo;
 import com.eloancn.nback.systemapi.SysSendMessageAPI;
 import com.eloancn.overdueAccrue.OverdueAccrueAPI;
@@ -49,8 +52,8 @@ public class DubboProvider {
 //            borrowAPP(context);
 //            countPayBackBail(context);
 //            authByIdcardAndName(context);
-            logicBuyRecordService(context);
-
+//            logicBuyRecordService(context);
+            loadTenderDetails(context);
             context.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,6 +71,19 @@ public class DubboProvider {
 //        }
     }
     /**
+     * 标详情
+     */
+    private static void loadTenderDetails(ClassPathXmlApplicationContext context) throws Exception {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.logicBuyRecordService");
+        ILoadTenderDetailsService api = context.getBean("loadTenderDetailsService", ILoadTenderDetailsService.class);
+        ResultDTO<LoadTenderDetailsDto> result = api.loadTenderDetails("1045072");
+//        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
+//        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
+        System.out.println("result = " + JSON.toJSONString(result));
+    }
+
+    /**
      * 身份证认证信息
      */
     private static void logicBuyRecordService(ClassPathXmlApplicationContext context) throws Exception {
@@ -83,9 +99,9 @@ public class DubboProvider {
         System.out.println("int1 = " + int1);
         System.out.println("int2 = " + int2);
         ILogicBuyRecordService api = context.getBean("logicBuyRecordService", ILogicBuyRecordService.class);
-        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
+//        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
 //        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
-        System.out.println("result = " + JSON.toJSONString(result.getResult()));
+//        System.out.println("result = " + JSON.toJSONString(result.getResult()));
     }
 
     /**
