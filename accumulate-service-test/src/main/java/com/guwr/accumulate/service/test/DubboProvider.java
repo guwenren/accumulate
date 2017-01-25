@@ -24,6 +24,7 @@ import com.eloancn.overdueAccrue.OverdueAccrueAPI;
 import com.eloancn.repayment.OverdueRepaymentAPI;
 import com.eloancn.repayment.PayBackBailAPI;
 import com.eloancn.repayment.RepaymentAPI;
+import com.eloancn.web.agent.service.TenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -53,7 +54,8 @@ public class DubboProvider {
 //            countPayBackBail(context);
 //            authByIdcardAndName(context);
 //            logicBuyRecordService(context);
-            loadTenderDetails(context);
+//            loadTenderDetails(context);
+            addSynchTenderJob(context);
             context.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,15 +73,29 @@ public class DubboProvider {
 //        }
     }
     /**
+     * 借款端app同步标详情
+     */
+    private static void addSynchTenderJob(ClassPathXmlApplicationContext context) throws Exception {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.addSynchTenderJob");
+        TenderService api = context.getBean("tenderService", TenderService.class);
+        com.eloancn.web.agent.service.com.eloancn.web.agent.domain.result.PublicResult result = api.addSynchTenderJob(1046646, 0, "121212121", 25);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
+        System.out.println("result = " + JSON.toJSONString(result));
+    }
+
+
+    /**
      * 标详情
      */
     private static void loadTenderDetails(ClassPathXmlApplicationContext context) throws Exception {
         System.out.println("context = [" + context + "]");
-        System.out.println("DubboProvider.logicBuyRecordService");
+        System.out.println("DubboProvider.loadTenderDetails");
         ILoadTenderDetailsService api = context.getBean("loadTenderDetailsService", ILoadTenderDetailsService.class);
         ResultDTO<LoadTenderDetailsDto> result = api.loadTenderDetails("1045072");
-//        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
-//        PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 

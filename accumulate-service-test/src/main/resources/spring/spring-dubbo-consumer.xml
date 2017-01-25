@@ -43,4 +43,9 @@
 
     <dubbo:reference interface="com.eloancn.dkweb.sevice.api.tender.ILoadTenderDetailsService" id="loadTenderDetailsService" group="dkweb-soa" version="1.0.0"
                      timeout="60000" protocol="dubbo" registry="elZookeeper" validation="false" retries="2" check="false" />
+
+    <dubbo:reference interface="com.eloancn.web.agent.service.TenderService"
+                     id="tenderService" group="borrow-agent-app" version="1.1.0"
+                     timeout="60000" protocol="dubbo" registry="elZookeeper" check="false" lazy="true" retries="2"/>
+
 </beans>
