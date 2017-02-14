@@ -35,7 +35,5 @@ public class Main {
 
         System.out.println("of = " + of);
         System.out.println("Main.main");
-
-
     }
 }
