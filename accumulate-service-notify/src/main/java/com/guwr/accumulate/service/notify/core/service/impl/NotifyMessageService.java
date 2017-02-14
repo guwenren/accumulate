@@ -31,22 +31,27 @@ public class NotifyMessageService implements INotifyMessageService {
     public Integer countNotifyMessage() {
         return null;
     }
+
     @Override
     public NotifyMessage getNotifyMessage(Integer id) {
         return null;
     }
+
     @Override
     public List<NotifyMessage> listNotifyMessage() {
         return null;
     }
+
     @Override
     public PageBean<NotifyMessage> pageNotifyMessage() {
         return null;
     }
+
     @Override
     public void removeNotifyMessage(Integer id) {
 
     }
+
     @Override
     public NotifyMessage updateNotifyMessage(NotifyMessage entity) {
         return null;
@@ -54,6 +59,7 @@ public class NotifyMessageService implements INotifyMessageService {
 
     @Override
     public NotifyMessage save(NotifyMessage entity) {
+        logger.info("save.entity = {}", entity);
         Date date = new Date();
         entity.setCreateTime(date);
         entity.setUpdateTime(date);
