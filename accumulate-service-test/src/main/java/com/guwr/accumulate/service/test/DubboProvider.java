@@ -50,12 +50,12 @@ public class DubboProvider {
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
-//            borrowAPP(context);
+            borrowAPP(context);
 //            countPayBackBail(context);
 //            authByIdcardAndName(context);
 //            logicBuyRecordService(context);
 //            loadTenderDetails(context);
-            addSynchTenderJob(context);
+//            addSynchTenderJob(context);
             context.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +93,8 @@ public class DubboProvider {
         System.out.println("context = [" + context + "]");
         System.out.println("DubboProvider.loadTenderDetails");
         ILoadTenderDetailsService api = context.getBean("loadTenderDetailsService", ILoadTenderDetailsService.class);
-        ResultDTO<LoadTenderDetailsDto> result = api.loadTenderDetails("1045072");
+
+        ResultDTO<LoadTenderDetailsDto> result = api.loadTenderDetails("1045072");//
 //      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
 //      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
         System.out.println("result = " + JSON.toJSONString(result));
@@ -240,8 +241,10 @@ public class DubboProvider {
         Result result = borrowAppAPI.borroweTenderInfo(1046108, null);
 
         System.out.println("result = " + JSON.toJSONString(result));
-        Integer uid = 701082;
-        Integer tid = 1046108;
+
+//        ,uid=,publisheddate=
+        Integer uid = 706978;
+        Integer tid = 1026809;
         Integer publisheddate = 1461901569;
          result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
         System.out.println("result = " + JSON.toJSONString(result));

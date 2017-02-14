@@ -1,9 +1,11 @@
 package com.guwr.accumulate.test.guava;
 
-import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by   guwr
@@ -16,10 +18,24 @@ import java.util.Date;
 public class Main {
     public static void main(String[] args) {
 
+        List<String> stringList = new ArrayList<>();
+
+//        stringList.replaceAll();
+
+
+        stringList.forEach(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                System.out.println("s = " + s);
+            }
+        });
+
         Date date = null;
         Optional<Date> of = Optional.of(date);
 
         System.out.println("of = " + of);
         System.out.println("Main.main");
+
+
     }
 }

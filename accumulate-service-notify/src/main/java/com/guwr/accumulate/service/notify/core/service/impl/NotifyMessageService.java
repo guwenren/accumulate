@@ -1,6 +1,7 @@
 package com.guwr.accumulate.service.notify.core.service.impl;
 
 
+import com.guwr.accumulate.common.page.PageBean;
 import com.guwr.accumulate.facade.notify.entity.NotifyMessage;
 import com.guwr.accumulate.service.notify.core.dao.NotifyMessageRepository;
 import com.guwr.accumulate.service.notify.core.service.INotifyMessageService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by gwr
@@ -24,6 +26,31 @@ public class NotifyMessageService implements INotifyMessageService {
     private static Logger logger = LoggerFactory.getLogger(NotifyMessageService.class);
     @Autowired
     private NotifyMessageRepository repository;
+
+    @Override
+    public Integer countNotifyMessage() {
+        return null;
+    }
+    @Override
+    public NotifyMessage getNotifyMessage(Integer id) {
+        return null;
+    }
+    @Override
+    public List<NotifyMessage> listNotifyMessage() {
+        return null;
+    }
+    @Override
+    public PageBean<NotifyMessage> pageNotifyMessage() {
+        return null;
+    }
+    @Override
+    public void removeNotifyMessage(Integer id) {
+
+    }
+    @Override
+    public NotifyMessage updateNotifyMessage(NotifyMessage entity) {
+        return null;
+    }
 
     @Override
     public NotifyMessage save(NotifyMessage entity) {

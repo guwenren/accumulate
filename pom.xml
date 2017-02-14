@@ -34,13 +34,12 @@
         <!--web-->
         <module>accumulate-web</module>
         <!--<module>accumulate-test</module>-->
-        <module>accumulate-parent</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <mina.version>1.1.7</mina.version>
         <grizzly.version>2.1.4</grizzly.version>
         <xstream.version>1.4.1</xstream.version>
