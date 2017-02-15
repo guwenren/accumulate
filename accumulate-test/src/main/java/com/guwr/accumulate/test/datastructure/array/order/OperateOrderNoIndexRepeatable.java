@@ -1,5 +1,7 @@
 package com.guwr.accumulate.test.datastructure.array.order;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -8,51 +10,57 @@ import java.util.Objects;
  * Path         com.guwr.accumulate.test.datastructure.array.order.OperateOrderNoIndex
  * Date         2017/2/14
  * Time         17:40
- * Description  有序数组,存放不重复的值
+ * Description  有序数组,存放重复的值
  */
-public class OperateOrderNoIndex {
+public class OperateOrderNoIndexRepeatable {
     private int[] datas;
     private int currentIndex = 0;
 
-    private OperateOrderNoIndex(int length) {
+    private OperateOrderNoIndexRepeatable(int length) {
         this.datas = new int[length];
     }
 
     public static void main(String[] args) {
-        OperateOrderNoIndex t = new OperateOrderNoIndex(10);
+        OperateOrderNoIndexRepeatable t = new OperateOrderNoIndexRepeatable(10);
 
         t.insert(3);
         t.insert(6);
         t.insert(1);
         t.insert(2);
+        t.insert(2);
+        t.insert(6);
 
         t.printDatas();
 
-        t.remove(1);
+        t.remove(6);
         t.printDatas();
-//
-        int ret = t.searchOne(1);
+
+        List<Integer> ret = t.searchOne(2);
         System.out.println("ret==" + ret);
     }
 
-    private int searchOne(int data) {
+    private List<Integer> searchOne(int data) {
+        List<Integer> integerList = new ArrayList<>();
         //1：查找这个数据对应的索引
-        int index = this.getIndex(data);
-        //2：如果有，就返回datas中的数据
-        if (index >= 0) {
-            return datas[index];
+        int index = this.getIndex(0, data);
+        while (index != -1) {
+            integerList.add(datas[index]);
+            index = this.getIndex(index+1, data);
         }
         //3：如果没有，就返回0；
-        return 0;
+        return integerList;
     }
 
     private void remove(int data) {
         //1：查找这个数据对应的索引
-        int index = this.getIndex(data);
-        for (int i = index; i < currentIndex; i++) {
-            datas[i] = datas[i + 1];
+        int index = this.getIndex(0, data);
+        while (index != -1) {
+            for (int i = index; i < currentIndex; i++) {
+                datas[i] = datas[i + 1];
+            }
+            currentIndex--;
+            index = this.getIndex(index, data);
         }
-        currentIndex--;
     }
 
     private void printDatas() {
@@ -103,9 +111,9 @@ public class OperateOrderNoIndex {
         return currentIndex - 1;
     }
 
-    private int getIndex(int data) {
+    private int getIndex(int begin, int data) {
         int index = -1;
-        for (int i = 0; i < currentIndex; i++) {
+        for (int i = begin; i < currentIndex; i++) {
             if (Objects.equals(data, datas[i])) {
                 index = i;
                 break;
