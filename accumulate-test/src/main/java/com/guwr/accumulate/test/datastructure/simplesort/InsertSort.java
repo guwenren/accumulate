@@ -25,7 +25,7 @@ public class InsertSort {
          */
         int j = 0;
         for (int i = 1; i < as.length; i++) {
-            int temp = as[i];
+            int temp = as[i];// 2
             for (j = i; j > 0; j--) {
                 if (as[j - 1] >= temp) {
                      as[j] = as[j - 1];
