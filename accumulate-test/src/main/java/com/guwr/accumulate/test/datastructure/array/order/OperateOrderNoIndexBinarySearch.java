@@ -96,6 +96,10 @@ public class OperateOrderNoIndexBinarySearch {
         return 0;
     }
 
+    private void sort(){
+
+    }
+
     public void printDatas() {
         System.out.println("======================================>");
         for (int d : datas) {
