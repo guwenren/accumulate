@@ -6,7 +6,7 @@ package com.guwr.accumulate.test.datastructure.simplesort;
  * Path         com.guwr.accumulate.test.datastructure.simplesort.BubbleSort
  * Date         2017/2/15
  * Time         11:42
- * Description  冒泡排序
+ * Description  选择排序
  */
 public class SelectSort {
 

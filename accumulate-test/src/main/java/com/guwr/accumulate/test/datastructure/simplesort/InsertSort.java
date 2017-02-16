@@ -6,7 +6,7 @@ package com.guwr.accumulate.test.datastructure.simplesort;
  * Path         com.guwr.accumulate.test.datastructure.simplesort.BubbleSort
  * Date         2017/2/15
  * Time         11:42
- * Description  冒泡排序
+ * Description  插入法排序
  */
 public class InsertSort {
 
@@ -15,21 +15,20 @@ public class InsertSort {
 
         int[] as = new int[]{3, 2, 8, 6, 4, 1};
 
-        t.selectSort(as);
+        t.insertSort(as);
         t.printDatas(as);
     }
 
-    private void selectSort(int[] as) {
-        /**
-         *  3, 2, 8, 6, 4, 1
-         */
-        int j = 0;
+    private void insertSort(int[] as) {
+        int temp;
+
         for (int i = 1; i < as.length; i++) {
-            int temp = as[i];// 2
+            temp = as[i];
+            int j = 0;
             for (j = i; j > 0; j--) {
-                if (as[j - 1] >= temp) {
-                     as[j] = as[j - 1];
-                } else {
+                if (as[j - 1] > temp) {
+                    as[j] = as[j - 1];
+                }else {
                     break;
                 }
             }
