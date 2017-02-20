@@ -36,6 +36,7 @@ public class InsertSort {
         }
     }
 
+
     private void swap(int[] as, int aIndex, int bIndex) {
         int temp = as[aIndex];
         as[aIndex] = as[bIndex];
