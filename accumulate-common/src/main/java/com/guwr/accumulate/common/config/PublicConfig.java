@@ -11,7 +11,7 @@ import java.util.Map;
  * Path com.guwr.accumulate.common.config.PublicConfig
  * Date 2016/9/5
  * Time 10:18
-         */
+*/
 public class PublicConfig implements Serializable {
     /**
      * 系统文件配置 加载。
