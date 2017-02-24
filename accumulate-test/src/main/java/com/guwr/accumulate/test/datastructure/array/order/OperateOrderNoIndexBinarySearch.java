@@ -18,19 +18,25 @@ public class OperateOrderNoIndexBinarySearch {
 
     public static void main(String[] args) {
         OperateOrderNoIndexBinarySearch t = new OperateOrderNoIndexBinarySearch(10);
+//
+//        t.insert(3);
+//        t.insert(6);
+//        t.insert(1);
+//        t.insert(2);
+//
+//        t.printDatas();
+//
+//        t.remove(6);
+//        t.printDatas();
+//
+//        int ret = t.searchOne(6);;
+//        System.out.println("ret==" + ret);
 
-        t.insert(3);
-        t.insert(6);
-        t.insert(1);
-        t.insert(2);
 
-        t.printDatas();
-
-        t.remove(6);
-        t.printDatas();
-
-        int ret = t.searchOne(6);
-        System.out.println("ret==" + ret);
+        int[] datas = {1,4,6,7,8};
+        int data = 7;
+        int i = t.binarySearch1(datas, data, 0, datas.length - 1);
+        System.out.println(i);
     }
 
     public int insert(int data) {
@@ -75,6 +81,24 @@ public class OperateOrderNoIndexBinarySearch {
         }
     }
 
+    private int binarySearch1(int[] datas, int data, int sIndex, int eIndex) {
+        int index;
+        index = (sIndex + eIndex) / 2;
+        if (sIndex > eIndex) {
+            return -1;
+        } else if (datas[index] == data) {
+            return index;
+        } else {
+            if (datas[index] > data) {
+                eIndex = index - 1;
+            } else {
+                sIndex = index + 1;
+
+            }
+            return binarySearch1(datas,data,sIndex,eIndex);
+        }
+    }
+
     public void remove(int data) {
         //1：查找这个数据对应的索引
         int index = this.binarySearch(data);
@@ -96,7 +120,7 @@ public class OperateOrderNoIndexBinarySearch {
         return 0;
     }
 
-    private void sort(){
+    private void sort() {
 
     }
 

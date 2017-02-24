@@ -24,17 +24,17 @@ import java.util.List;
 public class NotifyRecordRepositoryExtend implements Serializable {
     private static Logger logger = LoggerFactory.getLogger(NotifyRecordRepositoryExtend.class);
     @PersistenceContext
-    protected EntityManager em;
+    private EntityManager em;
 
     public Integer listPageCount(String listPageCount) {
-        System.out.println("NotifyRecordRepositoryExtend.listPageCount.listPageCount = [" + listPageCount + "]");
+        logger.info("listPageCount = [" + listPageCount + "]");
         Query query = em.createNativeQuery(listPageCount);
         BigInteger result = (BigInteger) query.getSingleResult();
         return result.intValue();
     }
 
     public List<NotifyRecord> listPage(String listPage, PageParam pageParam) {
-        logger.info("NotifyRecordRepositoryExtend.listPage.listPage = [" + listPage + "], pageParam = [" + pageParam + "]");
+        logger.info("listPage = [" + listPage + "], pageParam = [" + pageParam + "]");
         Query query = em.createNativeQuery(listPage);
         query.unwrap(SQLQuery.class).setResultTransformer(Transformers.aliasToBean(NotifyRecord.class));
         query.setFirstResult(pageParam.getFirstResult());
