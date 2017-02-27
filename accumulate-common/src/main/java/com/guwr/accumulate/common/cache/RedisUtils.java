@@ -31,6 +31,7 @@ public class RedisUtils implements Serializable {
     private JedisSentinelPool jedisSentinelPool;
 
     public static void main(String[] args) {
+        int parseInt = Integer.parseInt("345");
         Integer a = 444;
         Integer b = 444;
         System.out.println("a = b，" + (a.intValue() == b.intValue()));
@@ -38,7 +39,6 @@ public class RedisUtils implements Serializable {
         String str = "a,b,c,,"; 
         String[] ary = str.split(",");
         System.out.println("ary.length = " + ary.length);
-
 
         List<String> stringList = new ArrayList<>();
         stringList.add("a");
