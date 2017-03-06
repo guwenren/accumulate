@@ -23,6 +23,8 @@ public class CuratorClientTest {
     private static final String ZK_PATH = "/zktest";
 
     public static void main(String[] args) {
+        
+
         RetryNTimes retryNTimes = new RetryNTimes(10, 5000);
         // 1.Connect to zk
         CuratorFramework client = CuratorFrameworkFactory.newClient(ZK_ADDRESS, retryNTimes);
@@ -32,6 +34,7 @@ public class CuratorClientTest {
         // 2.1 Create node
         String data = "hello";
         try {
+
             getPath(ZK_PATH, client);
             String path = client.create().creatingParentsIfNeeded().forPath(ZK_PATH, data.getBytes());
             System.out.println(path);

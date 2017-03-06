@@ -10,7 +10,6 @@ import com.el.borrow.soa.service.logic.borrowsignature.ILogicBorrowSignatureServ
 import com.el.borrowuser.soa.service.logic.userverifyinfo.ILogicUserVerifyInfoService;
 import com.el.common.page.PageList;
 import com.el.common.result.PublicResult;
-//import com.el.wst.soa.domain.buyrecord.vo.WmpsBuyRecordVo;
 import com.el.wst.soa.service.logic.buyrecord.ILogicBuyRecordService;
 import com.eloancn.app.IBorrowAppAPI;
 import com.eloancn.dkweb.sevice.api.tender.ILoadTenderDetailsService;
@@ -24,16 +23,16 @@ import com.eloancn.overdueAccrue.OverdueAccrueAPI;
 import com.eloancn.repayment.OverdueRepaymentAPI;
 import com.eloancn.repayment.PayBackBailAPI;
 import com.eloancn.repayment.RepaymentAPI;
+import com.eloancn.sms.SmsSendAPI;
 import com.eloancn.web.agent.service.TenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
+//import com.el.wst.soa.domain.buyrecord.vo.WmpsBuyRecordVo;
 
 
 public class DubboProvider {
@@ -50,12 +49,13 @@ public class DubboProvider {
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
-            borrowAPP(context);
+//            borrowAPP(context);
 //            countPayBackBail(context);
 //            authByIdcardAndName(context);
 //            logicBuyRecordService(context);
 //            loadTenderDetails(context);
 //            addSynchTenderJob(context);
+            smsSendAPI(context);
             context.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,6 +72,23 @@ public class DubboProvider {
 //            }
 //        }
     }
+
+    /**
+     * 借款端app同步标详情
+     */
+    private static void smsSendAPI(ClassPathXmlApplicationContext context) throws Exception {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.addSynchTenderJob");
+        SmsSendAPI api = context.getBean("smsSendAPI", SmsSendAPI.class);
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("time", "time1time");
+        dataMap.put("amount", "amount1amount");
+        Result result = api.msgAllWithdrawRefuse("13167309518", dataMap);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
+        System.out.println("result = " + JSON.toJSONString(result));
+    }
+
     /**
      * 借款端app同步标详情
      */
@@ -111,8 +128,8 @@ public class DubboProvider {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = sf.parse(sdate1);
         Date date2 = sf.parse(sdate2);
-        int int1 = (int)(date1.getTime() / 1000);
-        int int2 = (int)(date2.getTime() / 1000);
+        int int1 = (int) (date1.getTime() / 1000);
+        int int2 = (int) (date2.getTime() / 1000);
         System.out.println("int1 = " + int1);
         System.out.println("int2 = " + int2);
         ILogicBuyRecordService api = context.getBean("logicBuyRecordService", ILogicBuyRecordService.class);
@@ -246,7 +263,7 @@ public class DubboProvider {
         Integer uid = 706978;
         Integer tid = 1026809;
         Integer publisheddate = 1461901569;
-         result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
+        result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
         System.out.println("result = " + JSON.toJSONString(result));
     }
 

@@ -17,6 +17,10 @@
     <dubbo:reference interface="com.eloancn.app.IBorrowAppAPI" id="borrowAppAPI" group="destress-soa-cat" registry="elZookeeper" version="1.0.0" check="false" />
 
 
+    <!-- back-destress-->
+    <dubbo:reference interface="com.eloancn.sms.SmsSendAPI" id="smsSendAPI" group="destress-soa-test" registry="elZookeeper" version="1.0.0" check="false" />
+
+
     <dubbo:reference interface="com.eloancn.repayment.OverdueRepaymentAPI" id="overdueRepaymentAPI" group="destress-soa-test-repay" version="1.0.0"
                      registry="elZookeeper" timeout="5000" protocol="dubbo"  validation="false" lazy="true" check="false"/>
 

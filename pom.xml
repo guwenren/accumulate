@@ -33,7 +33,6 @@
         <module>accumulate-service-test</module>
         <!--web-->
         <module>accumulate-web</module>
-        <module>accumulate-shiro</module>
         <!--<module>accumulate-test</module>-->
     </modules>
 
