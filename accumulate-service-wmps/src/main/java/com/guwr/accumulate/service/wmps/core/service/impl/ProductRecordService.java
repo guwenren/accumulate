@@ -174,7 +174,6 @@ public class ProductRecordService implements IProductRecordService {
         saveProductRecord(uid, pid, uuid, date, investAmount, effectAmount, interestrate, proearn);
 
         NotifyTransactionMessageVO transactionMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
-
         NotifyTransactionMessageVO transactionMessageVO1 = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
 
         NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO);
@@ -374,7 +373,6 @@ public class ProductRecordService implements IProductRecordService {
         info.setMessageBody(messageBody);
         info.setUuid(uuid);
         info.setConsumerQueue(productLevelVO.getConsumerQueue());
-
         return info;
     }
 }
