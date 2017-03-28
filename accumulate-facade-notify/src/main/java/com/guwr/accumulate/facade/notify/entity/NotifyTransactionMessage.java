@@ -1,12 +1,11 @@
 package com.guwr.accumulate.facade.notify.entity;
 
-import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.guwr.accumulate.common.entity.BaseEntity;
 import com.guwr.accumulate.common.util.CommonUtils;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by gwr
