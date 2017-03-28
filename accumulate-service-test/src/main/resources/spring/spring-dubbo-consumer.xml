@@ -52,4 +52,7 @@
                      id="tenderService" group="borrow-agent-app" version="1.1.0"
                      timeout="60000" protocol="dubbo" registry="elZookeeper" check="false" lazy="true" retries="2"/>
 
+    <dubbo:reference interface="com.eloancn.tender.TenderBusDetailAPI"
+                     id="tenderBusDetailAPI" group="destress-soa-test" version="1.0.0"
+                     timeout="60000" protocol="dubbo" registry="elZookeeper" check="false" lazy="true" retries="2"/>
 </beans>

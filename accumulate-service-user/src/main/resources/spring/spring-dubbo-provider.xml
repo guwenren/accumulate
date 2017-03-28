@@ -9,6 +9,7 @@
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+	<!--<dubbo:registry protocol="zookeeper" address="sd.siyuanren.com:2181" />-->
 
 	<dubbo:protocol name="dubbo" port="20812" />
 

@@ -80,4 +80,12 @@ public class ProductServiceTest extends BaseTest {
         productService.save(product);
         System.out.println("product = " + product);
     }
+
+    @Test
+    public void update() {
+        Product product = productService.findOne(1);
+        product.setAmount(new BigDecimal(100000));
+        product.setUpdateTime(new Date());
+        productService.save(product);
+    }
 }

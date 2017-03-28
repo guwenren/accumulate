@@ -6,7 +6,6 @@ import com.guwr.accumulate.common.enums.NotifyDestination;
 import com.guwr.accumulate.common.util.AmountUtils;
 import com.guwr.accumulate.common.util.StringUtils;
 import com.guwr.accumulate.facade.account.entity.AccountBalance;
-import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
@@ -128,19 +127,19 @@ public class ProductRecordService implements IProductRecordService {
         BigDecimal investAmount = info.getInvestAmount();
 
         check(info); //检查
-
+        logger.info("加载购买产品信息 s");
         Product product = productService.findOneCheck(pid);//加载购买产品信息
-
+        logger.info("加载购买产品信息 e");
         if (!Objects.equals(ProductStatus.PUBLISHED.getValue(), product.getStatus())) {//状态是否为已发布
+            logger.info("产品未开始认购");
             throw WmpsBizException.CHAN_PIN_WEI_KAI_SHI_REN_GOU.print();
         }
 
         BigDecimal productInvestAmount = product.getInvestAmount();//投资总额
         BigDecimal productEffectAmount = product.getEffectAmount();//有效总额
         BigDecimal amount = product.getAmount();
-
         BigDecimal subtractAmount = amount.subtract(productEffectAmount); //剩余金额
-
+        logger.info("投资总额={},有效总额={},产品金额={},剩余金额={}", productInvestAmount, productEffectAmount, amount, subtractAmount);
         BigDecimal effectAmount;//有效金额
 //        if (investAmount.compareTo(subtractAmount) > 0) {
 //            effectAmount = subtractAmount;
@@ -148,6 +147,7 @@ public class ProductRecordService implements IProductRecordService {
 //            effectAmount = investAmount;
 //        }
         if (investAmount.compareTo(subtractAmount) == 1) { // 投资金额>可投总额
+            logger.info("投资金额大于产品可投总额");
             throw WmpsBizException.TOU_ZI_JIN_E_DA_YU_CHAN_PIN_KE_TOU_ZONG_E.print();
         }
 
@@ -159,27 +159,76 @@ public class ProductRecordService implements IProductRecordService {
         product.setEffectAmount(effect_amount);
         product.setUpdateTime(date);
 
-        BigDecimal invest = effectAmount;
-        UserProductInvest userProductInvest = userProductInvestFacade.findUserProductInvestByUid(uid);
-        if (userProductInvest != null) {
-            invest = invest.add(userProductInvest.getTotalInvest());
-        }
+        BigDecimal invest = getInvest(uid, effectAmount);
 
-        UserProductLevel userProductLevel = userProductLevelFacade.findUserProductLevelByInvest(invest);
+        UserProductLevel userProductLevel = getUserProductLevelByInvest(invest);
+
         BigDecimal interestrate = userProductLevel.getInterestrate();//vip级别利息
 
         //预期收益
         BigDecimal proearn = AmountUtils.calculateProearn(interestrate, product.getInterestrate(), product.getPhases(), effectAmount);
+        logger.info("预期收益={}", proearn);
 
-        /**
-         *  添加资金流水，同时修改用户账户总额
-         */
+        outgo(uid, uuid, effectAmount);
+
+        saveProductRecord(uid, pid, uuid, date, investAmount, effectAmount, interestrate, proearn);
+
+        NotifyTransactionMessageVO transactionMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
+
+        NotifyTransactionMessageVO transactionMessageVO1 = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
+
+        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO);
+        logger.info(uid + "_保存邮件待确认消息");
+        NotifyTransactionMessage notifyTransactionMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO1);
+        logger.info(uid + "_保存用户投资等级待确认消息");
+
+        this.productService.update(product);//更新产品购买金额
+
+        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyMessage);
+        logger.info(uid + "_发送邮件已确认消息到MQ");
+        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyTransactionMessage);//将消息发送至mq
+        logger.info(uid + "_发送用户投资等级已确认消息到MQ");
+    }
+
+    /**
+     * 添加资金流水，同时修改用户账户总额
+     *
+     * @param uid
+     * @param uuid
+     * @param effectAmount
+     */
+    private void outgo(Integer uid, String uuid, BigDecimal effectAmount) {
         AccountBalanceRecordVO balanceRecordVO = new AccountBalanceRecordVO();
         balanceRecordVO.setAmount(effectAmount);
         balanceRecordVO.setUid(uid);
         balanceRecordVO.setUuid(uuid);
-        AccountBalanceRecord record = accountBalanceRecordFacade.outgo(balanceRecordVO);
-        logger.info("addProductRecord.record = " + record);
+        accountBalanceRecordFacade.outgo(balanceRecordVO);
+    }
+
+    /**
+     * 根据投资总额加载VIP级别
+     *
+     * @param invest
+     * @return
+     */
+    private UserProductLevel getUserProductLevelByInvest(BigDecimal invest) {
+        logger.info("getUserProductLevelByInvest = " + invest);
+        return userProductLevelFacade.findUserProductLevelByInvest(invest);
+    }
+
+    /**
+     * 设置投资记录参数
+     *
+     * @param uid
+     * @param pid
+     * @param uuid
+     * @param date
+     * @param investAmount
+     * @param effectAmount
+     * @param interestrate
+     * @param proearn
+     */
+    private void saveProductRecord(Integer uid, Integer pid, String uuid, Date date, BigDecimal investAmount, BigDecimal effectAmount, BigDecimal interestrate, BigDecimal proearn) {
         /**
          * 添加用户投资记录
          */
@@ -194,23 +243,24 @@ public class ProductRecordService implements IProductRecordService {
         productRecord.setUid(uid);
         productRecord.setUuid(uuid);
         productRecord.setStatus(ProductRecordStatus.WMPS_BUY_RECORD_STATUS_SUCCESS.getValue());
+        this.save(productRecord);
+    }
 
-        NotifyTransactionMessageVO transactionMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
-
-        NotifyTransactionMessageVO transactionMessageVO1 = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
-
-        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO);
-        logger.info(uid + "_保存邮件待确认消息");
-        NotifyTransactionMessage notifyTransactionMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO1);
-        logger.info(uid + "_保存用户投资等级待确认消息");
-
-        this.save(productRecord);  //保存购买记录
-        this.productService.update(product);//更新产品购买金额
-
-        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyMessage);
-        logger.info(uid + "_发送邮件已确认消息到MQ");
-        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyTransactionMessage);//将消息发送至mq
-        logger.info(uid + "_发送用户投资等级已确认消息到MQ");
+    /**
+     * 计算用户投资总额 + 本次
+     *
+     * @param uid
+     * @param effectAmount
+     * @return
+     */
+    private BigDecimal getInvest(Integer uid, BigDecimal effectAmount) {
+        logger.info("uid = [" + uid + "], effectAmount = [" + effectAmount + "]");
+        BigDecimal invest = effectAmount;
+        UserProductInvest userProductInvest = userProductInvestFacade.findUserProductInvestByUid(uid);
+        if (userProductInvest != null) {
+            invest = invest.add(userProductInvest.getTotalInvest());
+        }
+        return invest;
     }
 
 

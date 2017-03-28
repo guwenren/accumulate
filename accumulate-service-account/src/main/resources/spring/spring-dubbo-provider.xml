@@ -19,6 +19,10 @@
 	<dubbo:provider timeout="30000" threadpool="fixed" threads="100" accepts="1000" />
 
 	<!-- 提供服务接口 -->
-	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade" ref="accountBalanceFacade" />
+	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade" ref="accountBalanceFacade"  version="1.0.0"/>
+	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade" ref="accountBalanceFacade"  version="2.0.0"/>
+	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade" ref="accountBalanceFacade"  version="3.0.0"/>
+
+
 	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade" ref="accountBalanceRecordFacade" />
 </beans>

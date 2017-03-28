@@ -24,6 +24,7 @@ import com.eloancn.repayment.OverdueRepaymentAPI;
 import com.eloancn.repayment.PayBackBailAPI;
 import com.eloancn.repayment.RepaymentAPI;
 import com.eloancn.sms.SmsSendAPI;
+import com.eloancn.tender.TenderBusDetailAPI;
 import com.eloancn.web.agent.service.TenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +50,14 @@ public class DubboProvider {
 //            autoRepayOverdue(context);
 //            gotOrAccruedByTid(context);
 //            countAccruedByUid(context);
-//            borrowAPP(context);
+            borrowAPP(context);
 //            countPayBackBail(context);
 //            authByIdcardAndName(context);
 //            logicBuyRecordService(context);
 //            loadTenderDetails(context);
 //            addSynchTenderJob(context);
-            smsSendAPI(context);
+//            smsSendAPI(context);
+//            tenderBusDetailAPI(context);
             context.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,6 +75,21 @@ public class DubboProvider {
 //        }
     }
 
+    /**
+     * 借款端app同步标详情
+     */
+    private static void tenderBusDetailAPI(ClassPathXmlApplicationContext context) throws Exception {
+        System.out.println("context = [" + context + "]");
+        System.out.println("DubboProvider.tenderBusDetailAPI");
+        TenderBusDetailAPI api = context.getBean("tenderBusDetailAPI", TenderBusDetailAPI.class);
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("page", 1);
+//        dataMap.put("amount", "amount1amount");
+        Result result = api.finalServiceFeeList(dataMap,10,10);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 100, int1, int2);
+//      PublicResult<PageList<WmpsBuyRecordVo>> result= api.loadRecordListByTid(4400, 1, 10);
+        System.out.println("result = " + JSON.toJSONString(result));
+    }
     /**
      * 借款端app同步标详情
      */
@@ -255,13 +272,13 @@ public class DubboProvider {
         IBorrowAppAPI borrowAppAPI = context.getBean("borrowAppAPI", IBorrowAppAPI.class);
 //        System.out.println("borrowAppAPI = " + borrowAppAPI);
 
-        Result result = borrowAppAPI.borroweTenderInfo(1046108, null);
+        Result result = borrowAppAPI.borroweTenderInfo(1041300, null);
 
         System.out.println("result = " + JSON.toJSONString(result));
 
 //        ,uid=,publisheddate=
         Integer uid = 706978;
-        Integer tid = 1026809;
+        Integer tid = 1041300;
         Integer publisheddate = 1461901569;
         result = borrowAppAPI.borrowerInfo(tid, uid, publisheddate, null);
         System.out.println("result = " + JSON.toJSONString(result));
