@@ -1,0 +1,8 @@
+13:44:34.588 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：java.lang.NullPointerException
+13:49:42.856 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：java.lang.NullPointerException
+13:51:48.677 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：java.lang.NullPointerException
+13:55:22.821 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：java.lang.NullPointerException
+14:40:56.029 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：java.lang.NullPointerException
+14:42:14.997 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：java.lang.NullPointerException
+15:06:05.011 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+15:17:38.912 [main] ERROR com.guwr.accumulate.common.cache.RedisUtils - get获取失败：redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
