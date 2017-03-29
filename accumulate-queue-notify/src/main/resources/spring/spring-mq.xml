@@ -35,15 +35,16 @@
     <bean id="userProductLevelMessageListener" class="com.guwr.accumulate.queue.notify.message.UserProductLevelMessageListener"/>
     <bean id="productRecordMessageListener" class="com.guwr.accumulate.queue.notify.message.ProductRecordMessageListener"/>
     <bean id="accountBalanceByRegisterMessageListener" class="com.guwr.accumulate.queue.notify.message.AccountBalanceByRegisterMessageListener"/>
+    <bean id="testMessageListener" class="com.guwr.accumulate.queue.notify.message.TestMessageListener"/>
 
-    <jms:listener-container concurrency = "4">
-        <!-- concurrency指定最多可并发开启2个监听器 -->
-        <jms:listener id="jmsNotifyMessageListener" destination="MESSAGE_NOTIFY" ref="notifyMessageListener"/>
-        <jms:listener id="jmsUserProductLevelMessageListener" destination="USER_PRODUCT_LEVEL_MESSAGE" ref="userProductLevelMessageListener"/>
-        <jms:listener id="jmsProductRecordMessageListener" destination="UPDATE_PROEARN_INTERESTRATE_MESSAGE" ref="productRecordMessageListener"/>
-        <jms:listener id="jmsAccountBalanceByRegisterMessageListener" destination="ADD_ACCOUNT_BALANCE_REGISTER" ref="accountBalanceByRegisterMessageListener"/>
+    <jms:listener-container concurrency = "5">
+        <!-- concurrency指定最多可并发开启5个监听器 -->
+        <jms:listener id="jmsNotifyMessageListener" destination="${mq.message_notify}" ref="notifyMessageListener"/>
+        <jms:listener id="jmsUserProductLevelMessageListener" destination="${mq.user_product_level_message}" ref="userProductLevelMessageListener"/>
+        <jms:listener id="jmsProductRecordMessageListener" destination="${mq.update_proearn_interestrate_message}" ref="productRecordMessageListener"/>
+        <jms:listener id="jmsAccountBalanceByRegisterMessageListener" destination="${mq.add_account_balance_register}" ref="accountBalanceByRegisterMessageListener"/>
+        <jms:listener id="jmsTestMessageListener" destination="${mq.test}" ref="testMessageListener"/>
     </jms:listener-container>
-
 
     <!--&lt;!&ndash;这个是sessionAwareQueue目的地 &ndash;&gt;-->
     <!--<bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">-->
