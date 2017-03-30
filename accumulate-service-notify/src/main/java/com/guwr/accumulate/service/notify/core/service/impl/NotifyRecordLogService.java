@@ -25,14 +25,14 @@ public class NotifyRecordLogService implements INotifyRecordLogService {
 
     @Override
     public NotifyRecordLog save(NotifyRecordLog entity) {
-        logger.info("NotifyRecordLogService.save");
+        logger.info("NotifyRecordLogService.saveNotifyMessage");
         return repository.save(entity);
     }
 
 
     @Override
     public NotifyRecordLog update(NotifyRecordLog entity) {
-        logger.info("NotifyRecordLogService.update");
+        logger.info("NotifyRecordLogService.updateNotifyRecord");
         return repository.save(entity);
     }
 

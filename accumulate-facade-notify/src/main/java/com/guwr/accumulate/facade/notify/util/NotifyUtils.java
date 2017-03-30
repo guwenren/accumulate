@@ -1,7 +1,5 @@
 package com.guwr.accumulate.facade.notify.util;
 
-import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
-import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

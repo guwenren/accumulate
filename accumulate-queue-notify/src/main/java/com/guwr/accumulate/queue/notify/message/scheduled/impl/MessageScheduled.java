@@ -3,10 +3,10 @@ package com.guwr.accumulate.queue.notify.message.scheduled.impl;
 import com.alibaba.fastjson.JSON;
 import com.guwr.accumulate.common.config.PublicConfig;
 import com.guwr.accumulate.common.page.PageBean;
-import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
-import com.guwr.accumulate.facade.notify.enums.NotifyTransactionMessageStatus;
-import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
-import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
+import com.guwr.accumulate.facade.notify.entity.NotifyMessage;
+import com.guwr.accumulate.facade.notify.enums.NotifyMessageStatus;
+import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
+import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
 import com.guwr.accumulate.facade.wmps.facade.IProductRecordFacade;
 import com.guwr.accumulate.queue.notify.message.scheduled.IMessageScheduled;
@@ -35,72 +35,72 @@ public class MessageScheduled implements IMessageScheduled {
 
     private static Logger logger = LoggerFactory.getLogger(MessageScheduled.class);
     @Autowired
-    private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+    private INotifyMessageFacade notifyMessageFacade;
     @Autowired
     private IProductRecordFacade productRecordFacade;
 
     @Override
     public void handleWaitingConfirmTimeOutMessages() {
-        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
-        info.setStatus(NotifyTransactionMessageStatus.WAITING_CONFIRM.getValue());
+        NotifyMessageVO info = new NotifyMessageVO();
+        info.setStatus(NotifyMessageStatus.WAITING_CONFIRM.getValue());
         info.setNumPerPage(50);
-        info.setSortType(NotifyTransactionMessageVO.SORT_TYPE_ASC);
+        info.setSortType(NotifyMessageVO.SORT_TYPE_ASC);
         String createTimeBefore = getCreateTimeBefore();
         info.setCreateTimeBefore(createTimeBefore);
-        PageBean<NotifyTransactionMessage> listPageByCondition = notifyTransactionMessageFacade.findListPageByCondition(info);
+        PageBean<NotifyMessage> listPageByCondition = notifyMessageFacade.findListPageByCondition(info);
 
         logger.info("listPageByCondition = " + JSON.toJSONString(listPageByCondition));
 
-        List<NotifyTransactionMessage> notifyTransactionMessages = listPageByCondition.getRecordList();
+        List<NotifyMessage> notifyMessages = listPageByCondition.getRecordList();
 
-        if (CollectionUtils.isEmpty(notifyTransactionMessages)) {
+        if (CollectionUtils.isEmpty(notifyMessages)) {
             logger.info("没有[waiting_confirm]状态的消息");
             return;
         }
 
-        logger.info("开始处理[waiting_confirm]状态的消息,总条数[" + notifyTransactionMessages.size() + "]");
-        for (NotifyTransactionMessage message : notifyTransactionMessages) {
+        logger.info("开始处理[waiting_confirm]状态的消息,总条数[" + notifyMessages.size() + "]");
+        for (NotifyMessage message : notifyMessages) {
             Integer id = message.getId();
             String uuid = message.getUuid();
             ProductRecord productRecord = productRecordFacade.findOneProductRecordByUUID(uuid);
             if (productRecord == null) {
                 // 投资没有成功，可以直接删除数据
                 logger.debug("投资没有成功,删除[waiting_confirm]消息id[" + id + "]的消息");
-                notifyTransactionMessageFacade.deleteNotifyTransactionMessageById(id);
+                notifyMessageFacade.deleteNotifyMessageById(id);
             } else {
                 logger.debug("投资成功,重新发送消息id[" + id + "]的消息");
-                notifyTransactionMessageFacade.sendNotifyTransactionMessage(id);
+                notifyMessageFacade.sendNotifyMessage(id);
             }
         }
     }
 
     @Override
     public void handleAlreadyConfirmTimeOutMessages() {
-        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
-        info.setStatus(NotifyTransactionMessageStatus.ALREADY_CONFIRM.getValue());
+        NotifyMessageVO info = new NotifyMessageVO();
+        info.setStatus(NotifyMessageStatus.ALREADY_CONFIRM.getValue());
         info.setNumPerPage(50);
-        info.setSortType(NotifyTransactionMessageVO.SORT_TYPE_ASC);
+        info.setSortType(NotifyMessageVO.SORT_TYPE_ASC);
         info.setAreadlyDead(1);
         String createTimeBefore = getCreateTimeBefore();
         info.setCreateTimeBefore(createTimeBefore);
-        PageBean<NotifyTransactionMessage> listPageByCondition = notifyTransactionMessageFacade.findListPageByCondition(info);
+        PageBean<NotifyMessage> listPageByCondition = notifyMessageFacade.findListPageByCondition(info);
 
         logger.info("listPageByCondition = " + JSON.toJSONString(listPageByCondition));
-        List<NotifyTransactionMessage> notifyTransactionMessages = listPageByCondition.getRecordList();
+        List<NotifyMessage> notifyMessages = listPageByCondition.getRecordList();
 
-        if (CollectionUtils.isEmpty(notifyTransactionMessages)) {
+        if (CollectionUtils.isEmpty(notifyMessages)) {
             logger.info("没有[already_confirm]状态的消息");
             return;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        logger.info("开始处理[already_confirm]状态的消息,总条数[" + notifyTransactionMessages.size() + "]");
+        logger.info("开始处理[already_confirm]状态的消息,总条数[" + notifyMessages.size() + "]");
 
         Integer messageMaxSendTimes = PublicConfig.MESSAGE_MAX_SEND_TIMES;
 
         Map<Integer, Integer> notifyParam = getNotifyParam();
 
-        for (NotifyTransactionMessage message : notifyTransactionMessages) {
+        for (NotifyMessage message : notifyMessages) {
             Integer id = message.getId();
             long time = message.getUpdateTime().getTime();
             Integer messageSendTimes = message.getMessageSendTimes();
@@ -110,7 +110,7 @@ public class MessageScheduled implements IMessageScheduled {
             logger.info("[already_confirm]消息ID为[" + id + "]的消息,已经重新发送的次数[" + messageSendTimes + "]");
             if (messageMaxSendTimes < messageSendTimes) {  //判断发送次数, 大于最大发送次数
                 message.setAreadlyDead(0); //将消息标记为死亡
-                notifyTransactionMessageFacade.update(message);
+                notifyMessageFacade.update(message);
                 continue;
             }
 
@@ -121,7 +121,7 @@ public class MessageScheduled implements IMessageScheduled {
                 continue;
             }
             // 重新发送消息
-            notifyTransactionMessageFacade.repeatSendNotifyTransactionMessage(message);
+            notifyMessageFacade.repeatSendNotifyMessage(message);
             logger.info("结束处理[already_confirm]消息ID为[" + id + "]的消息");
         }
     }

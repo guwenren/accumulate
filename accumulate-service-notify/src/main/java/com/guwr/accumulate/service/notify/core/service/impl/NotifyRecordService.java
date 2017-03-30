@@ -40,7 +40,7 @@ public class NotifyRecordService implements INotifyRecordService {
 
     @Override
     public NotifyRecord save(NotifyRecord entity) {
-        logger.info("NotifyRecordService.save");
+        logger.info("NotifyRecordService.saveNotifyMessage");
         return repository.save(entity);
     }
 
@@ -102,7 +102,7 @@ public class NotifyRecordService implements INotifyRecordService {
 
     @Override
     public NotifyRecord update(NotifyRecord entity) {
-        logger.info("NotifyRecordService.update");
+        logger.info("NotifyRecordService.updateNotifyRecord");
         return repository.save(entity);
     }
 

@@ -1,36 +1,54 @@
 package com.guwr.accumulate.service.notify.core.service.impl;
 
+import com.guwr.accumulate.common.page.PageBean;
+import com.guwr.accumulate.common.util.StringUtils;
 import com.guwr.accumulate.facade.notify.entity.NotifyMessage;
+import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.service.notify.BaseTest;
 import com.guwr.accumulate.service.notify.core.service.INotifyMessageService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 /**
- * Created by gwr
+ * Created by   guwr
+ * Project_name accumulate
+ * Path         com.guwr.accumulate.service.notify.core.service.impl.NotifyTransactionMessageServiceTest
+ * Date         2016/11/23
+ * Time         20:25
  * Description
- * Path com.guwr.accumulate.service.notify.core.service.impl.NotifyMessageServiceTest
- * Date 2016/9/12
- * Time 15:20
  */
 public class NotifyMessageServiceTest extends BaseTest {
+    @Test
+    public void findListPage() throws Exception {
+        NotifyMessageVO info = new NotifyMessageVO();
+        PageBean<NotifyMessage> listPage = notifyMessageService.findListPageByCondition(info);
+        System.out.println("listPage = " + listPage);
+    }
 
     @Autowired
     private INotifyMessageService notifyMessageService;
 
     @Test
-    public void save() throws Exception {
-        long l = System.currentTimeMillis();
-        NotifyMessage notifyMessage = new NotifyMessage();
-        notifyMessage.setUid(1);
-        notifyMessage.setTitle("title" + l);
-        notifyMessage.setContent("content" + l);
-        notifyMessageService.save(notifyMessage);
+    public void saveNotifyTransactionMessage() throws Exception {
+        NotifyMessage notifyTransactionMessage = new NotifyMessage();
+        Date date = new Date();
+        String uuid = StringUtils.getUUID();
+        notifyTransactionMessage.setCreateTime(date);
+        notifyTransactionMessage.setUpdateTime(date);
+        notifyTransactionMessage.setMessageBody("messageBody");
+        notifyTransactionMessage.setMessageSendTimes(0);
+        notifyTransactionMessage.setAreadlyDead(1);
+        notifyTransactionMessage.setConsumerQueue("consumerQueue");
+        notifyTransactionMessage.setRemark("remark");
+        notifyTransactionMessage.setStatus(1);
+        notifyTransactionMessage.setUuid(uuid);
+        notifyMessageService.saveNotifyMessage(notifyTransactionMessage);
     }
 
     @Test
-    public void findOne() throws Exception {
-        NotifyMessage notifyMessage = notifyMessageService.findOne(1);
-        System.out.println("notifyMessage = " + notifyMessage);
+    public void sendNotifyTransactionMessage() throws Exception {
+
     }
 }

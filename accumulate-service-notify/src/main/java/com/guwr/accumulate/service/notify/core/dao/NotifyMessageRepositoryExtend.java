@@ -1,7 +1,7 @@
 package com.guwr.accumulate.service.notify.core.dao;
 
 import com.guwr.accumulate.common.dao.BaseRepository;
-import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
+import com.guwr.accumulate.facade.notify.entity.NotifyMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,13 +13,13 @@ import javax.persistence.Query;
 /**
  * Created by gwr
  * Description
- * Path com.accumulate.service.notify.core.dao.NotifyTransactionMessageRepositoryExtend
+ * Path com.accumulate.service.notify.core.dao.NotifyMessageRepositoryExtend
  * Date 2016/8/13
  * Time 21:19
  */
-public class NotifyTransactionMessageRepositoryExtend extends BaseRepository<NotifyTransactionMessage> {
+public class NotifyMessageRepositoryExtend extends BaseRepository<NotifyMessage> {
 
-    private static Logger logger = LoggerFactory.getLogger(NotifyTransactionMessageRepositoryExtend.class);
+    private static Logger logger = LoggerFactory.getLogger(NotifyMessageRepositoryExtend.class);
 
     @PersistenceContext
     @Override
@@ -28,7 +28,7 @@ public class NotifyTransactionMessageRepositoryExtend extends BaseRepository<Not
     }
 
     @Modifying
-    public int deleteNotifyTransactionMessageByUUID(String uuid) {
+    public int deleteNotifyMessageByUUID(String uuid) {
         logger.info("deleteNotifyTransactionMessageByUUID.uuid = " + uuid);
         String qlString = " delete NotifyTransactionMessage o where o.uuid = ?";
         Query query = em.createQuery(qlString);
@@ -38,8 +38,8 @@ public class NotifyTransactionMessageRepositoryExtend extends BaseRepository<Not
     }
 
     @Modifying
-    public int deleteNotifyTransactionMessageByUUIDAndQueue(String uuid, String consumerQueue) {
-        logger.info("deleteNotifyTransactionMessageByUUIDAndQueue.uuid = " + uuid + " , consumerQueue =" + consumerQueue);
+    public int deleteNotifyMessageByUUIDAndQueue(String uuid, String consumerQueue) {
+        logger.info("deleteNotifyMessageByUUIDAndQueue.uuid = " + uuid + " , consumerQueue =" + consumerQueue);
         String qlString = " delete NotifyTransactionMessage o where o.uuid = ? and o.consumerQueue = ?";
         Query query = em.createQuery(qlString);
         query.setParameter(1, uuid);

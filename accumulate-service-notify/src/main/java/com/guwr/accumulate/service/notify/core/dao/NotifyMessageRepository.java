@@ -1,7 +1,10 @@
 package com.guwr.accumulate.service.notify.core.dao;
+
+import com.guwr.accumulate.common.page.PageParam;
 import com.guwr.accumulate.facade.notify.entity.NotifyMessage;
-import com.guwr.accumulate.facade.notify.entity.NotifyRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 /**
  * Created by gwr
@@ -12,4 +15,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface NotifyMessageRepository extends JpaRepository<NotifyMessage, Integer> {
 
+    int listPageCount(String listPageCountStr);
+
+    List<NotifyMessage> listPage(String listPageStr, PageParam pageParam);
+
+    int deleteNotifyMessageByUUID(String uuid);
+
+    int deleteNotifyMessageByUUIDAndQueue(String uuid, String consumerQueue);
 }

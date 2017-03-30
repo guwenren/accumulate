@@ -12,11 +12,11 @@ import com.guwr.accumulate.facade.notify.vo.NotifyRecordVO;
  * Time 18:33
  */
 public interface INotifyRecordFacade {
-    NotifyRecord save(NotifyRecord entity);
+    NotifyRecord saveNotifyRecord(NotifyRecord entity);
 
     NotifyRecord findOne(Integer id);
 
-    NotifyRecord update(NotifyRecord entity);
+    NotifyRecord updateNotifyRecord(NotifyRecord entity);
 
-    PageBean<NotifyRecord> findListPage(NotifyRecordVO info);
+    PageBean<NotifyRecord> findListPage(NotifyRecordVO vo);
 }

@@ -35,7 +35,7 @@ public class NotifyPersist implements Serializable {
 
     public Integer saveNotifyRecord(NotifyRecord entity) {
         logger.info("NotifyPersist.saveNotifyRecord");
-        NotifyRecord record = notifyRecordFacade.save(entity);
+        NotifyRecord record = notifyRecordFacade.saveNotifyRecord(entity);
         return record.getId();
     }
 
@@ -44,7 +44,7 @@ public class NotifyPersist implements Serializable {
         NotifyRecord entity = notifyRecordFacade.findOne(id);
         entity.setNotifyTimes(notifyTimes);
         entity.setStatus(status);
-        notifyRecordFacade.update(entity);
+        notifyRecordFacade.updateNotifyRecord(entity);
     }
 
     public Integer saveNotifyRecordLogs(Integer notifyId, String merchantNo, String merchantOrderNo, String request, String response,

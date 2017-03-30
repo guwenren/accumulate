@@ -23,7 +23,7 @@ public class NotifyRecordLogFacade implements INotifyRecordLogFacade {
 
     @Override
     public NotifyRecordLog save(NotifyRecordLog entity) {
-        logger.info("NotifyRecordLogFacade.save");
+        logger.info("NotifyRecordLogFacade.saveNotifyMessage");
         return service.save(entity);
     }
 
@@ -35,7 +35,7 @@ public class NotifyRecordLogFacade implements INotifyRecordLogFacade {
 
     @Override
     public NotifyRecordLog update(NotifyRecordLog entity) {
-        logger.info("NotifyRecordLogFacade.update");
+        logger.info("NotifyRecordLogFacade.updateNotifyRecord");
         return service.update(entity);
     }
 }

@@ -3,42 +3,55 @@ package com.guwr.accumulate.facade.notify.vo;
 import com.guwr.accumulate.common.util.CommonUtils;
 import com.guwr.accumulate.common.web.vo.BaseVO;
 
+import java.util.Date;
+
 /**
- * Created by gwr
+ * Created by   guwr
+ * Project_name accumulate
+ * Path         com.guwr.accumulate.facade.notify.vo.NotifyMessageVO
+ * Date         2016/11/6
+ * Time         16:53
  * Description
- * Path com.guwr.accumulate.facade.notify.vo.NotifyMessageVO
- * Date 2016/9/12
- * Time 15:58
  */
-public class NotifyMessageVO extends BaseVO{
+public class NotifyMessageVO extends BaseVO {
 
-    private static final long serialVersionUID = -8344439058579757034L;
-    private Integer uid;
-    private String title;
-    private String content;
 
-    public Integer getUid() {
-        return uid;
+    private static final long serialVersionUID = 2773955965211920688L;
+    private Integer status;
+    private String messageBody;
+    private Integer areadlyDead;
+    private String createTimeBefore; //
+
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getTitle() {
-        return title;
+    public String getMessageBody() {
+        return messageBody;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setMessageBody(String messageBody) {
+        this.messageBody = messageBody;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getAreadlyDead() {
+        return areadlyDead;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setAreadlyDead(Integer areadlyDead) {
+        this.areadlyDead = areadlyDead;
+    }
+
+    public String getCreateTimeBefore() {
+        return createTimeBefore;
+    }
+
+    public void setCreateTimeBefore(String createTimeBefore) {
+        this.createTimeBefore = createTimeBefore;
     }
 
     @Override

@@ -2,9 +2,9 @@ package com.guwr.accumulate.controller.notify;
 
 import com.guwr.accumulate.common.page.PageBean;
 import com.guwr.accumulate.common.web.controller.BaseController;
-import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
-import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
-import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
+import com.guwr.accumulate.facade.notify.entity.NotifyMessage;
+import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
+import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class NotifyController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(NotifyController.class);
 
     @Autowired
-    private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+    private INotifyMessageFacade notifyMessageFacade;
 
     /**
      * 列出用户信息.
@@ -34,9 +34,9 @@ public class NotifyController extends BaseController {
      * @return
      */
     @RequestMapping("messageList")
-    public String messageList(Model model, NotifyTransactionMessageVO info) {
-        logger.info("NotifyController.list.info = " + info);
-        PageBean<NotifyTransactionMessage> listPage = notifyTransactionMessageFacade.findListPageByCondition(info);
+    public String messageList(Model model, NotifyMessageVO info) {
+        logger.info("model = [" + model + "], info = [" + info + "]");
+        PageBean<NotifyMessage> listPage = notifyMessageFacade.findListPageByCondition(info);
         model.addAttribute(MODEL_KEY, listPage);
         model.addAttribute(QUERY_KEY, info);
         return "notify/notify_message_list";

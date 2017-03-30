@@ -1,7 +1,7 @@
 package com.guwr.accumulate.queue.notify.message;
 
 import com.alibaba.fastjson.JSON;
-import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
+import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
 import com.guwr.accumulate.facade.wmps.facade.IProductRecordFacade;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 import org.apache.activemq.command.ActiveMQTextMessage;
@@ -29,7 +29,7 @@ public class ProductRecordMessageListener implements SessionAwareMessageListener
     private static Logger logger = LoggerFactory.getLogger(ProductRecordMessageListener.class);
 
     @Autowired
-    private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+    private INotifyMessageFacade notifyMessageFacade;
 
     @Autowired
     private IProductRecordFacade productRecordFacade;
@@ -42,6 +42,6 @@ public class ProductRecordMessageListener implements SessionAwareMessageListener
         logger.info("msgText = " + msgText);
         ProductRecordVO info = JSON.parseObject(msgText, ProductRecordVO.class);
         productRecordFacade.updateProearnAndInterestrateByUUID(info);
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(info);
+        notifyMessageFacade.deleteNotifyMessageByUUIDAndQueue(info);
     }
 }

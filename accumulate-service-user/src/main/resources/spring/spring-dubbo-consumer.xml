@@ -7,7 +7,7 @@
 
     <!-- 异步通知 notify-->
     <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade" id="notifyMessageFacade" check="false" />
-    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade" id="notifyTransactionMessageFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade" id="notifyTransactionMessageFacade" check="false"/>
     <!-- 用户账户 -->
     <dubbo:reference interface="com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade" id="accountBalanceFacade" check="false" />
 </beans>

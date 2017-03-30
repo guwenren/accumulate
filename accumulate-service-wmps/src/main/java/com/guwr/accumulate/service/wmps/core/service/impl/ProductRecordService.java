@@ -9,10 +9,9 @@ import com.guwr.accumulate.facade.account.entity.AccountBalance;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceFacade;
 import com.guwr.accumulate.facade.account.facade.IAccountBalanceRecordFacade;
 import com.guwr.accumulate.facade.account.vo.AccountBalanceRecordVO;
-import com.guwr.accumulate.facade.notify.entity.NotifyTransactionMessage;
-import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
+import com.guwr.accumulate.facade.notify.entity.NotifyMessage;
+import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
-import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
 import com.guwr.accumulate.facade.user.entity.UserProductInvest;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
 import com.guwr.accumulate.facade.user.facade.*;
@@ -67,7 +66,7 @@ public class ProductRecordService implements IProductRecordService {
     @Autowired
     private IUserProductEarningsFacade userProductEarningsFacade;
     @Autowired
-    private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+    private INotifyMessageFacade notifyMessageFacade;
     @Autowired
     private IUserProductDayInterFacade userProductDayInterFacade;
     @Autowired
@@ -173,19 +172,15 @@ public class ProductRecordService implements IProductRecordService {
 
         saveProductRecord(uid, pid, uuid, date, investAmount, effectAmount, interestrate, proearn);
 
-        NotifyTransactionMessageVO transactionMessageVO = buildMessageByNotifyMessageVO(uid, uuid, pid);
-        NotifyTransactionMessageVO transactionMessageVO1 = buildMessageByNotifyTransactionMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
+        NotifyMessageVO transactionMessageVO1 = buildMessageByNotifyMessageVO(uid, effectAmount, uuid, product.getPhases(), product.getInterestrate(), pid);
 
-        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO);
-        logger.info(uid + "_保存邮件待确认消息");
-        NotifyTransactionMessage notifyTransactionMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(transactionMessageVO1);
+
+        NotifyMessage notifyMessage = notifyMessageFacade.saveNotifyMessage(transactionMessageVO1);
         logger.info(uid + "_保存用户投资等级待确认消息");
 
         this.productService.update(product);//更新产品购买金额
 
-        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyMessage);
-        logger.info(uid + "_发送邮件已确认消息到MQ");
-        notifyTransactionMessageFacade.sendNotifyTransactionMessage(notifyTransactionMessage);//将消息发送至mq
+        notifyMessageFacade.sendNotifyMessage(notifyMessage);//将消息发送至mq
         logger.info(uid + "_发送用户投资等级已确认消息到MQ");
     }
 
@@ -333,32 +328,7 @@ public class ProductRecordService implements IProductRecordService {
         }
     }
 
-    /**
-     * 组装预发送消息
-     *
-     * @param uid
-     * @param uuid
-     * @param pid
-     * @return
-     */
-    public NotifyTransactionMessageVO buildMessageByNotifyMessageVO(Integer uid, String uuid, Integer pid) {
-
-        NotifyMessageVO messageVO = new NotifyMessageVO();//消息体
-        messageVO.setUid(uid);
-        messageVO.setTitle(uid + "_购买产品");
-        messageVO.setContent(uid + "_购买，" + pid + "_产品");
-        messageVO.setUuid(uuid);
-        messageVO.setConsumerQueue(NotifyDestination.MESSAGE_NOTIFY.name());
-        String messageBody = JSON.toJSONString(messageVO);
-
-        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
-        info.setMessageBody(messageBody);
-        info.setUuid(uuid);
-        info.setConsumerQueue(messageVO.getConsumerQueue());
-        return info;
-    }
-
-    private NotifyTransactionMessageVO buildMessageByNotifyTransactionMessageVO(Integer uid, BigDecimal effectAmount, String uuid, Integer phases, BigDecimal interestrate, Integer pid) {
+    private NotifyMessageVO buildMessageByNotifyMessageVO(Integer uid, BigDecimal effectAmount, String uuid, Integer phases, BigDecimal interestrate, Integer pid) {
         UserProductLevelVO productLevelVO = new UserProductLevelVO();
         productLevelVO.setPid(pid);
         productLevelVO.setUid(uid);
@@ -369,7 +339,7 @@ public class ProductRecordService implements IProductRecordService {
         productLevelVO.setConsumerQueue(NotifyDestination.USER_PRODUCT_LEVEL_MESSAGE.name());
         String messageBody = JSON.toJSONString(productLevelVO);
 
-        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
+        NotifyMessageVO info = new NotifyMessageVO();
         info.setMessageBody(messageBody);
         info.setUuid(uuid);
         info.setConsumerQueue(productLevelVO.getConsumerQueue());

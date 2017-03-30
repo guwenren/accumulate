@@ -40,7 +40,7 @@ public class FastDFSTest {
     public static void download() throws Exception {
         String fileId = "group1/M00/00/00/wKgDjljbh_GAFFSNAAA7ifSmPVk823.jpg";
         InputStream inputStream = FastDFSClient.downloadFile(fileId);
-        File destFile = new File("F:/fastfds/DownloadTest.jpg");
+        File destFile = new File("F:/fastfds/DownloadTest1.jpg");
         FileUtils.copyInputStreamToFile(inputStream, destFile);
     }
 

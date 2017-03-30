@@ -2,7 +2,6 @@ package com.guwr.accumulate.queue.notify.message;
 
 import com.alibaba.fastjson.JSON;
 import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
-import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
@@ -28,11 +27,9 @@ public class NotifyMessageListener implements SessionAwareMessageListener<Messag
 
     private static Logger logger = LoggerFactory.getLogger(NotifyMessageListener.class);
 
-    @Autowired
-    private INotifyMessageFacade notifyMessageFacade;
 
     @Autowired
-    private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+    private INotifyMessageFacade notifyMessageFacade;
 
     @Override
     public void onMessage(Message message, Session session) throws JMSException {
@@ -41,7 +38,7 @@ public class NotifyMessageListener implements SessionAwareMessageListener<Messag
         String msgText = textMessage.getText();
         logger.info("msgText = " + msgText);
         NotifyMessageVO info = JSON.parseObject(msgText, NotifyMessageVO.class);
-        notifyMessageFacade.save(info);
-        notifyTransactionMessageFacade.deleteNotifyTransactionMessageByUUIDAndQueue(info);//测试消息通知结果处理完成但是删除消息失败
+        notifyMessageFacade.saveNotifyMessage(info);
+        notifyMessageFacade.deleteNotifyMessageByUUIDAndQueue(info);//测试消息通知结果处理完成但是删除消息失败
     }
 }

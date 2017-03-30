@@ -4,8 +4,8 @@ package com.guwr.accumulate.service.user.core.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.guwr.accumulate.common.enums.NotifyDestination;
 import com.guwr.accumulate.common.util.AmountUtils;
-import com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade;
-import com.guwr.accumulate.facade.notify.vo.NotifyTransactionMessageVO;
+import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
+import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.facade.user.entity.UserProductInvest;
 import com.guwr.accumulate.facade.user.entity.UserProductLevel;
 import com.guwr.accumulate.facade.user.enums.UserProductInvestUserType;
@@ -42,7 +42,7 @@ public class UserProductLevelService implements IUserProductLevelService {
     private IUserProductInvestService userProductInvestService;
 
     @Autowired
-    private INotifyTransactionMessageFacade notifyTransactionMessageFacade;
+    private INotifyMessageFacade notifyTransactionMessageFacade;
 
     @Autowired
     private IUserProductEarningsService userProductEarningsService;
@@ -98,7 +98,7 @@ public class UserProductLevelService implements IUserProductLevelService {
         // 用户投资收益
         userProductEarningsService.saveOrUpdateUserProductEarnings(date, uid, uuid, invest, pid, vipInterestrate, proearn,interestrate,phases);
 
-//        NotifyTransactionMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, currentInterestrate, uuid);
+//        NotifyMessageVO messageVO = buildMessageByProductRecordVO(uid, proearn, currentInterestrate, uuid);
 //
 //        NotifyTransactionMessage notifyMessage = notifyTransactionMessageFacade.saveNotifyTransactionMessage(messageVO);
 //        logger.info(uid + "_保存修改投资预期收益与利率消息");
@@ -117,7 +117,7 @@ public class UserProductLevelService implements IUserProductLevelService {
         return userProductLevel;
     }
 
-    private NotifyTransactionMessageVO buildMessageByProductRecordVO(Integer uid, BigDecimal proearn, BigDecimal interestrate, String uuid) {
+    private NotifyMessageVO buildMessageByProductRecordVO(Integer uid, BigDecimal proearn, BigDecimal interestrate, String uuid) {
         ProductRecordVO productRecordVO = new ProductRecordVO();
         productRecordVO.setProearn(proearn);
         productRecordVO.setInterestrate(interestrate);
@@ -126,7 +126,7 @@ public class UserProductLevelService implements IUserProductLevelService {
         productRecordVO.setConsumerQueue(NotifyDestination.UPDATE_PROEARN_INTERESTRATE_MESSAGE.name());
         String messageBody = JSON.toJSONString(productRecordVO);
 
-        NotifyTransactionMessageVO info = new NotifyTransactionMessageVO();
+        NotifyMessageVO info = new NotifyMessageVO();
         info.setMessageBody(messageBody);
         info.setUuid(uuid);
         info.setConsumerQueue(productRecordVO.getConsumerQueue());

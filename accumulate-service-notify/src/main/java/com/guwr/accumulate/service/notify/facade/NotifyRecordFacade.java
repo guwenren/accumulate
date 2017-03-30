@@ -24,26 +24,24 @@ public class NotifyRecordFacade implements INotifyRecordFacade {
     private INotifyRecordService service;
 
     @Override
-    public NotifyRecord save(NotifyRecord entity) {
-        logger.info("NotifyRecordFacade.save");
+    public NotifyRecord saveNotifyRecord(NotifyRecord entity) {
         return service.save(entity);
     }
 
     @Override
     public NotifyRecord findOne(Integer id) {
-        logger.info("NotifyRecordFacade.findOne.id = [" + id + "]");
+        logger.info("id = [" + id + "]");
         return service.findOne(id);
     }
 
     @Override
-    public NotifyRecord update(NotifyRecord entity) {
-        logger.info("NotifyRecordFacade.update");
+    public NotifyRecord updateNotifyRecord(NotifyRecord entity) {
         return service.update(entity);
     }
 
     @Override
-    public PageBean<NotifyRecord> findListPage(NotifyRecordVO info) {
-        logger.info("NotifyRecordFacade.findListPageByCondition.info = [" + info + "]");
-        return service.findListPage(info);
+    public PageBean<NotifyRecord> findListPage(NotifyRecordVO vo) {
+        logger.info("vo = [" + vo + "]");
+        return service.findListPage(vo);
     }
 }

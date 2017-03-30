@@ -22,5 +22,4 @@
 	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.notify.facade.INotifyRecordFacade" ref="notifyRecordFacade" />
 	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.notify.facade.INotifyRecordLogFacade" ref="notifyRecordLogFacade" />
 	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade" ref="notifyMessageFacade" />
-	<dubbo:service retries="0" interface="com.guwr.accumulate.facade.notify.facade.INotifyTransactionMessageFacade" ref="notifyTransactionMessageFacade" />
 </beans>

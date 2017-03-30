@@ -4,7 +4,7 @@
         <artifactId>accumulate-parent</artifactId>
         <groupId>com.guwr</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>pom.xml</relativePath>
+        <relativePath>../accumulate-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>accumulate-web</artifactId>
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.1.0.v20131115</version>
+                <version>9.3.11.v20160721</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <httpConnector>
