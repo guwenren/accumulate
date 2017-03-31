@@ -5,6 +5,8 @@ import com.guwr.accumulate.common.page.PageBean;
 import com.guwr.accumulate.facade.user.entity.UserInfo;
 import com.guwr.accumulate.facade.user.vo.UserInfoVO;
 
+import java.io.Serializable;
+
 /**
  * Created by gwr
  * Description
@@ -12,7 +14,7 @@ import com.guwr.accumulate.facade.user.vo.UserInfoVO;
  * Date 2016/8/21
  * Time 18:33
  */
-public interface IUserInfoFacade {
+public interface IUserInfoFacade extends Serializable{
     /**
      * @param id
      * @return

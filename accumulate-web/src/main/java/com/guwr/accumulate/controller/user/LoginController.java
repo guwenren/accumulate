@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+
 /**
  * Created by   guwr
  * Project_name accumulate
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Description
  */
 @Controller
-public class LoginController extends BaseController {
+public class LoginController extends BaseController implements Serializable {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
@@ -50,10 +53,11 @@ public class LoginController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "login", method = {RequestMethod.POST})
-    public String login(Model model, String mobile, String password) {
+    public String login(HttpServletRequest request, Model model, String mobile, String password) {
         logger.info("model = [" + model + "], mobile = [" + mobile + "], password = [" + password + "]");
         UserInfo userInfo = userInfoFacade.findOneByMobile(mobile);
         model.addAttribute(MODEL_KEY, userInfo);
+        request.getSession().setAttribute("", userInfo);
         return "index";
     }
 }
