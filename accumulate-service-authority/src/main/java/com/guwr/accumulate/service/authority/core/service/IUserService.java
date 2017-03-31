@@ -14,8 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
  * Time 21:07
  */
 public interface IUserService {
+    /**
+     *
+     * @param entity
+     * @return
+     */
     User save(User entity);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     User findOne(Integer id);
 
     Page<User> pageInfo(UserVO info);
