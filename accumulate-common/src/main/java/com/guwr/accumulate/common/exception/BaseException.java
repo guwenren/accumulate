@@ -3,17 +3,17 @@ package com.guwr.accumulate.common.exception;
 /**
  * Created by gwr
  * Description
- * Path com.guwr.accumulate.common.exceptions.BizException
+ * Path com.guwr.accumulate.common.exceptions.BaseException
  * Date 2016/8/21
  * Time 11:13
  */
-public class BizException extends RuntimeException {
+public class BaseException extends RuntimeException {
 
 
     protected String msg;
     protected int code;
 
-    public BizException(int code, String msgFormat, Object... args) {
+    public BaseException(int code, String msgFormat, Object... args) {
         super(String.format(msgFormat, args));
         this.code = code;
         this.msg = String.format(msgFormat, args);
@@ -27,23 +27,23 @@ public class BizException extends RuntimeException {
         return msg;
     }
 
-    public BizException() {
+    public BaseException() {
         super();
     }
 
-    public BizException newInstance(String msgFormat, Object... args) {
-        return new BizException(this.code, msgFormat, args);
+    public BaseException newInstance(String msgFormat, Object... args) {
+        return new BaseException(this.code, msgFormat, args);
     }
 
-    public BizException(String message, Throwable cause) {
+    public BaseException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public BizException(Throwable cause) {
+    public BaseException(Throwable cause) {
         super(cause);
     }
 
-    public BizException(String message) {
+    public BaseException(String message) {
         super(message);
     }
 }

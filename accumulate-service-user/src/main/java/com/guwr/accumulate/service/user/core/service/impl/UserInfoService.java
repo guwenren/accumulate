@@ -10,7 +10,7 @@ import com.guwr.accumulate.facade.account.vo.AccountBalanceVO;
 import com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade;
 import com.guwr.accumulate.facade.notify.vo.NotifyMessageVO;
 import com.guwr.accumulate.facade.user.entity.UserInfo;
-import com.guwr.accumulate.facade.user.exception.UserBizException;
+import com.guwr.accumulate.facade.user.exception.UserException;
 import com.guwr.accumulate.facade.user.vo.UserInfoVO;
 import com.guwr.accumulate.service.user.core.dao.UserInfoRepository;
 import com.guwr.accumulate.service.user.core.service.IUserInfoService;
@@ -107,11 +107,11 @@ public class UserInfoService implements IUserInfoService {
     public UserInfo findOneByMobile(String mobile) {
         logger.info("UserInfoService.findOneByMobile");
         if (StringUtils.isBlank(mobile)) {
-            throw UserBizException.SHOU_JI_HAO_MA_BU_NENG_WEI_KONG.print();
+            throw UserException.SHOU_JI_HAO_MA_BU_NENG_WEI_KONG.print();
         }
         List<UserInfo> userInfos = repository.findOneByMobile(mobile);
         if (CollectionUtils.isEmpty(userInfos)) {
-            throw UserBizException.YONG_HU_BU_CUN_ZAI.print();
+            throw UserException.YONG_HU_BU_CUN_ZAI.print();
         }
         return userInfos.get(0);
     }

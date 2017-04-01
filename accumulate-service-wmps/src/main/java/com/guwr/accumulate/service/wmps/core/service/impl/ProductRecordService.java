@@ -21,7 +21,7 @@ import com.guwr.accumulate.facade.wmps.entity.ProductRecord;
 import com.guwr.accumulate.facade.wmps.entity.ProductRecordExtend;
 import com.guwr.accumulate.facade.wmps.enums.ProductRecordStatus;
 import com.guwr.accumulate.facade.wmps.enums.ProductStatus;
-import com.guwr.accumulate.facade.wmps.exception.WmpsBizException;
+import com.guwr.accumulate.facade.wmps.exception.WmpsException;
 import com.guwr.accumulate.facade.wmps.vo.ProductRecordVO;
 import com.guwr.accumulate.service.wmps.core.dao.ProductRecordRepository;
 import com.guwr.accumulate.service.wmps.core.service.IProductRecordService;
@@ -131,7 +131,7 @@ public class ProductRecordService implements IProductRecordService {
         logger.info("加载购买产品信息 e");
         if (!Objects.equals(ProductStatus.PUBLISHED.getValue(), product.getStatus())) {//状态是否为已发布
             logger.info("产品未开始认购");
-            throw WmpsBizException.CHAN_PIN_WEI_KAI_SHI_REN_GOU.print();
+            throw WmpsException.CHAN_PIN_WEI_KAI_SHI_REN_GOU.print();
         }
 
         BigDecimal productInvestAmount = product.getInvestAmount();//投资总额
@@ -147,7 +147,7 @@ public class ProductRecordService implements IProductRecordService {
 //        }
         if (investAmount.compareTo(subtractAmount) == 1) { // 投资金额>可投总额
             logger.info("投资金额大于产品可投总额");
-            throw WmpsBizException.TOU_ZI_JIN_E_DA_YU_CHAN_PIN_KE_TOU_ZONG_E.print();
+            throw WmpsException.TOU_ZI_JIN_E_DA_YU_CHAN_PIN_KE_TOU_ZONG_E.print();
         }
 
         effectAmount = investAmount;
@@ -296,7 +296,7 @@ public class ProductRecordService implements IProductRecordService {
         ProductRecord productRecord = findOneProductRecordByUUID(uuid);
         if (productRecord == null) {
             System.out.println("---------------------------------------------------------------------------_" + uuid);
-            throw WmpsBizException.CHAN_PIN_BU_CUN_ZAI.print();
+            throw WmpsException.CHAN_PIN_BU_CUN_ZAI.print();
         }
         productRecord.setProearn(proearn);
         productRecord.setInterestrate(interestrate);
@@ -313,10 +313,10 @@ public class ProductRecordService implements IProductRecordService {
         BigDecimal investAmount = info.getInvestAmount();
         BigDecimal[] divideAndRemainder = investAmount.divideAndRemainder(MULTIPLE_AMOUNT);
         if (investAmount.compareTo(BigDecimal.ZERO) < 1) {
-            throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
+            throw WmpsException.TOU_ZI_JIN_E_YOU_WU.print();
         }
         if (divideAndRemainder[1].compareTo(BigDecimal.ZERO) != 0) { //不是100的整倍数
-            throw WmpsBizException.TOU_ZI_JIN_E_YOU_WU.print();
+            throw WmpsException.TOU_ZI_JIN_E_YOU_WU.print();
         }
         userInfoFacade.findOneCheck(uid);
 
@@ -324,7 +324,7 @@ public class ProductRecordService implements IProductRecordService {
 
         BigDecimal balance = accountBalance.getBalance();//账户余额
         if (investAmount.compareTo(balance) > 0) { //账户余额是否足够
-            throw WmpsBizException.YU_E_BU_ZU.print();
+            throw WmpsException.YU_E_BU_ZU.print();
         }
     }
 

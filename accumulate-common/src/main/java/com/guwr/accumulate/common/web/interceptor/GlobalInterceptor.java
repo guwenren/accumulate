@@ -1,13 +1,13 @@
 package com.guwr.accumulate.common.web.interceptor;
 
-import com.guwr.accumulate.common.util.CommonUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.WebRequestInterceptor;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -17,36 +17,42 @@ import java.util.Map;
  * Date 2016/8/27
  * Time 19:12
  */
-public class GlobalInterceptor implements WebRequestInterceptor {
+public class GlobalInterceptor implements HandlerInterceptor {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalInterceptor.class);
 
-    @Override
-    public void preHandle(WebRequest request) throws Exception {
-        printReqLog(request);
-        logger.info("1");
-    }
 
     @Override
-    public void postHandle(WebRequest request, ModelMap model) throws Exception {
-        logger.info("2");
-    }
-
-    @Override
-    public void afterCompletion(WebRequest request, Exception ex) throws Exception {
-        logger.info("3");
-    }
-
-    /**
-     * 打印访问参数
-     *
-     * @param request
-     */
-    private void printReqLog(WebRequest request) {
-        Map<String, String[]> params = request.getParameterMap();
-        if (CollectionUtils.isEmpty(params)) {
-            return;
+    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        //        logger.info("GlobalInterceptor.preHandle..1");
+        String requestURI = httpServletRequest.getRequestURI();
+        // 找到运行的Action对象，并打印其类名
+        logger.info("requestURI：" + requestURI);
+        // 找到运行的ActionProxy对象，并打印其要运行的方法名
+        String method = httpServletRequest.getMethod();
+        logger.info("method：" + method);
+        // 找到这次请求的request中的parameter参数，并打印
+        Map params = httpServletRequest.getParameterMap();
+//        logger.info("MethodType：" + request.getMethod());
+//        if (!CollectionUtils.isEmpty(params)) {
+//            logger.info("params：");
+//        }
+        for (Object key : params.keySet()) {
+            Object obj = params.get(key);
+            if (obj instanceof String[]) {
+                logger.info(key + "：" + StringUtils.join((String[]) obj, ","));
+            }
         }
-        CommonUtils.printObj2Json(params, logger);
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+
     }
 }

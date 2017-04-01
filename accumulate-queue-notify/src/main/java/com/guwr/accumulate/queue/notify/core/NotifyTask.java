@@ -1,9 +1,8 @@
 package com.guwr.accumulate.queue.notify.core;
 
-import com.alibaba.dubbo.common.serialize.support.json.FastJsonSerialization;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.fastjson.JSON;
-import com.guwr.accumulate.common.exception.BizException;
+import com.guwr.accumulate.common.exception.BaseException;
 import com.guwr.accumulate.facade.notify.entity.NotifyRecord;
 import com.guwr.accumulate.facade.notify.enums.NotifyRecordEnum;
 import com.guwr.accumulate.queue.notify.entity.NotifyParam;
@@ -105,7 +104,7 @@ public class NotifyTask implements Runnable, Delayed, Serializable {
         } catch (RpcException e) {
             logger.error("NotifyTask", e);
             notifyQueue.addElementToList(notifyRecord);
-        } catch (BizException e) {
+        } catch (BaseException e) {
             logger.error("NotifyTask", e);
         } catch (Exception e) {
             logger.error("NotifyTask", e);

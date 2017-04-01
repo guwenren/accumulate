@@ -2,7 +2,7 @@ package com.guwr.accumulate.service.wmps.core.service.impl;
 
 
 import com.guwr.accumulate.facade.wmps.entity.Product;
-import com.guwr.accumulate.facade.wmps.exception.WmpsBizException;
+import com.guwr.accumulate.facade.wmps.exception.WmpsException;
 import com.guwr.accumulate.service.wmps.core.dao.ProductRepository;
 import com.guwr.accumulate.service.wmps.core.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class ProductService implements IProductService {
     public Product findOneCheck(Integer id) {
         Product product = this.findOne(id);
         if (product == null) { //产品是否存在
-            throw WmpsBizException.CHAN_PIN_BU_CUN_ZAI.print();
+            throw WmpsException.CHAN_PIN_BU_CUN_ZAI.print();
         }
         return product;
     }

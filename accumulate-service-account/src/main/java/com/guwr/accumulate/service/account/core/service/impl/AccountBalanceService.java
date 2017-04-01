@@ -2,7 +2,7 @@ package com.guwr.accumulate.service.account.core.service.impl;
 
 
 import com.guwr.accumulate.facade.account.entity.AccountBalance;
-import com.guwr.accumulate.facade.account.exception.AccountBizException;
+import com.guwr.accumulate.facade.account.exception.AccountException;
 import com.guwr.accumulate.service.account.core.dao.AccountBalanceRepository;
 import com.guwr.accumulate.service.account.core.service.IAccountBalanceService;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ public class AccountBalanceService implements IAccountBalanceService {
         }
         List<AccountBalance> accountBalances = repository.findOneByUid(uid);
         if (CollectionUtils.isEmpty(accountBalances)) {
-            throw AccountBizException.YONG_HU_ZHANG_HU_BU_CUN_ZAI.print();
+            throw AccountException.YONG_HU_ZHANG_HU_BU_CUN_ZAI.print();
         }
         return accountBalances.get(0);
     }

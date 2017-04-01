@@ -4,7 +4,7 @@ package com.guwr.accumulate.service.account.core.service.impl;
 import com.guwr.accumulate.facade.account.entity.AccountBalance;
 import com.guwr.accumulate.facade.account.entity.AccountBalanceRecord;
 import com.guwr.accumulate.facade.account.enums.AccountBalanceRecordEnum;
-import com.guwr.accumulate.facade.account.exception.AccountBizException;
+import com.guwr.accumulate.facade.account.exception.AccountException;
 import com.guwr.accumulate.service.account.core.dao.AccountBalanceRecordRepository;
 import com.guwr.accumulate.service.account.core.service.IAccountBalanceRecordService;
 import com.guwr.accumulate.service.account.core.service.IAccountBalanceService;
@@ -51,7 +51,7 @@ public class AccountBalanceRecordService implements IAccountBalanceRecordService
         BigDecimal balance = accountBalance.getBalance();
         //余额不足
         if (amount.compareTo(balance) > 0) {
-            AccountBizException.YU_E_BU_ZU.print();
+            AccountException.YU_E_BU_ZU.print();
         }
         BigDecimal subtractBalance = balance.subtract(amount);
         accountBalance.setBalance(subtractBalance);
