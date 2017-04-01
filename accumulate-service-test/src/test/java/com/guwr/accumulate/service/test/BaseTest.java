@@ -1,11 +1,7 @@
 package com.guwr.accumulate.service.test;
 
-import com.alibaba.fastjson.JSON;
-import com.eloancn.nback.finance.common.result.ResultFinance;
-import com.eloancn.nback.financeapi.AccountPaymentAPI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
