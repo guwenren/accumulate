@@ -25,7 +25,7 @@ public class RedisUtils implements Serializable {
     /**
      * 默认缓存时间
      */
-    private static final int DEFAULT_CACHE_SECONDS = 60 * 60 * 1;// 单位秒 设置成一个钟
+    private static final int DEFAULT_CACHE_SECONDS = 3600;// 单位秒 设置成一个钟
 
     /**
      * 连接池
