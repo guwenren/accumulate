@@ -35,22 +35,6 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login() {
-        logger.info("LoginController.login GET");
-        return "login";
-    }
-
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    @ResponseBody
-    public ResultData login(UserVO vo) {
-        logger.info("IndexController.login POST");
-        User user = userService.login(vo);
-        Session session = TokenManager.getSession();
-        session.setAttribute("user", user);
-        return ResultData.SUCCESS;
-    }
-
     @RequestMapping(value = "logout")
     public String logout() {
         logger.info("LoginController.logout");

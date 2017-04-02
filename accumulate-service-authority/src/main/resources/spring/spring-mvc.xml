@@ -26,19 +26,9 @@
     <mvc:resources mapping="/static/**" location="/static/"/>
     <mvc:resources mapping="/**" location="/"/>
 
-    <!-- 打印所有请求日志 -->
-    <mvc:interceptors>
-        <!--使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-        <bean class="com.guwr.accumulate.common.web.interceptor.GlobalInterceptor"/>
-        <mvc:interceptor>
-            <mvc:mapping path="/authority/*"/>
-            <bean class="com.guwr.accumulate.service.authority.interceptor.LoginInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
 
 </beans>

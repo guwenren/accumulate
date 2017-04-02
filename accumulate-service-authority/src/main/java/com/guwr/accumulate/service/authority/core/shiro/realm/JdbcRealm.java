@@ -5,7 +5,6 @@ import com.guwr.accumulate.service.authority.core.service.IPermissionService;
 import com.guwr.accumulate.service.authority.core.service.IRoleService;
 import com.guwr.accumulate.service.authority.core.service.IUserService;
 import com.guwr.accumulate.service.authority.core.shiro.token.TokenManager;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -42,8 +41,8 @@ public class JdbcRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        logger.info("JdbcRealm.doGetAuthorizationInfo");
-        User user =TokenManager.getToken();
+        logger.info("授权 doGetAuthorizationInfo");
+        User user = TokenManager.getToken();
         Integer uid = user.getId();
         Set<String> roles = roleService.findRoleByUId(uid);
         Set<String> permissions = permissionService.findPermissionByUid(uid);
@@ -62,8 +61,7 @@ public class JdbcRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        logger.info("JdbcRealm.doGetAuthenticationInfo");
-        logger.info("authenticationToken = " + authenticationToken);
+        logger.info("认证.doGetAuthenticationInfo");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String username = token.getUsername();
         char[] password = token.getPassword();
