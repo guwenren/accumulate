@@ -2,6 +2,8 @@ package com.guwr.accumulate.service.authority.facade;
 
 import com.guwr.accumulate.facade.authority.entity.Permission;
 import com.guwr.accumulate.facade.authority.facade.IPermissionFacade;
+import com.guwr.accumulate.service.authority.core.service.IPermissionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -18,8 +20,11 @@ import java.util.Set;
 public class PermissionFacade implements IPermissionFacade {
 
 
+    @Autowired
+    private IPermissionService permissionService;
+
     @Override
     public Set<String> findPermissionByUid(int uid) {
-        return null;
+        return permissionService.findPermissionByUid(uid);
     }
 }

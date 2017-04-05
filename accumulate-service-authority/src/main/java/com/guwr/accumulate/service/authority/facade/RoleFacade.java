@@ -1,17 +1,10 @@
 package com.guwr.accumulate.service.authority.facade;
 
-import com.guwr.accumulate.facade.authority.entity.Role;
-import com.guwr.accumulate.facade.authority.entity.User;
-import com.guwr.accumulate.facade.authority.exception.AuthorityException;
 import com.guwr.accumulate.facade.authority.facade.IRoleFacade;
-import com.guwr.accumulate.facade.authority.facade.IUserFacade;
-import com.guwr.accumulate.facade.authority.vo.UserVO;
-import com.guwr.accumulate.service.authority.core.service.IUserService;
+import com.guwr.accumulate.service.authority.core.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,8 +19,11 @@ import java.util.Set;
 public class RoleFacade implements IRoleFacade {
 
 
+    @Autowired
+    private IRoleService roleService;
+
     @Override
     public Set<String> findRoleByUid(int uid) {
-        return null;
+        return roleService.findRoleByUId(uid);
     }
 }

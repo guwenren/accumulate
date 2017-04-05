@@ -57,8 +57,9 @@ public class JdbcRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         logger.info("认证");
         Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
-        Set<String> roles = new HashSet<>();
-        Set<String> stringPermissions = new HashSet<>();
+        Set<String> roles = roleFacade.findRoleByUid(uid);
+        Set<String> stringPermissions = permissionFacade.findPermissionByUid(uid);
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         info.setRoles(roles);

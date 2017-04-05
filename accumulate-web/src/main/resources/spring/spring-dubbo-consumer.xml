@@ -16,4 +16,6 @@
     <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade" id="notifyMessageFacade" check="false"/>
     <!--authority-->
     <dubbo:reference interface="com.guwr.accumulate.facade.authority.facade.IUserFacade" id="userFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.authority.facade.IPermissionFacade" id="permissionFacade" check="false"/>
+    <dubbo:reference interface="com.guwr.accumulate.facade.authority.facade.IRoleFacade" id="roleFacade" check="false"/>
 </beans>
