@@ -51,7 +51,6 @@
         <thrift.version>0.8.0</thrift.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <hessian.version>4.0.7</hessian.version>
-        <jetty.version>6.1.26</jetty.version>
         <validation.version>1.0.0.GA</validation.version>
         <hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
         <jcache.version>0.4</jcache.version>
@@ -61,6 +60,56 @@
         <kryo-serializers.version>0.26</kryo-serializers.version>
         <spring.version>4.1.5.RELEASE</spring.version>
         <jodd.version>3.7</jodd.version>
+        <jetty.version>9.4.0.v20161208</jetty.version>
+        <junit.version>4.11</junit.version>
+        <slf4j-api.version>1.7.6</slf4j-api.version>
+        <logback-classic.version>1.0.13</logback-classic.version>
+        <logback-core.version>1.0.13</logback-core.version>
+        <jackson-core.version>2.2.3</jackson-core.version>
+        <jackson-databind.version>2.2.3</jackson-databind.version>
+        <jackson-annotations.version>2.2.3</jackson-annotations.version>
+        <spring-support.version>2.0.8</spring-support.version>
+        <proxool.version>0.9.1</proxool.version>
+        <commons-fileupload.version>1.2.2</commons-fileupload.version>
+        <commons-lang3.version>3.3.1</commons-lang3.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <commons-codec.version>1.6</commons-codec.version>
+        <jackson-mapper-asl.version>1.9.11</jackson-mapper-asl.version>
+        <jul-to-slf4j.version>1.7.6</jul-to-slf4j.version>
+        <jcl-over-slf4j.version>1.7.6</jcl-over-slf4j.version>
+        <log4j.version>1.2.16</log4j.version>
+        <jstl.version>1.2</jstl.version>
+        <servlet-api.version>3.0-alpha-1</servlet-api.version>
+        <jsp-api.version>2.1</jsp-api.version>
+        <httpclient-cache.version>4.3.1</httpclient-cache.version>
+        <httpclient.version>4.3.1</httpclient.version>
+        <httpcore.version>4.3.1</httpcore.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
+        <zkclient.version>0.7</zkclient.version>
+        <curator-recipes.version>2.5.0</curator-recipes.version>
+        <dubbo.version>2.8.4</dubbo.version>
+        <javassist.version>3.18.1-GA</javassist.version>
+        <fst.version>1.55</fst.version>
+        <cas-client-core.version>3.1.12</cas-client-core.version>
+        <spring-data-commons.version>1.9.2.RELEASE</spring-data-commons.version>
+        <hibernate-core.version>4.3.9.Final</hibernate-core.version>
+        <hibernate-entitymanager.version>4.3.9.Final</hibernate-entitymanager.version>
+        <hibernate-validator.version>5.0.2.Final</hibernate-validator.version>
+        <fastjson.version>1.2.3</fastjson.version>
+        <mysql-connector-java.version>5.1.28</mysql-connector-java.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
+        <activemq-all.version>5.11.0</activemq-all.version>
+        <activemq-pool.version>5.11.0</activemq-pool.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <jboss-logging.version>3.1.4.GA</jboss-logging.version>
+        <guava.version>19.0</guava.version>
+        <freemarker.version>2.3.20</freemarker.version>
+        <aspectjweaver.version>1.8.2</aspectjweaver.version>
+        <jackson-core-asl.version>1.9.13</jackson-core-asl.version>
+        <xbean-spring.version>3.16</xbean-spring.version>
+        <druid.version>1.0.2</druid.version>
+        <spring-data-jpa.version>1.7.2.RELEASE</spring-data-jpa.version>
     </properties>
     <dependencies>
         <dependency>
@@ -71,7 +120,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -85,12 +134,12 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.0.13</version>
+            <version>${logback-core.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.0.13</version>
+            <version>${logback-classic.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -137,7 +186,7 @@
         <dependency>
             <groupId>com.cloudhopper.proxool</groupId>
             <artifactId>proxool</artifactId>
-            <version>0.9.1</version>
+            <version>${proxool.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>avalon-framework-api</artifactId>
@@ -152,32 +201,32 @@
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.2.2</version>
+            <version>${commons-fileupload.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.3.1</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
+            <version>${commons-logging.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.6</version>
+            <version>${commons-codec.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.11</version>
+            <version>${jackson-mapper-asl.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jackson-core-asl</artifactId>
@@ -188,12 +237,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.6</version>
+            <version>${slf4j-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
-            <version>1.7.6</version>
+            <version>${jul-to-slf4j.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -204,7 +253,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.6</version>
+            <version>${jcl-over-slf4j.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -215,7 +264,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <version>${log4j.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.sun.jmx</groupId>
@@ -234,25 +283,25 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>3.0-alpha-1</version>
+            <version>${servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- servlet -->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
+            <version>${jsp-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient-cache</artifactId>
-            <version>4.3.1</version>
+            <version>${httpclient-cache.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -263,7 +312,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.1</version>
+            <version>${httpclient.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -278,13 +327,13 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.3.1</version>
+            <version>${httpcore.version}</version>
         </dependency>
         <!-- zookeeper jar begin -->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>3.4.5</version>
+            <version>${zookeeper.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -307,7 +356,7 @@
         <dependency>
             <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
-            <version>0.7</version>
+            <version>${zkclient.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -326,7 +375,7 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
-            <version>2.5.0</version>
+            <version>${curator-recipes.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>guava</artifactId>
@@ -387,16 +436,6 @@
                     <groupId>com.google.guava</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>8.0.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-logging-juli</artifactId>
-            <version>8.0.11</version>
         </dependency>
         <dependency>
             <groupId>org.javassist</groupId>
@@ -487,17 +526,6 @@
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
             <version>${hessian.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty</artifactId>
-            <version>${jetty.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mortbay.jetty</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -600,14 +628,14 @@
         <dependency>
             <groupId>de.ruedigermoeller</groupId>
             <artifactId>fst</artifactId>
-            <version>1.55</version>
+            <version>${fst.version}</version>
         </dependency>
         <!-- dubbox jar end -->
         <!-- 添加cas -->
         <dependency>
             <groupId>org.jasig.cas.client</groupId>
             <artifactId>cas-client-core</artifactId>
-            <version>3.1.12</version>
+            <version>${cas-client-core.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -620,7 +648,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
-            <version>1.9.2.RELEASE</version>
+            <version>${spring-data-commons.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -643,7 +671,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>1.7.2.RELEASE</version>
+            <version>${spring-data-jpa.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -683,7 +711,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.9.Final</version>
+            <version>${hibernate-core.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jboss-logging</artifactId>
@@ -698,7 +726,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.9.Final</version>
+            <version>${hibernate-entitymanager.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jboss-logging</artifactId>
@@ -713,7 +741,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.0.2.Final</version>
+            <version>${hibernate-validator.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jboss-logging</artifactId>
@@ -725,29 +753,29 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.0.2</version>
+            <version>${druid.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.3</version>
+            <version>${fastjson.version}</version>
         </dependency>
         <!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.28</version>
+            <version>${mysql-connector-java.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
+            <version>${validation-api.version}</version>
         </dependency>
         <!-- activemq-->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
-            <version>5.11.0</version>
+            <version>${activemq-all.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -758,7 +786,7 @@
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-pool</artifactId>
-            <version>5.11.0</version>
+            <version>${activemq-pool.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -774,7 +802,7 @@
         <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-spring</artifactId>
-            <version>3.16</version>
+            <version>${xbean-spring.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -785,42 +813,42 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
+            <version>${commons-collections.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>3.1.4.GA</version>
+            <version>${jboss-logging.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>${guava.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.20</version>
+            <version>${freemarker.version}</version>
         </dependency>
         <!-- aspectjweaver (支撑spring) -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.8.2</version>
+            <version>${aspectjweaver.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.13</version>
+            <version>${jackson-core-asl.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-support -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-support</artifactId>
-            <version>2.0.8</version>
+            <version>${spring-support.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spring-context</artifactId>
@@ -839,17 +867,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.2.3</version>
+            <version>${jackson-core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.2.3</version>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.2.3</version>
+            <version>${jackson-annotations.version}</version>
         </dependency>
     </dependencies>
 
@@ -865,4 +893,8 @@
             <url>http://192.168.3.232:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <build>
+        <finalName>accumulate-parent</finalName>
+    </build>
 </project>

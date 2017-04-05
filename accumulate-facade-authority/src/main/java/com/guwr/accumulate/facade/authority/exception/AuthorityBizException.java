@@ -1,6 +1,6 @@
 package com.guwr.accumulate.facade.authority.exception;
 
-import com.guwr.accumulate.common.exception.BizException;
+import com.guwr.accumulate.common.exception.BaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Date 2016/9/1
  * Time 23:15
  */
-public class AuthorityBizException extends BizException {
+public class AuthorityBizException extends BaseException {
 
     private static final long serialVersionUID = 3424589800181389417L;
     private static Logger logger = LoggerFactory.getLogger(AuthorityBizException.class);
