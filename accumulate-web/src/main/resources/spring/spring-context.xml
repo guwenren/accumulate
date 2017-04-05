@@ -25,4 +25,5 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <import resource="classpath:spring/spring-dubbo-consumer.xml"/>
+    <import resource="classpath:spring/spring-shiro.xml"/>
 </beans>

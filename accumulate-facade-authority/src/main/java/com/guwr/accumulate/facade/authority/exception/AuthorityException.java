@@ -16,9 +16,9 @@ public class AuthorityException extends BaseException {
     private static final long serialVersionUID = 3424589800181389417L;
     private static Logger logger = LoggerFactory.getLogger(AuthorityException.class);
 
-    public static final AuthorityException USER_NOT_EXIT = new AuthorityException(20080001, "用户不存在");
-    public static final AuthorityException ACCOUNT_OR_PWD_NOT_EXIT = new AuthorityException(20080002, "帐号或密码不正确");
-    public static final AuthorityException ACCOUNT_LOCK = new AuthorityException(20080003, "帐号已经禁止登录");
+    public static final AuthorityException USER_NOT_EXIT = new AuthorityException(101, "用户不存在");
+    public static final AuthorityException ACCOUNT_OR_PWD_NOT_EXIT = new AuthorityException(102, "帐号或密码不正确");
+    public static final AuthorityException ACCOUNT_LOCK = new AuthorityException(103, "帐号已经禁止登录");
 
     public AuthorityException() {
         super();

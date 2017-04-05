@@ -5,13 +5,15 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
-    <dubbo:application name="accumulate-web" />
+    <dubbo:application name="${dubbo.application.web}" />
 
     <!-- 使用zookeeper注册中心暴露服务地址 -->
     <dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
 
     <!-- 用户-->
     <dubbo:reference interface="com.guwr.accumulate.facade.user.facade.IUserInfoFacade" id="userInfoFacade" check="false"/>
-    <!--accumulate-service-notify-->
+    <!--notify-->
     <dubbo:reference interface="com.guwr.accumulate.facade.notify.facade.INotifyMessageFacade" id="notifyMessageFacade" check="false"/>
+    <!--authority-->
+    <dubbo:reference interface="com.guwr.accumulate.facade.authority.facade.IUserFacade" id="userFacade" check="false"/>
 </beans>

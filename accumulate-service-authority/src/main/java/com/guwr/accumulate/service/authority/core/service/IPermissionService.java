@@ -11,5 +11,12 @@ import java.util.Set;
  * Time 21:07
  */
 public interface IPermissionService {
+
+    /**
+     * 查看所有权限
+     *
+     * @param uid
+     * @return
+     */
     Set<String> findPermissionByUid(int uid);
 }

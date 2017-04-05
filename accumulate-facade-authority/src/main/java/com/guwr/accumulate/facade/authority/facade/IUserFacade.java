@@ -1,6 +1,7 @@
 package com.guwr.accumulate.facade.authority.facade;
 
 import com.guwr.accumulate.facade.authority.entity.User;
+import com.guwr.accumulate.facade.authority.vo.UserVO;
 
 /**
  * Created by gwr
@@ -10,5 +11,7 @@ import com.guwr.accumulate.facade.authority.entity.User;
  * Time 18:33
  */
 public interface IUserFacade {
-    User save(User entity);
+    User login(UserVO vo);
+
+    User findUserByUsername(String username);
 }

@@ -12,6 +12,7 @@ public class DubboProvider {
 		try {
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
 			LOGGER.info("context = " + context);
+			LOGGER.info("accumulate-service-authority");
 			context.start();
 		} catch (Exception e) {
 			LOGGER.error("== DubboProvider context start error:", e);

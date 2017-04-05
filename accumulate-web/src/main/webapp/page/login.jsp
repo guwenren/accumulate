@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>用户统登录</title>
-<link href="statics/dwz/themes/css/login.css" rel="stylesheet" type="text/css" />
+<link href="/static/dwz/themes/css/login.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .info{font-size: 12px;color: red;margin-left: 80px;}
 </style>
@@ -13,7 +13,7 @@
 	<div id="login">
 		<div id="login_header">
 			<h1 class="login_logo">
-				<!-- <a href="#"><img src="statics/dwz/themes/default/images/login_logo.gif" /></a> -->
+				<!-- <a href="#"><img src="/static/dwz/themes/default/images/login_logo.gif" /></a> -->
 				<a style="font-size:25px">管理后台</a>
 			</h1>
 			<div class="login_headerContent">
@@ -30,13 +30,13 @@
 				<form action="login" method="post">
 					<p>
 						<label>用户名：</label>
-						<input name="mobile" value="13448449026" type="text" style="width:140px;height:20px;" class="login_input" />
+						<input name="username" value="" type="text" style="width:140px;height:20px;" class="login_input" />
 						<br/>
 						<span class="info">${userNoMsg}</span>
 					</p>
 					<p>
 						<label>密&nbsp;&nbsp;&nbsp;码：</label>
-						<input name="password" type="password" style="width:140px;height:20px;" class="login_input" value="R3IGER" />
+						<input name="password" type="password" style="width:140px;height:20px;" class="login_input" value="" />
 						<br/>
 						<span class="info">${userPwdMsg}</span>
 					</p>
@@ -46,12 +46,12 @@
 					</div>
 				</form>
 			</div>
-			<div class="login_banner"><img src="statics/dwz/themes/default/images/login_banner.jpg" /></div>
+			<div class="login_banner"><img src="/static/dwz/themes/default/images/login_banner.jpg" /></div>
 			<div class="login_main">
 				<ul class="helpList">
 					<li><a href="#">测试帐号：admin</a></li>
 					<li><a href="#">默认密码：123456</a></li>
-				</ul>  
+				</ul>
 			</div>
 		</div>
 		<div id="login_footer">

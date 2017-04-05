@@ -11,6 +11,10 @@
     <packaging>war</packaging>
     <name>accumulate-web Maven Webapp</name>
     <url>http://maven.apache.org</url>
+
+    <properties>
+        <shiro.version>1.3.2</shiro.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.guwr</groupId>
@@ -27,6 +31,34 @@
             <artifactId>accumulate-facade-notify</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.guwr</groupId>
+            <artifactId>accumulate-facade-authority</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Shiro dependencies: -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>accumulate-web</finalName>
@@ -34,7 +66,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.3.11.v20160721</version>
+                <version>${jetty.version}</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <httpConnector>

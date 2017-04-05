@@ -17,8 +17,8 @@ public class UserException extends BaseException {
     private static final long serialVersionUID = 3424589800181389417L;
     private static Logger logger = LoggerFactory.getLogger(UserException.class);
 
-    public static final UserException SHOU_JI_HAO_MA_BU_NENG_WEI_KONG = new UserException(20080001, "手机号码不能为空");
-    public static final UserException YONG_HU_BU_CUN_ZAI = new UserException(20080002, "用户不存在");
+    public static final UserException SHOU_JI_HAO_MA_BU_NENG_WEI_KONG = new UserException(201, "手机号码不能为空");
+    public static final UserException YONG_HU_BU_CUN_ZAI = new UserException(202, "用户不存在");
 
 
     public UserException() {

@@ -6,10 +6,10 @@ import com.guwr.accumulate.facade.authority.entity.User;
 import com.guwr.accumulate.facade.authority.vo.UserVO;
 import com.guwr.accumulate.service.authority.BaseTest;
 import com.guwr.accumulate.service.authority.core.service.IUserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.subject.Subject;
+//import org.apache.shiro.SecurityUtils;
+//import org.apache.shiro.authc.UsernamePasswordToken;
+//import org.apache.shiro.mgt.SecurityManager;
+//import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +32,8 @@ public class UserServiceTest extends BaseTest {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private SecurityManager securityManager;
+//    @Autowired
+//    private SecurityManager securityManager;
 
     @Test
     public void save() throws Exception {
@@ -42,15 +42,15 @@ public class UserServiceTest extends BaseTest {
 
     @Test
     public void findOne() throws Exception {
-        SecurityUtils.setSecurityManager(securityManager);
-        SecurityManager securityManager = SecurityUtils.getSecurityManager();
-        Subject subject = SecurityUtils.getSubject();
-        String username = "zhangsan";
-        String password = "123456";
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        subject.login(token);
-        System.out.println(securityManager);
-        System.out.println(subject);
+//        SecurityUtils.setSecurityManager(securityManager);
+//        SecurityManager securityManager = SecurityUtils.getSecurityManager();
+//        Subject subject = SecurityUtils.getSubject();
+//        String username = "zhangsan";
+//        String password = "123456";
+//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//        subject.login(token);
+//        System.out.println(securityManager);
+//        System.out.println(subject);
 //        User user = userService.findOne(11);
 //        System.out.println(user);
     }
@@ -66,7 +66,7 @@ public class UserServiceTest extends BaseTest {
 
     @Test
     public void findUserByUsername() throws Exception {
-        User userByEmail = userService.findUserByUsername("8446666@qq.com11");
+        User userByEmail = null;//userService.findUserByUsername("8446666@qq.com11");
         System.out.println(userByEmail);
     }
 

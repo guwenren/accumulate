@@ -8,7 +8,7 @@
 			<table class="searchContent">
 				<tr>
 					<td>状态：
-						<select name="status">
+					<select name="status">
 						<option value="">请选择</option>
 						<option value="0"  <c:if test="${query.status == 0}"> selected="selected"</c:if>>待确认</option>
 						<option value="1"  <c:if test="${query.status == 1}"> selected="selected"</c:if>>已确认</option>

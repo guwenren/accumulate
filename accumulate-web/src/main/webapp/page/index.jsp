@@ -15,7 +15,7 @@ String path = request.getContextPath();
 		<div id="header">
 		    <!-- navMenu begin -->
 			<div class="headerNav">
-				<img alt="" src="<%=path %>/images/logo.png" height="50" />
+				<img alt="" src="<%=path %>/image/logo.png" height="50" />
 				<ul class="nav">
 					<li style="color:black;">欢迎您（${model.realname}）！&nbsp;上次登录：yyyy年MM月dd日  HH时mm分ss秒
 						<%--<s:date name="lastLoginTime" format="yyyy年MM月dd日  HH时mm分ss秒" /> --%>

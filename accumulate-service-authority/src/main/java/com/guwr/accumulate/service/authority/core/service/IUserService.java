@@ -6,6 +6,8 @@ import com.guwr.accumulate.facade.authority.vo.UserVO;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by gwr
  * Description
@@ -30,7 +32,7 @@ public interface IUserService {
 
     Page<User> pageInfo(UserVO info);
 
-    User findUserByUsername(String username);
+    List<User> findUserByUsername(String username);
 
     User login(UserVO vo);
 
