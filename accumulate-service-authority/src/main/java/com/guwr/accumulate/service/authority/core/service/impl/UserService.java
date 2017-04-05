@@ -1,9 +1,8 @@
 package com.guwr.accumulate.service.authority.core.service.impl;
 
 
-import com.guwr.accumulate.common.util.CommonUtils;
 import com.guwr.accumulate.facade.authority.entity.User;
-import com.guwr.accumulate.facade.authority.exception.AuthorityBizException;
+import com.guwr.accumulate.facade.authority.exception.AuthorityException;
 import com.guwr.accumulate.facade.authority.vo.UserVO;
 import com.guwr.accumulate.service.authority.core.dao.UserRepository;
 import com.guwr.accumulate.service.authority.core.service.IUserService;
@@ -62,7 +61,7 @@ public class UserService implements IUserService {
         logger.info("username = [" + username + "]");
         List<User> users = repository.findUserByUsername(username);
         if (CollectionUtils.isEmpty(users)) {
-            throw AuthorityBizException.USER_NOT_EXIT.print();
+            throw AuthorityException.USER_NOT_EXIT.print();
         }
         return users.get(0);
     }
