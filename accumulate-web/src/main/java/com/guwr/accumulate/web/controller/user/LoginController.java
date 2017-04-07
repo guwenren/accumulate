@@ -48,17 +48,12 @@ public class LoginController extends BaseController implements Serializable {
     public String login(HttpServletRequest request, UserVO vo) {
         String username = vo.getUsername();
         String password = vo.getPassword();
-
         User user = userFacade.login(vo);
-
         Subject subject = SecurityUtils.getSubject();
-
         boolean authenticated = subject.isAuthenticated();
-
         if (!authenticated) {
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             subject.login(token);
-
             if (subject.isPermitted("permission:list")) {
                 logger.info("yes");
             }
